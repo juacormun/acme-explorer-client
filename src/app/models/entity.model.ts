@@ -1,4 +1,5 @@
 export class Entity {
+
     private _id: string;
     private _version: number;
 
