@@ -387,7 +387,7 @@
   </div>
 
   <!-- Next Steps -->
-  <h2>Next Steps</h2>
+  <h2>Next (FAST) Steps</h2>
   <p>What do you want to do next with your app?</p>
 
   <input type="hidden" #selection>
@@ -426,7 +426,7 @@
 
   <!-- Terminal -->
   <div class="terminal" [ngSwitch]="selection.value">
-      <pre *ngSwitchDefault>ng generate component xyz</pre>
+      <pre *ngSwitchDefault>ng generate component alepelate</pre>
       <pre *ngSwitchCase="'material'">ng add @angular/material</pre>
       <pre *ngSwitchCase="'pwa'">ng add @angular/pwa</pre>
       <pre *ngSwitchCase="'dependency'">ng add _____</pre>
