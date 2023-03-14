@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "acme-explorer-3300e": {
+      "hosting": {
+        "acme-explorer": [
+          "acme-explorer-3300e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "acme-explorer-3300e"
+  }
+}

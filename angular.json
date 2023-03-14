@@ -95,6 +95,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "acme-explorer:build:production",
+            "firebaseProject": "acme-explorer-3300e",
+            "firebaseHostingSite": "acme-explorer-3300e"
+          }
         }
       }
     }
