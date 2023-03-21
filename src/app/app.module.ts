@@ -11,13 +11,17 @@ import { LoginComponent } from './components/security/login/login.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
+import { HeaderComponent } from './components/master/header/header.component';
+import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

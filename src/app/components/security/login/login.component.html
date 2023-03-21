@@ -1,4 +1,4 @@
-<form class="form-horizontal" (ngSubmit)="onLogin(f)" #f="ngForm">
+<!-- <form class="form-horizontal" (ngSubmit)="onLogin(f)" #f="ngForm">
   <div class="form-group">
     <label class="control-label col-sm-2" for="email">Email:
     </label>
@@ -19,4 +19,25 @@
     </div>
   </div>
 
-</form>
+</form> -->
+<div class="form-signin row text-center m-auto">
+  <form class="col-8 offset-2 col-lg-6 offset-lg-3" (ngSubmit)="onLogin(f)" #f="ngForm">
+    <h1 class="h3 mb-3 fw-normal">Welcome to acme-explorer</h1>
+
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" ngModel>
+      <label for="email">Email address</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="pwd" name="password" placeholder="Password" ngModel>
+      <label for="pwd">Password</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+
+    <div class="mt-1 mb-3">
+      <p>Not registered yet? Go to <a href="/register">register</a> page</p>
+    </div>
+    <p class="text-muted">&copy; MIS TC 2023 - G5</p>
+  </form>
+</div>
