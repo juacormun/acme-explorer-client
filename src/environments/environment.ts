@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendApiBaseUrl: 'http://localhost:3000/',
+  backendApiBaseUrl: 'http://localhost:8080/',
   firebaseConfig: {
     apiKey: "AIzaSyDQYJXYH4sFGTvy4QeW5gjCKGUpErMSru4",
     authDomain: "acme-explorer-fb57e.firebaseapp.com",
