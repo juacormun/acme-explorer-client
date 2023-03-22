@@ -33,6 +33,8 @@
       <label for="pwd">Password</label>
     </div>
 
+    <p *ngIf="errorMessage" class="text-danger">{{errorMessage}}</p>
+
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
     <div class="mt-1 mb-3">

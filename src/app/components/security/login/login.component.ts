@@ -1,6 +1,8 @@
+import { User } from './../../../models/user';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,8 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,11 +21,11 @@ export class LoginComponent implements OnInit {
   onLogin(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.login(email, password).then(_ => {
+    this.authService.login(email, password).then((user: User) => {
       form.reset();
-      console.log('login ok');
-    }).catch(err => {
-      console.log(err);
+      this.router.navigate(['/']);
+    }).catch(({ error }) => {
+      this.errorMessage = error.message;
     });
   }
 

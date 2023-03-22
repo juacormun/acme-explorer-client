@@ -12,6 +12,7 @@ export class Actor extends Entity{
   private _address!: string;
   private _role: Role;
   private _ban!: Ban
+  private _customToken!: string;
 
   constructor() {
     super();
@@ -46,6 +47,9 @@ export class Actor extends Entity{
   public get ban(): Ban {
     return this._ban;
   }
+  public get customToken(): string {
+    return this._customToken;
+  }
 
   public set name(name: string) {
     this._name = name;
@@ -70,6 +74,9 @@ export class Actor extends Entity{
   }
   public set ban(ban: Ban) {
     this._ban = ban;
+  }
+  public set customToken(token: string) {
+    this._customToken = token;
   }
 
 }
