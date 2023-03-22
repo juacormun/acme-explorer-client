@@ -13,6 +13,7 @@ import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/aut
 import { environment } from 'src/environments/environment';
 import { HeaderComponent } from './components/master/header/header.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NotFoundComponent } from './components/shared/not-found/not-found.compo
     RegisterComponent,
     LoginComponent,
     HeaderComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
