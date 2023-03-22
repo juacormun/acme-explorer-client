@@ -16,6 +16,16 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    this.authService.getCurrentUser()
+      .then((user: User) => {
+        if (user) {
+          console.log('User is already logged in, redirecting to home page...')
+          this.router.navigate(['/']);
+        }
+      })
+      .catch(error => {
+        console.log('Error retrieving user info');
+      });
   }
 
   onLogin(form: NgForm) {
