@@ -13,6 +13,8 @@ export class RegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
   roleList : string[];
+  errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(private authService: AuthService,
     private fb: FormBuilder) {
@@ -31,12 +33,16 @@ export class RegisterComponent implements OnInit {
   onRegister() {
     this.authService.registerUser(this.registrationForm.value)
       .then(res => {
-      console.log(res);
-    }, err => {
-      console.log(err);
-    });
-
-
+        console.log(res);
+        this.errorMessage = '';
+        this.successMessage = 'Registration successful, navitage to login page';
+      })
+      .catch(error => {
+        if (error.status === 422) {
+          this.errorMessage = 'There are some errors in the data introduced';
+        }
+        this.successMessage = '';
+      });
   }
 
   ngOnInit(): void {
