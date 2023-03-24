@@ -1,4 +1,5 @@
 import { Actor } from './../models/actor';
+import { User } from './../models/user';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { environment } from './../../environments/environment';
@@ -31,23 +32,81 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should login a correct user', () => {
+  it('should register a user', async () => {
+    let r = (Math.random() + 1).toString(36).substring(2);
+    let actor = {
+      name: 'test' + r,
+      surname: 'test' + r,
+      email: r + '@test.com',
+      password: '12345678',
+      role: Role.EXPLORER
+    } as Actor;
+    await service.registerUser(actor).then((res) => {
+      expect(res.user.email).toBe(actor.email);
+    })
+  })
+
+  it('should not register a user', async () => {
+    let actor = {
+      name: 'test',
+      surname: 'test',
+      email: email,
+      password: '12345678',
+      role: Role.EXPLORER
+    } as Actor;
+
+    await service.registerUser(actor).catch((error: { status: number; }) => {
+      expect(error.status).toBe(500);
+    })
+  })
+
+  it('should get the roles', () => {
     expect(service.getRoles()).toEqual(Object.values(Role))
   })
 
   it('should login correctly', async () => {
     const res = await service.login(email, '12345678');
-    expect(res.user.email).toBe(email);
+    expect(res.email).toBe(email);
   })
 
-  it('should not register a user', async () => {
-    let actor = new Actor();
-    actor.name = 'test';
-    actor.surname = 'test';
-    actor.email = email;
-    actor.password = '12345678';
-    // await expectAsync(service.registerUser(actor))
-    //   .toBeRejectedWithError(new FirebaseError())
+  it('should not login correctly', async () => {
+    await service.login(email, '123456789').catch((error: { status: number; }) => {
+      expect(error.status).toBe(401);
+    })
+  })
+
+  it ('should logout correctly', async () => {
+    await service.login(email, '12345678');
+    const res = await service.logout();
+    expect(res).toEqual('Logout successful');
+  })
+
+  it ('should set the user', () => {
+    const user = {
+      email: email,
+      token: '12345678'
+    } as User;
+    service.setCurrentUser(user)
+    expect(localStorage.getItem('currentUser')).toEqual(JSON.stringify(user));
+  })
+
+  it ('should get the current user', async () => {
+    const user = {
+      email: email,
+      token: '12345678'
+    } as User;
+    service.setCurrentUser(user)
+    const expected = JSON.parse(JSON.stringify(user));
+    await service.getCurrentUser().then((res) => {
+      expect(res).toEqual(expected);
+    })
+  })
+
+  it ('should not get the current user', async () => {
+    localStorage.removeItem('currentUser');
+    await service.getCurrentUser().then((res) => {
+      expect(res).toBeNull();
+    })
   })
 
 });
