@@ -6,13 +6,12 @@ export const environment = {
   production: false,
   backendApiBaseUrl: 'http://localhost:8080',
   firebaseConfig: {
-    apiKey: "AIzaSyDQYJXYH4sFGTvy4QeW5gjCKGUpErMSru4",
-    authDomain: "acme-explorer-fb57e.firebaseapp.com",
-    projectId: "acme-explorer-fb57e",
-    storageBucket: "acme-explorer-fb57e.appspot.com",
-    messagingSenderId: "904980102277",
-    appId: "1:904980102277:web:4c94aaac613e715f233dec",
-    measurementId: "G-9HMVSTFF5P"
+    apiKey: "AIzaSyBEyOBgsFHIbPKdSRV8YGrnZguUHGpu1rE",
+    authDomain: "acme-explorer-3300e.firebaseapp.com",
+    projectId: "acme-explorer-3300e",
+    storageBucket: "acme-explorer-3300e.appspot.com",
+    messagingSenderId: "248517529315",
+    appId: "1:248517529315:web:9447f77fb93ca70c807fd6"
   }
 };
 
