@@ -20,27 +20,6 @@ export class AuthService {
 
   constructor(private fireAuth: AngularFireAuth, private http: HttpClient) { }
 
-  // registerUser(actor: Actor) {
-  //   return new Promise((resolve, reject) => {
-  //     this.fireAuth.createUserWithEmailAndPassword(actor.email, actor.password)
-  //       .then(_ => {
-  //         // if the authentication was ok, then we proceed
-  //         const headers = new HttpHeaders();
-  //         headers.append('Content-Type', 'application/json');
-  //         const url = `${environment.backendApiBaseUrl + '/v2/actors'}`;
-  //         const body = JSON.stringify(actor);
-  //         this.http.post(url, body, httpOptions).toPromise()
-  //           .then(res => {
-  //             resolve(res);
-  //           }, err => {
-  //             reject(err);
-  //           });
-  //       }).catch(err => {
-  //         reject(err);
-  //       });
-  //   });
-  // }
-
   registerUser(actor: Actor) {
     const url = environment.backendApiBaseUrl + '/v2/actors';
     const headers = new HttpHeaders();
@@ -122,7 +101,7 @@ export class AuthService {
       this.fireAuth.signOut()
         .then(_ => {
           localStorage.clear();
-          resolve('');
+          resolve('Logout successful');
         }).catch(error => {
           reject(error);
         });
