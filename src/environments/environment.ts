@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendApiBaseUrl: 'https://acme-explorer-u21d.onrender.com',
+  backendApiBaseUrl: 'http://localhost:8080',
   firebaseConfig: {
     apiKey: "AIzaSyBEyOBgsFHIbPKdSRV8YGrnZguUHGpu1rE",
     authDomain: "acme-explorer-3300e.firebaseapp.com",
