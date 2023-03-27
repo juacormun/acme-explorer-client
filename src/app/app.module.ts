@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { HeaderComponent } from './components/master/header/header.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 import { HomeComponent } from './components/home/home.component';
+import { FooterComponent } from './components/master/footer/footer.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { HomeComponent } from './components/home/home.component';
     LoginComponent,
     HeaderComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

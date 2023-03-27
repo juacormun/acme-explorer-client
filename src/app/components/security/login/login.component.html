@@ -4,11 +4,11 @@
 
     <div class="form-floating mb-3">
       <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" ngModel>
-      <label for="email">Email address</label>
+      <label class="px-4" for="email">Email address</label>
     </div>
     <div class="form-floating mb-3">
       <input type="password" class="form-control" id="pwd" name="password" placeholder="Password" ngModel>
-      <label for="pwd">Password</label>
+      <label class="px-4" for="pwd">Password</label>
     </div>
 
     <p *ngIf="errorMessage" class="text-danger">{{errorMessage}}</p>
@@ -18,6 +18,6 @@
     <div class="mt-1 mb-3">
       <p>Don't have an account? <a href="/register">Sign up!</a></p>
     </div>
-    <p class="text-muted">&copy; MIS TC 2023 - G5</p>
+
   </form>
 </div>
