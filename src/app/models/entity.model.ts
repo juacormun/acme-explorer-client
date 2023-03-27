@@ -1,7 +1,7 @@
 export class Entity {
 
-    private _id: string;
-    private _version: number;
+    public _id: string;
+    public _version: number;
 
     constructor() {
         this._id = '0';
@@ -14,4 +14,8 @@ export class Entity {
     public get version(): number {
         return this._version;
     }
+
+    public set id(id: string) {
+      this._id = id;
+  }
 }

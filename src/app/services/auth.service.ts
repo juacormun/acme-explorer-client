@@ -6,6 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 import { environment } from '../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,6 +18,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+
+  private currentActor!: Actor;
+  private loginStatus = new Subject<Boolean>();
 
   constructor(private fireAuth: AngularFireAuth, private http: HttpClient) { }
 
@@ -73,6 +77,8 @@ export class AuthService {
                   user.token = token;
                   user.email = userCredentials.user?.uid ?? '';
                   this.setCurrentUser(user);
+                  this.currentActor = res;
+                  this.loginStatus.next(true);
                   resolve(user);
                 })
                 .catch(error => {
@@ -101,6 +107,7 @@ export class AuthService {
       this.fireAuth.signOut()
         .then(_ => {
           localStorage.clear();
+          this.loginStatus.next(false);
           resolve('Logout successful');
         }).catch(error => {
           reject(error);
@@ -110,6 +117,14 @@ export class AuthService {
 
   setCurrentUser(user: User) {
     localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  getStatus(): Observable<Boolean> {
+    return this.loginStatus.asObservable();
+  }
+
+  getCurrentActor(): Actor {
+    return this.currentActor;
   }
 
   getCurrentUser(): Promise<any> {

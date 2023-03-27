@@ -15,6 +15,10 @@ import { HeaderComponent } from './components/master/header/header.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/master/footer/footer.component';
+import { ProfileComponent } from './components/actor/profile/profile.component';
+import { TripListComponent } from './components/trip/trip-list/trip-list.component';
+import { TripDisplayComponent } from './components/trip/trip-display/trip-display.component';
+import { TripCreateComponent } from './components/trip/trip-create/trip-create.component';
 
 
 @NgModule({
@@ -25,7 +29,11 @@ import { FooterComponent } from './components/master/footer/footer.component';
     HeaderComponent,
     NotFoundComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    ProfileComponent,
+    TripListComponent,
+    TripDisplayComponent,
+    TripCreateComponent
   ],
   imports: [
     BrowserModule,

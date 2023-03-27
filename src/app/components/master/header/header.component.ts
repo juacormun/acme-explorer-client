@@ -1,6 +1,8 @@
+import { Actor } from './../../../models/actor';
 import { User } from './../../../models/user';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { Role } from 'src/app/enums/RoleEnum';
 
 @Component({
   selector: 'app-header',
@@ -8,35 +10,32 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  user: User = new User();
+
+  protected currentActor: Actor | undefined;
+  protected activeRole: string = Role.ANONYMOUS;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.authService.getCurrentUser()
-      .then((user: User) => {
-        if (user) {
-          this.user = user;
-        }
-      })
-      .catch(error => {
-        console.log('Error retrieving user info');
-      });
+    this.authService.getStatus().subscribe(loggedIn => {
+      if (loggedIn) {
+        this.currentActor = this.authService.getCurrentActor();
+        this.activeRole = this.currentActor.role;
+      } else {
+        this.activeRole = Role.ANONYMOUS;
+        this.currentActor = undefined;
+      }
+    })
   }
 
   logOut(): void {
     this.authService.logout()
       .then(_ => {
         console.log('User logout completed');
-        this.user = new User();
       })
       .catch(err => {
         console.log('Error while logout');
       });
-  }
-
-  userNotLogged(): boolean {
-    return !this.user.email;
   }
 
 }
