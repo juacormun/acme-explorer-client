@@ -1,1 +1,21 @@
-<p>trip-list works!</p>
+<div class="breadcrumb">
+  <legend>Trips</legend>
+</div>
+
+<div *ngIf="!trips || trips.length == 0">
+  Sorry, no trips found.
+</div>
+
+<div *ngIf="trips && trips.length > 0" class="row">
+  <div *ngFor="let trip of trips" class="col-md-4">
+    <div class="card mb-4 box-shadow">
+      <img class="card-img-top" [src]="getTripMainPicture(trip).image" alt="getTripMainPicture(trip).title" data-holder-rendered="true">
+      <div class="card-body">
+        <h5 class="card-title">{{trip.title}}</h5>
+        <p class="card-text text-justify">{{trip.description | slice:0:125}}</p>
+        <div class="d-flex justify-content-end align-items-center">
+          <small class="text-muted">{{trip.startDate | date:'dd/MM/yyyy'}} - {{trip.endDate | date:'dd/MM/yyyy'}}</small>
+      </div>
+    </div>
+  </div>
+</div>
