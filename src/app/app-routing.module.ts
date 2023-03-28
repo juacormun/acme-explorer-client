@@ -8,6 +8,7 @@ import { NotFoundComponent } from './components/shared/not-found/not-found.compo
 import { ProfileComponent } from './components/actor/profile/profile.component';
 import { TripCreateComponent } from './components/trip/trip-create/trip-create.component';
 import { TripListComponent } from './components/trip/trip-list/trip-list.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: ':id', component: TripDisplayComponent },
     { path: '', component: TripListComponent }
   ]},
+  { path: 'dashboard', component: DashboardComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent }
 ];

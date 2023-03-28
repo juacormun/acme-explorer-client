@@ -19,6 +19,7 @@ import { ProfileComponent } from './components/actor/profile/profile.component';
 import { TripListComponent } from './components/trip/trip-list/trip-list.component';
 import { TripDisplayComponent } from './components/trip/trip-display/trip-display.component';
 import { TripCreateComponent } from './components/trip/trip-create/trip-create.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { TripCreateComponent } from './components/trip/trip-create/trip-create.c
     ProfileComponent,
     TripListComponent,
     TripDisplayComponent,
-    TripCreateComponent
+    TripCreateComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
