@@ -8,7 +8,7 @@ import { TripService } from 'src/app/services/trip.service';
 @Component({
   selector: 'app-trip-list',
   templateUrl: './trip-list.component.html',
-  styleUrls: ['./trip-list.component.css']
+  styleUrls: ['./trip-list.component.scss']
 })
 export class TripListComponent implements OnInit {
 

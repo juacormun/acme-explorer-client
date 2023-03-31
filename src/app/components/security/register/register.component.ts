@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
 
@@ -19,6 +19,8 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService,
     private fb: FormBuilder) {
     this.roleList = this.authService.getRoles();
+    // Delete ANONYMOUS role from the list, as it is not allowed to register as ANONYMOUS
+    this.roleList.splice(this.roleList.indexOf(Role.ANONYMOUS), 1);
     this.registrationForm = this.fb.group({
       name: [''],
       surname: [''],

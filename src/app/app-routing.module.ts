@@ -9,11 +9,15 @@ import { ProfileComponent } from './components/actor/profile/profile.component';
 import { TripCreateComponent } from './components/trip/trip-create/trip-create.component';
 import { TripListComponent } from './components/trip/trip-list/trip-list.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TripApplicationsComponent } from './components/trip/trip-applications/trip-applications.component';
+import { TripSponsorshipsComponent } from './components/trip/trip-sponsorships/trip-sponsorships.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile/:id', component: ProfileComponent },
+  { path: 'applications', component: TripApplicationsComponent },
+  { path: 'sponsorships', component: TripSponsorshipsComponent },
   { path: 'trips', children: [
     { path: 'create', component: TripCreateComponent },
     { path: ':id', component: TripDisplayComponent },

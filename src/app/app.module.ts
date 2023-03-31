@@ -20,6 +20,8 @@ import { TripListComponent } from './components/trip/trip-list/trip-list.compone
 import { TripDisplayComponent } from './components/trip/trip-display/trip-display.component';
 import { TripCreateComponent } from './components/trip/trip-create/trip-create.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TripApplicationsComponent } from './components/trip/trip-applications/trip-applications.component';
+import { TripSponsorshipsComponent } from './components/trip/trip-sponsorships/trip-sponsorships.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     TripListComponent,
     TripDisplayComponent,
     TripCreateComponent,
-    DashboardComponent
+    DashboardComponent,
+    TripApplicationsComponent,
+    TripSponsorshipsComponent
   ],
   imports: [
     BrowserModule,

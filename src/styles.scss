@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+$primary: #008a83;
+$secondary: #161086;
+$success: #0c9968;
+$info: #afd4ff;
+$warning: #ffda07c0;
+$danger: #dc3551;
+$light: #f8f9fa;
+$dark: #0e2649;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
+);
+
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap');
+
+* {
+  font-family: 'Reem Kufi', sans-serif !important;
+  word-spacing: 0.15em;
+}
+
+.text-justify {
+  text-align: justify;
+}
