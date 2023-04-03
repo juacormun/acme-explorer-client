@@ -1,6 +1,6 @@
 <header class="navbar navbar-expand-lg bg-white sticky-top">
   <div class="container-fluid">
-    <a href="/" class="navbar-brand d-flex align-items-center">
+    <a href="#" routerLink="/" class="navbar-brand d-flex align-items-center">
       <object data="../../../../assets/images/logo.svg" width="40" height="40"></object>
       <span class="fs-3 ms-2 text-dark">ACME-EXPLORER</span>
     </a>
@@ -70,6 +70,25 @@
             </li>
             <li class="nav-item">
               <a href="#" (click)="logOut()" class="dropdown-item text-primary">Logout</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="dropdownLanguage"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Idioma
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownLanguage">
+            <li>
+              <a class="dropdown-item">
+                <object data="../../../../assets/flags/es.svg" width="15" height="15"></object> ES
+              </a>
+              <a class="dropdown-item">
+                <object data="../../../../assets/flags/gb.svg" width="15" height="15"></object> EN
+              </a>
+              <a class="dropdown-item">
+                <object data="../../../../assets/flags/no.svg" width="15" height="15"></object> NO
+              </a>
             </li>
           </ul>
         </li>
