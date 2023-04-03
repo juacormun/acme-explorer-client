@@ -22,6 +22,7 @@ import { TripCreateComponent } from './components/trip/trip-create/trip-create.c
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TripApplicationsComponent } from './components/trip/trip-applications/trip-applications.component';
 import { TripSponsorshipsComponent } from './components/trip/trip-sponsorships/trip-sponsorships.component';
+import { MessageComponent } from './components/master/message/message.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { TripSponsorshipsComponent } from './components/trip/trip-sponsorships/t
     TripCreateComponent,
     DashboardComponent,
     TripApplicationsComponent,
-    TripSponsorshipsComponent
+    TripSponsorshipsComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

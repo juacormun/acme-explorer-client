@@ -28,6 +28,10 @@ export class HeaderComponent implements OnInit {
     })
   }
 
+  changeLanguage(lan: string): void {
+
+  }
+
   logOut(): void {
     this.authService.logout()
       .then(_ => {

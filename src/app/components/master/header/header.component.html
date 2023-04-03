@@ -80,13 +80,13 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownLanguage">
             <li>
-              <a class="dropdown-item">
+              <a class="dropdown-item" (click)="changeLanguage('ES')">
                 <object data="../../../../assets/flags/es.svg" width="15" height="15"></object> ES
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" (click)="changeLanguage('EN')">
                 <object data="../../../../assets/flags/gb.svg" width="15" height="15"></object> EN
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" (click)="changeLanguage('NO')">
                 <object data="../../../../assets/flags/no.svg" width="15" height="15"></object> NO
               </a>
             </li>
