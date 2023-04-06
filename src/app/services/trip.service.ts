@@ -8,11 +8,17 @@ import { Trip } from '../models/trip';
 })
 export class TripService {
 
+  private tripsUrl = `${environment.backendApiBaseUrl}/v2/trips`;
 
   constructor(private http: HttpClient) { }
 
   searchTrips() {
     //TODO: filtros de búsqueda y token para finder
     return this.http.get<Trip[]>(environment.backendApiBaseUrl + '/v2/search');
+  }
+
+  getTrip(id: string) {
+    const url = `${this.tripsUrl}/${id}`;
+    return this.http.get<Trip>(url);
   }
 }

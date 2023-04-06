@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actor } from 'src/app/models/actor';
 import { Picture } from 'src/app/models/picture';
 import { Trip } from 'src/app/models/trip';
@@ -15,7 +16,11 @@ export class TripListComponent implements OnInit {
   trips: Trip[];
   actor: Actor;
 
-  constructor(private tripService: TripService, private authService: AuthService) {
+  constructor(
+    private tripService: TripService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.trips = [];
     this.actor = new Actor();
   }
@@ -29,6 +34,10 @@ export class TripListComponent implements OnInit {
 
   getTripMainPicture(trip: Trip): Picture {
     return trip.pictures?.length > 0 ? trip.pictures[0] : new Picture()
+  }
+
+  displayTrip(trip: Trip) {
+    this.router.navigate(['/trips', trip._id]);
   }
 
 }

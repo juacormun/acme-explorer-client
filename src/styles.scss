@@ -30,3 +30,13 @@ $theme-colors: (
 .text-justify {
   text-align: justify;
 }
+
+.clickable-card {
+  transition: all 0.3s ease-out;
+}
+
+.clickable-card:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+

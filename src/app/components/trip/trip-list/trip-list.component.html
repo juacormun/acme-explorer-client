@@ -8,7 +8,7 @@
 
 <div *ngIf="trips && trips.length > 0" class="row">
   <div *ngFor="let trip of trips" class="col-md-4">
-    <div class="card mb-4 box-shadow">
+    <div class="card mb-4 box-shadow clickable-card" (click)="displayTrip(trip)">
       <img class="card-img-top" [src]="getTripMainPicture(trip).image" alt="getTripMainPicture(trip).title" data-holder-rendered="true">
       <div class="card-body">
         <h5 class="card-title">{{trip.title}}</h5>
