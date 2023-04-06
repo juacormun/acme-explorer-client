@@ -56,23 +56,6 @@
             </li>
           </ul>
         </li>
-        <li *ngIf="currentActor" class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" id="dropdownActor"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownActor">
-            <li class="nav-item">
-              <a class="dropdown-item" routerLink="/profile/{{currentActor._id}}">Profile</a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="nav-item">
-              <a href="#" (click)="logOut()" class="dropdown-item text-primary">Logout</a>
-            </li>
-          </ul>
-        </li>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" id="dropdownLanguage"
             data-bs-toggle="dropdown" aria-expanded="false">
@@ -89,6 +72,23 @@
               <a class="dropdown-item" (click)="changeLanguage('NO')">
                 <object data="../../../../assets/flags/no.svg" width="15" height="15"></object> NO
               </a>
+            </li>
+          </ul>
+        </li>
+        <li *ngIf="currentActor" class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="dropdownActor"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownActor">
+            <li class="nav-item">
+              <a class="dropdown-item" routerLink="/profile/{{currentActor._id}}">Profile</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="nav-item">
+              <a href="#" (click)="logOut()" class="dropdown-item text-primary">Logout</a>
             </li>
           </ul>
         </li>

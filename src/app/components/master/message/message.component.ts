@@ -34,4 +34,9 @@ export class MessageComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
+  close() {
+    this.showMessage = false;
+    this.messageService.removeMessage();
+  }
+
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MessageType } from 'src/app/enums/MessageEnum';
 import { Role } from 'src/app/enums/RoleEnum';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'src/app/services/message.service';
 
 
 @Component({
@@ -13,11 +15,12 @@ export class RegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
   roleList : string[];
-  errorMessage: string = '';
-  successMessage: string = '';
 
-  constructor(private authService: AuthService,
-    private fb: FormBuilder) {
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private messageService: MessageService
+  ) {
     this.roleList = this.authService.getRoles();
     // Delete ANONYMOUS role from the list, as it is not allowed to register as ANONYMOUS
     this.roleList.splice(this.roleList.indexOf(Role.ANONYMOUS), 1);
@@ -35,15 +38,14 @@ export class RegisterComponent implements OnInit {
   onRegister() {
     this.authService.registerUser(this.registrationForm.value)
       .then(res => {
-        console.log(res);
-        this.errorMessage = '';
-        this.successMessage = 'Registration successful, navitage to login page';
+        this.messageService.notifyMessage('Registration successful, navitage to login page', MessageType.SUCCESS);
       })
       .catch(error => {
+        let errorMsg = 'Something wrong occurred...';
         if (error.status === 422) {
-          this.errorMessage = 'There are some errors in the data introduced';
+          errorMsg = 'There are some errors in the data introduced';
         }
-        this.successMessage = '';
+        this.messageService.notifyMessage(errorMsg, MessageType.DANGER);
       });
   }
 

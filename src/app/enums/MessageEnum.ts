@@ -1,4 +1,4 @@
-export enum MEssageType {
+export enum MessageType {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   SUCCESS = 'success',

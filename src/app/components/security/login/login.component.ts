@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'src/app/services/message.service';
+import { MessageType } from 'src/app/enums/MessageEnum';
 
 
 @Component({
@@ -11,9 +13,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
       form.reset();
       this.router.navigate(['/']);
     }).catch(({ error }) => {
-      this.errorMessage = error.message;
+      this.messageService.notifyMessage(error.message, MessageType.DANGER);
     });
   }
 

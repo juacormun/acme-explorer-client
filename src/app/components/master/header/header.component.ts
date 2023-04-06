@@ -3,6 +3,8 @@ import { User } from './../../../models/user';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Role } from 'src/app/enums/RoleEnum';
+import { MessageType } from 'src/app/enums/MessageEnum';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +16,7 @@ export class HeaderComponent implements OnInit {
   protected currentActor: Actor | undefined;
   protected activeRole: string = Role.ANONYMOUS;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.authService.getStatus().subscribe(loggedIn => {
@@ -35,10 +37,10 @@ export class HeaderComponent implements OnInit {
   logOut(): void {
     this.authService.logout()
       .then(_ => {
-        console.log('User logout completed');
+        this.messageService.notifyMessage('User logout completed', MessageType.SUCCESS);
       })
       .catch(err => {
-        console.log('Error while logout');
+        this.messageService.notifyMessage('Error while logout', MessageType.DANGER);
       });
   }
 

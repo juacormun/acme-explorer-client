@@ -1,3 +1,7 @@
-<div class="alert alert-{{cssClass}}" role="alert" *ngIf="infoMessage != null && infoMessage.length > 0 && showMessage">
-  {{infoMessage}}<br />
+<div class="alert alert-{{cssClass}} alert-dismissible fade show d-flex justify-content-between" role="alert"
+  *ngIf="infoMessage != null && infoMessage.length > 0 && showMessage">
+  <span>{{infoMessage}}</span>
+  <button class="btn btn-link text-decoration-none text-reset p-0" (click)="close()">
+    <strong>x</strong>
+  </button>
 </div>
