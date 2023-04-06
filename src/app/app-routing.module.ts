@@ -11,19 +11,23 @@ import { TripListComponent } from './components/trip/trip-list/trip-list.compone
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TripApplicationsComponent } from './components/trip/trip-applications/trip-applications.component';
 import { TripSponsorshipsComponent } from './components/trip/trip-sponsorships/trip-sponsorships.component';
+import { ActorRoleGuard } from './guards/actor-role.guard';
+import { Role } from './enums/RoleEnum';
+import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
+  { path: 'register', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
   { path: 'profile/:id', component: ProfileComponent },
-  { path: 'applications', component: TripApplicationsComponent },
-  { path: 'sponsorships', component: TripSponsorshipsComponent },
+  { path: 'applications', component: TripApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.EXPLORER] } },
+  { path: 'sponsorships', component: TripSponsorshipsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.SPONSOR] } },
   { path: 'trips', children: [
-    { path: 'create', component: TripCreateComponent },
+    { path: 'create', component: TripCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
     { path: ':id', component: TripDisplayComponent },
     { path: '', component: TripListComponent }
   ]},
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ADMINISTRATOR] } },
+  { path: 'denied-access', component: DeniedAccessComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent }
 ];

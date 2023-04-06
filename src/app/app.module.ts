@@ -23,6 +23,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TripApplicationsComponent } from './components/trip/trip-applications/trip-applications.component';
 import { TripSponsorshipsComponent } from './components/trip/trip-sponsorships/trip-sponsorships.component';
 import { MessageComponent } from './components/master/message/message.component';
+import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { MessageComponent } from './components/master/message/message.component'
     DashboardComponent,
     TripApplicationsComponent,
     TripSponsorshipsComponent,
-    MessageComponent
+    MessageComponent,
+    DeniedAccessComponent
   ],
   imports: [
     BrowserModule,

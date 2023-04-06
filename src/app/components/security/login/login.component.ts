@@ -2,7 +2,7 @@ import { User } from './../../../models/user';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { MessageType } from 'src/app/enums/MessageEnum';
 
@@ -14,9 +14,17 @@ import { MessageType } from 'src/app/enums/MessageEnum';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private messageService: MessageService) { }
+  private returnUrl!: string;
+
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   onLogin(form: NgForm) {
@@ -24,7 +32,7 @@ export class LoginComponent implements OnInit {
     const password = form.value.password;
     this.authService.login(email, password).then((user: User) => {
       form.reset();
-      this.router.navigate(['/']);
+      this.router.navigateByUrl(this.returnUrl);
     }).catch(({ error }) => {
       this.messageService.notifyMessage(error.message, MessageType.DANGER);
     });
