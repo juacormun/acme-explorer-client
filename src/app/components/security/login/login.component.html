@@ -1,20 +1,20 @@
 <div class="form-signin row text-center m-auto">
   <form class="col-8 offset-2 col-lg-6 offset-lg-3" (ngSubmit)="onLogin(f)" #f="ngForm">
-    <h1 class="h3 mb-3 fw-normal">Welcome to acme-explorer</h1>
+    <h1 i18n class="h3 mb-3 fw-normal">Welcome to acme-explorer</h1>
 
     <div class="form-floating mb-3">
       <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" ngModel>
-      <label class="px-4" for="email">Email address</label>
+      <label i18n class="px-4" for="email">Email address</label>
     </div>
     <div class="form-floating mb-3">
       <input type="password" class="form-control" id="pwd" name="password" placeholder="Password" ngModel>
-      <label class="px-4" for="pwd">Password</label>
+      <label i18n class="px-4" for="pwd">Password</label>
     </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button i18n class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 
     <div class="mt-1 mb-3">
-      <p>Don't have an account? <a href="/register">Sign up!</a></p>
+      <span i18n>Don't have an account?</span> <a i18n href="/register">Sign up!</a>
     </div>
 
   </form>

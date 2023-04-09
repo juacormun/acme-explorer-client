@@ -13,51 +13,51 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" id="dropdownTrips" data-bs-toggle="dropdown"
+          <a i18n href="#" class="nav-link dropdown-toggle" id="dropdownTrips" data-bs-toggle="dropdown"
             aria-expanded="false">
             Trips
           </a>
           <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownTrips">
             <li>
-              <a class="dropdown-item" routerLink="/trips">Search</a>
+              <a i18n class="dropdown-item" routerLink="/trips">Search</a>
             </li>
             <li>
               <hr *ngIf="activeRole === 'explorer'" class="dropdown-divider">
             </li>
             <li *ngIf="activeRole === 'explorer'">
-              <a class="dropdown-item" routerLink="/applications">Applications</a>
+              <a i18n class="dropdown-item" routerLink="/applications">Applications</a>
             </li>
             <li>
               <hr *ngIf="activeRole === 'manager'" class="dropdown-divider">
             </li>
             <li *ngIf="activeRole === 'manager'">
-              <a class="dropdown-item" routerLink="/trips/create">Create</a>
+              <a i18n class="dropdown-item" routerLink="/trips/create">Create</a>
             </li>
           </ul>
         </li>
         <li *ngIf="activeRole === 'sponsor'" class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" id="dropdownSponsorships"
+          <a i18n href="#" class="nav-link dropdown-toggle" id="dropdownSponsorships"
             data-bs-toggle="dropdown" aria-expanded="false">
             Sponsorships
           </a>
           <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownSponsorships">
             <li>
-              <a class="dropdown-item" routerLink="/sponsorships">List</a>
+              <a i18n class="dropdown-item" routerLink="/sponsorships">List</a>
             </li>
           </ul>
         <li *ngIf="activeRole === 'administrator'" class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" id="dropdownAdministration"
+          <a i18n href="#" class="nav-link dropdown-toggle" id="dropdownAdministration"
             data-bs-toggle="dropdown" aria-expanded="false">
             Administration
           </a>
           <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownAdministration">
             <li>
-              <a class="dropdown-item" routerLink="/dashboard">Dashboard</a>
+              <a i18n class="dropdown-item" routerLink="/dashboard">Dashboard</a>
             </li>
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" id="dropdownLanguage"
+          <a i18n href="#" class="nav-link dropdown-toggle" id="dropdownLanguage"
             data-bs-toggle="dropdown" aria-expanded="false">
             Idioma
           </a>
@@ -82,23 +82,22 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownActor">
             <li class="nav-item">
-              <a class="dropdown-item" routerLink="/profile/{{currentActor._id}}">Profile</a>
+              <a i18n class="dropdown-item" routerLink="/profile/{{currentActor._id}}">Profile</a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
             <li class="nav-item">
-              <a href="#" (click)="logOut()" class="dropdown-item text-primary">Logout</a>
+              <a i18n href="#" (click)="logOut()" class="dropdown-item text-primary">Logout</a>
             </li>
           </ul>
         </li>
       </ul>
 
       <div class="nav nav-pills">
-        <div *ngIf="!currentActor" class="nav-item"><a href="/login" class="nav-link active ms-lg-3"
-            aria-current="page">Login</a>
+        <div *ngIf="!currentActor" class="nav-item">
+          <a i18n href="/login" class="nav-link active ms-lg-3" aria-current="page">Login</a>
         </div>
-
       </div>
 
     </div>

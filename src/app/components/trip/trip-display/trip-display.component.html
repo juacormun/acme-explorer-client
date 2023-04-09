@@ -4,7 +4,7 @@
       {{ trip.title }}
       <h6 class="card-subtitle mb-2 text-muted">{{ trip.startDate | date: 'shortDate' }} - {{ trip.endDate | date: 'shortDate' }}</h6>
     </div>
-    <button class="btn btn-light" (click)="goBack()">Trips</button>
+    <button i18n class="btn btn-light" (click)="goBack()">Trips</button>
   </legend>
 </div>
 
@@ -16,20 +16,20 @@
       </div>
       <div class="col-md-8">
         <p class="card-text">{{ trip.description }}</p>
-        <p class="card-text"><strong>Price:</strong> {{ trip.price }}</p>
-        <p class="card-text"><strong>Requirements:</strong> {{ trip.requirements }}</p>
+        <p class="card-text"><strong i18n>Price:</strong> {{ trip.price }}</p>
+        <p class="card-text"><strong i18n>Requirements:</strong> {{ trip.requirements }}</p>
       </div>
     </div>
   </div>
   <div *ngIf="canDisplayActions()" class="card-footer text-muted d-flex justify-content-around">
-    <button class="btn btn-primary mr-2">Edit</button>
-    <button class="btn btn-danger mr-2">Delete</button>
-    <button class="btn btn-info">Applications</button>
+    <button i18n class="btn btn-primary mr-2">Edit</button>
+    <button i18n class="btn btn-danger mr-2">Delete</button>
+    <button i18n class="btn btn-info">Applications</button>
   </div>
 </div>
 
 <div *ngIf="trip.stages.length > 0" class="mt-3" id="accordion">
-  <h4>Stages</h4>
+  <h4 i18n>Stages</h4>
   <div *ngFor="let stage in trip.stages" class="card">
     <div class="card-header" id="heading{{stage._id}}">
       <h5 class="mb-0">
@@ -41,7 +41,7 @@
 
     <div id="collapse{{stage._id}}" class="collapse show" attr.aria-labelledby="heading{{stage._id}}" data-parent="#accordion">
       <div class="card-body">
-        <span>Price: {{stage.price}}</span>
+        <span i18n>Price: </span>{{stage.price}}
         <p>{{stage.description}}</p>
       </div>
     </div>
