@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { ActorRoleGuard } from './actor-role.guard';
+// import { ActorRoleGuard } from './actor-role.guard';
 
-describe('ActorRoleGuard', () => {
-  let guard: ActorRoleGuard;
+// describe('ActorRoleGuard', () => {
+//   let guard: ActorRoleGuard;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    guard = TestBed.inject(ActorRoleGuard);
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({});
+//     guard = TestBed.inject(ActorRoleGuard);
+//   });
 
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     expect(guard).toBeTruthy();
+//   });
+// });

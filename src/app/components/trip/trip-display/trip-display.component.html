@@ -21,14 +21,14 @@
       </div>
     </div>
   </div>
-  <div *ngIf="canDisplayActions()" class="card-footer text-muted d-flex justify-content-around">
+  <div *ngIf="canDisplayActions()" class="card-footer text-muted d-flex justify-content-around" id="tripActions">
     <button i18n class="btn btn-primary mr-2">Edit</button>
     <button i18n class="btn btn-danger mr-2">Delete</button>
     <button i18n class="btn btn-info">Applications</button>
   </div>
 </div>
 
-<div *ngIf="trip.stages && trip.stages.length > 0" class="mt-3" id="accordion">
+<div *ngIf="trip.stages && trip.stages.length > 0" class="mt-3" id="stagesAccordion">
   <h4 i18n>Stages</h4>
   <div *ngFor="let stage in trip.stages" class="card">
     <div class="card-header" id="heading{{stage._id}}">
