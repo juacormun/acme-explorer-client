@@ -31,7 +31,8 @@ export class HeaderComponent implements OnInit {
   }
 
   changeLanguage(lan: string): void {
-
+    localStorage.setItem('locale', lan);
+    location.reload();
   }
 
   logOut(): void {

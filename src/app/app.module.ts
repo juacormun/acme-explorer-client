@@ -24,6 +24,7 @@ import { TripApplicationsComponent } from './components/trip/trip-applications/t
 import { TripSponsorshipsComponent } from './components/trip/trip-sponsorships/trip-sponsorships.component';
 import { MessageComponent } from './components/master/message/message.component';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
+import { I18nModule } from 'src/i18n.module';
 
 
 @NgModule({
@@ -55,6 +56,8 @@ import { DeniedAccessComponent } from './components/shared/denied-access/denied-
     HttpClientModule
   ],
   providers: [
+    I18nModule.setLocale(),
+    I18nModule.setLocaleId(),
     AngularFireAuth
   ],
   bootstrap: [
