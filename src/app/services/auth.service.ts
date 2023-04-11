@@ -127,15 +127,18 @@ export class AuthService {
     return this.currentActor;
   }
 
-  getCurrentUser(): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      const currentUser = localStorage.getItem('currentUser');
-      if (currentUser) {
-        resolve(JSON.parse(currentUser));
-      } else {
-        resolve(null);
-      }
-    });
+  getCurrentUser(): User   {
+    const currentUser = localStorage.getItem('currentUser');
+    return currentUser ? JSON.parse(currentUser) : null;
+  }
+
+  getHeaders(): HttpHeaders {
+    let headers = new HttpHeaders();
+    const user = this.getCurrentUser();
+    if (user) {
+      headers = headers.append('idtoken', user._token);
+    }
+    return headers;
   }
 
 }

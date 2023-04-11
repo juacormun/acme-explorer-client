@@ -1,10 +1,13 @@
+import { EmbeddedTrip } from "./embedded-trip";
+
 export class Sponsorship {
-  private _id: string;
+  public _id: string;
   private _banner: string;
   private _sponsor: string;
   private _link: string;
   private _financedAmount!: string;
   private _paidAt!: Date;
+  private _trip!: EmbeddedTrip;
 
   constructor() {
     this._id = '';
@@ -59,5 +62,13 @@ export class Sponsorship {
 
   set paidAt(value: Date) {
     this._paidAt = value;
+  }
+
+  get trip(): EmbeddedTrip {
+    return this._trip;
+  }
+
+  set trip(value: EmbeddedTrip) {
+    this._trip = value;
   }
 }

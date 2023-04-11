@@ -1,6 +1,6 @@
 export class User {
-  private _email: string;
-  private _token: string;
+  public _email: string;
+  public _token: string;
 
   constructor() {
     this._email = '';

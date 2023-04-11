@@ -20,11 +20,15 @@ import { TripListComponent } from './components/trip/trip-list/trip-list.compone
 import { TripDisplayComponent } from './components/trip/trip-display/trip-display.component';
 import { TripCreateComponent } from './components/trip/trip-create/trip-create.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { TripApplicationsComponent } from './components/trip/trip-applications/trip-applications.component';
-import { TripSponsorshipsComponent } from './components/trip/trip-sponsorships/trip-sponsorships.component';
+import { TripApplicationsComponent } from './components/application/trip-applications/trip-applications.component';
+import { TripSponsorshipsComponent } from './components/sponsorship/trip-sponsorships/trip-sponsorships.component';
 import { MessageComponent } from './components/master/message/message.component';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
 import { I18nModule } from 'src/i18n.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ExplorerApplicationsComponent } from './components/application/explorer-applications/explorer-applications.component';
+import { SponsorshipListComponent } from './components/sponsorship/sponsorship-list/sponsorship-list.component';
+import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorship-display/sponsorship-display.component';
 
 
 @NgModule({
@@ -44,7 +48,10 @@ import { I18nModule } from 'src/i18n.module';
     TripApplicationsComponent,
     TripSponsorshipsComponent,
     MessageComponent,
-    DeniedAccessComponent
+    DeniedAccessComponent,
+    ExplorerApplicationsComponent,
+    SponsorshipListComponent,
+    SponsorshipDisplayComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +60,8 @@ import { I18nModule } from 'src/i18n.module';
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    HttpClientModule
+    HttpClientModule,
+    NgxDatatableModule
   ],
   providers: [
     I18nModule.setLocale(),
