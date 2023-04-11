@@ -41,6 +41,7 @@ function setLocale() {
 function setLocaleId() {
   return {
     provide: LOCALE_ID,
+    useValue: 'en-US',
     useFactory: (i18n: I18n) => () => i18n.locale,
     deps: [I18n]
   }

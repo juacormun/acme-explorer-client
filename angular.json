@@ -16,7 +16,9 @@
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
-          "es":  "src/assets/i18n/messages.es.json"
+          "es": {
+            "translation": "src/assets/i18n/messages.es.json"
+          }
         }
       },
       "architect": {
@@ -64,7 +66,13 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "es": {
+                "localize": ["es"]
+              },
+              "en-US": {
+                "localize": ["en-US"]
+              }
             },
             "development": {
               "buildOptimizer": false,
@@ -85,6 +93,12 @@
             },
             "development": {
               "browserTarget": "acme-explorer:build:development"
+            },
+            "es": {
+              "browserTarget": "acme-explorer:build:es"
+            },
+            "en-US": {
+              "browserTarget": "acme-explorer:build:en"
             }
           },
           "defaultConfiguration": "development"

@@ -1,5 +1,5 @@
 {
-  "locale": "es",
+  "locale": "en-US",
   "translations": {
     "ngb.alert.close": "Close",
     "ngb.carousel.slide-number": " Slide {$INTERPOLATION} of {$INTERPOLATION_1} ",
