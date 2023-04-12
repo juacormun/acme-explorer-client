@@ -14,6 +14,7 @@ import { TripSponsorshipsComponent } from './components/sponsorship/trip-sponsor
 import { ActorRoleGuard } from './guards/actor-role.guard';
 import { Role } from './enums/RoleEnum';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
+import { TripManagerListComponent } from './components/trip/trip-manager-list/trip-manager-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
@@ -21,8 +22,10 @@ const routes: Routes = [
   { path: 'profile/:id', component: ProfileComponent },
   { path: 'applications', component: TripApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.EXPLORER] } },
   { path: 'sponsorships', component: TripSponsorshipsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.SPONSOR] } },
+  { path: 'mytrips', component: TripManagerListComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
   { path: 'trips', children: [
     { path: 'create', component: TripCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
+    { path: ':id/applications', component: TripApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
     { path: ':id', component: TripDisplayComponent },
     { path: '', component: TripListComponent }
   ]},

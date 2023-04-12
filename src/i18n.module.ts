@@ -16,6 +16,7 @@ class I18n {
     }
 
     const localeModule = await import(
+      /* webpackInclude: /(de|en|es)\.mjs$/ */
       `/node_modules/@angular/common/locales/${this.locale}.mjs`
     );
 

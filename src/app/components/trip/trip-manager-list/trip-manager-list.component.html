@@ -1,0 +1,54 @@
+<div class="breadcrumb">
+  <legend i18n>My trips</legend>
+</div>
+
+<div i18n *ngIf="!trips || trips.length == 0">
+  Sorry, no trips found.
+</div>
+
+<div *ngIf="trips && trips.length > 0">
+  <ngx-datatable [rows]="trips"
+    #sponsorshipTable
+    class="material"
+    [headerHeight]="40"
+    [footerHeight]="80"
+    [loadingIndicator]="loadingIndicator"
+    rowHeight="auto"
+    [columnMode]="ColumnMode.force"
+    [reorderable]="reorderable"
+    [limit]="10"
+    [sorts]="sorts">
+
+    <ngx-datatable-column i18n-name name="Ticker" prop="this">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <a class="text-decoration-none" href="#" routerLink="/trips/{{ row._id }}">{{ row.ticker }}</a>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column i18n-name name="Title" prop="title">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>{{ value }}</p>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column i18n-name name="Start date" prop="startDate">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p *ngIf="value">{{ value | date:'shortDate' }}</p>
+        <p class="text-center" *ngIf="!value"> - </p>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column i18n-name name="End date" prop="endDate">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p *ngIf="value">{{ value | date:'shortDate' }}</p>
+        <p class="text-center" *ngIf="!value"> - </p>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column i18n-name name="Price" prop="price">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>{{ value }}</p>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

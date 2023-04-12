@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Trip } from '../models/trip';
+import { AuthService } from './auth.service';
+import { Application } from '../models/application';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ export class TripService {
 
   private tripsUrl = `${environment.backendApiBaseUrl}/v2/trips`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   searchTrips() {
     //TODO: filtros de búsqueda y token para finder
@@ -20,5 +22,17 @@ export class TripService {
   getTrip(id: string) {
     const url = `${this.tripsUrl}/${id}`;
     return this.http.get<Trip>(url);
+  }
+
+  getTrips() {
+    const url = this.tripsUrl;
+    const headers = this.authService.getHeaders();
+    return this.http.get<Trip[]>(url, { headers: headers } );
+  }
+
+  getTripApplications(id: string) {
+    const url = `${this.tripsUrl}/${id}/applications`;
+    const headers = this.authService.getHeaders();
+    return this.http.get<Application[]>(url, { headers: headers } );
   }
 }

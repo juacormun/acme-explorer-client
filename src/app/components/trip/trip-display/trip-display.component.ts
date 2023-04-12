@@ -49,4 +49,8 @@ export class TripDisplayComponent implements OnInit {
     return this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
   }
 
+  displayTripApplications(trip: Trip) {
+    this.router.navigate(['/trips', trip._id, 'applications']);
+  }
+
 }
