@@ -21,7 +21,6 @@ import { TripDisplayComponent } from './components/trip/trip-display/trip-displa
 import { TripCreateComponent } from './components/trip/trip-create/trip-create.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TripApplicationsComponent } from './components/application/trip-applications/trip-applications.component';
-import { TripSponsorshipsComponent } from './components/sponsorship/trip-sponsorships/trip-sponsorships.component';
 import { MessageComponent } from './components/master/message/message.component';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
 import { I18nModule } from 'src/i18n.module';
@@ -46,7 +45,6 @@ import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorshi
     TripCreateComponent,
     DashboardComponent,
     TripApplicationsComponent,
-    TripSponsorshipsComponent,
     MessageComponent,
     DeniedAccessComponent,
     ExplorerApplicationsComponent,
