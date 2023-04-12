@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Actor } from 'src/app/models/actor';
 import { Application } from 'src/app/models/application';
@@ -35,7 +35,8 @@ export class TripApplicationsComponent implements OnInit {
   constructor(
     private tripService: TripService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.id = '0';
     this.trip = new Trip();
@@ -56,6 +57,10 @@ export class TripApplicationsComponent implements OnInit {
 
   toggleExpandRow(row: Application) {
     this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  goBack(): void {
+    this.router.navigate(['/trips', this.trip._id]);
   }
 
 }
