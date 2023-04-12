@@ -1,1 +1,38 @@
-<p>sponsorship-display works!</p>
+<div class="breadcrumb">
+  <legend class="d-flex justify-content-between">
+    <div>
+      <h4>Sponsorship #{{ sponsorship._id }}</h4>
+    </div>
+    <button i18n class="btn btn-light" (click)="goBack()">Sponsorships</button>
+  </legend>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <img src="{{sponsorship.banner}}" class="img-fluid rounded" [alt]="sponsorship.banner">
+      </div>
+      <div class="col-12">
+        <p class="card-text"><strong i18n>Link:</strong> {{ sponsorship.link }}</p>
+        <p class="card-text"><strong i18n>Financed amount:</strong> {{ sponsorship.financedAmount }} €</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="canDisplayActions()" class="card-footer text-muted d-flex justify-content-center" id="sponsorshipActions">
+    <button i18n class="btn btn-primary me-2">Edit</button>
+    <button i18n class="btn btn-danger">Delete</button>
+  </div>
+</div>
+
+<div class="mt-3" id="trip">
+  <h4 i18n>Sponsored trip</h4>
+  <div class="card">
+    <div class="card-header">
+      <h4><a href="#" routerLink="/trips/{{ sponsorship.trip._id }}">{{sponsorship.trip.title}}</a></h4>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><strong i18n>Ticker: </strong>{{sponsorship.trip.ticker}}</p>
+      <p class="card-text">{{sponsorship.trip.description}}</p>
+  </div>
+</div>

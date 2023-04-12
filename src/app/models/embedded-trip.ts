@@ -1,5 +1,5 @@
 export class EmbeddedTrip {
-  private _id: string;
+  public _id: string;
   private _title: string;
   private _description: string;
   private _ticker: string;
