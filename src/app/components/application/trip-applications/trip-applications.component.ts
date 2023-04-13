@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ColumnMode } from '@swimlane/ngx-datatable';
+import { Actor } from 'src/app/models/actor';
+import { Application } from 'src/app/models/application';
+import { Trip } from 'src/app/models/trip';
+import { AuthService } from 'src/app/services/auth.service';
+import { TripService } from 'src/app/services/trip.service';
 
 @Component({
   selector: 'app-trip-applications',
@@ -7,9 +14,53 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TripApplicationsComponent implements OnInit {
 
-  constructor() { }
+  id: string;
+  trip: Trip;
+  applications: Application[];
+  actor: Actor;
+
+  @ViewChild('applicationsTable') table: any;
+
+  sorts = [
+    { prop: 'explorer', dir: 'desc' },
+    { prop: 'status', dir: 'desc' },
+    { prop: 'cancellationDate', dir: 'desc' },
+    { prop: 'cancellationReason', dir: 'desc' },
+  ];
+
+  loadingIndicator = true;
+  reorderable = true;
+  ColumnMode = ColumnMode;
+
+  constructor(
+    private tripService: TripService,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.id = '0';
+    this.trip = new Trip();
+    this.applications = [];
+    this.actor = new Actor();
+  }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
+    this.tripService.getTrip(this.id).subscribe(trip => {
+      this.trip = trip;
+    })
+    this.tripService.getTripApplications(this.id).subscribe(apps => {
+      this.applications = apps;
+    });
+    this.actor = this.authService.getCurrentActor();
+  }
+
+  toggleExpandRow(row: Application) {
+    this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  goBack(): void {
+    this.router.navigate(['/trips', this.trip._id]);
   }
 
 }

@@ -28,6 +28,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ExplorerApplicationsComponent } from './components/application/explorer-applications/explorer-applications.component';
 import { SponsorshipListComponent } from './components/sponsorship/sponsorship-list/sponsorship-list.component';
 import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorship-display/sponsorship-display.component';
+import { TripManagerListComponent } from './components/trip/trip-manager-list/trip-manager-list.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorshi
     ExplorerApplicationsComponent,
     SponsorshipListComponent,
     SponsorshipDisplayComponent,
+    TripManagerListComponent,
   ],
   imports: [
     BrowserModule,

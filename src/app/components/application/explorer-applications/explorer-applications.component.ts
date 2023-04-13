@@ -1,4 +1,8 @@
+import { ApplicationService } from './../../../services/application.service';
+import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Actor } from 'src/app/models/actor';
+import { ApplicationsByStatus } from 'src/app/models/applications-by-status';
 
 @Component({
   selector: 'app-explorer-applications',
@@ -7,9 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExplorerApplicationsComponent implements OnInit {
 
-  constructor() { }
+  actor: Actor;
+  applicationsByStatus: ApplicationsByStatus[];
+
+  constructor(private authService: AuthService, private applicationService: ApplicationService) {
+    this.actor = new Actor();
+    this.applicationsByStatus = [];
+  }
 
   ngOnInit(): void {
+    this.actor = this.authService.getCurrentActor();
+    this.applicationService.getApplicationsByStatus().subscribe(appsByStatus => {
+      this.applicationsByStatus = appsByStatus;
+    })
   }
 
 }
