@@ -1,5 +1,15 @@
-<div class="breadcrumb">
-  <legend i18n>Trips</legend>
+<div class="row mt-2 mb-3">
+  <form class="row" role="search" (ngSubmit)="searchTrips(filters)" #filters="ngForm">
+    <div class="breadcrumb col-3 col-lg-2">
+      <legend i18n>Trips</legend>
+    </div>
+    <div class="col-6 col-lg-7">
+      <input class="form-control" type="search" placeholder="Keyword" aria-label="Search" name="keyword" ngModel />
+    </div>
+    <div class="col-3 col-lg-1">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+  </form>
 </div>
 
 <div *ngIf="!trips || trips.length == 0">
@@ -9,13 +19,16 @@
 <div *ngIf="trips && trips.length > 0" class="row">
   <div *ngFor="let trip of trips" class="col-md-4">
     <div class="card mb-4 box-shadow clickable-card" (click)="displayTrip(trip)">
-      <img class="card-img-top" [src]="getTripMainPicture(trip).image" alt="getTripMainPicture(trip).title" data-holder-rendered="true">
+      <img class="card-img-top" [src]="getTripMainPicture(trip).image" alt="getTripMainPicture(trip).title"
+        data-holder-rendered="true">
       <div class="card-body">
         <h5 class="card-title">{{trip.title}}</h5>
         <p class="card-text text-justify">{{trip.description | slice:0:125}}</p>
         <div class="d-flex justify-content-end align-items-center">
-          <small class="text-muted">{{trip.startDate | date: 'shortDate'}} - {{trip.endDate | date: 'shortDate'}}</small>
+          <small class="text-muted">
+            {{trip.startDate | date: 'shortDate'}} - {{trip.endDate | date: 'shortDate'}}
+          </small>
+        </div>
       </div>
     </div>
   </div>
-</div>

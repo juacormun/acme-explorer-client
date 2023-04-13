@@ -14,14 +14,32 @@ export class TripService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  searchTrips() {
-    //TODO: filtros de búsqueda y token para finder
-    return this.http.get<Trip[]>(environment.backendApiBaseUrl + '/v2/search');
+  searchTrips(query: any) {
+    let finder = {};
+    if (query.keyword) {
+      finder = { keyword: query.keyword };
+    }
+    if (query.minPrice) {
+      finder = { ...finder, minPrice: query.minPrice };
+    }
+    if (query.maxPrice) {
+      finder = { ...finder, maxPrice: query.maxPrice };
+    }
+    if (query.minDate) {
+      finder = { ...finder, minDate: query.minDate };
+    }
+    if (query.maxDate) {
+      finder = { ...finder, maxDate: query.maxDate };
+    }
+    const url = environment.backendApiBaseUrl + '/v2/search';
+    const headers = this.authService.getHeaders();
+    return this.http.get<Trip[]>(url, { headers: headers, params: finder });
   }
 
   getTrip(id: string) {
     const url = `${this.tripsUrl}/${id}`;
-    return this.http.get<Trip>(url);
+    const headers = this.authService.getHeaders();
+    return this.http.get<Trip>(url, { headers: headers });
   }
 
   getTrips() {
