@@ -1,8 +1,6 @@
 <div class="breadcrumb">
   <legend class="d-flex justify-content-between">
-    <div>
-      <h5 i18n>Applications</h5>
-    </div>
+    <h5 i18n class="my-auto">Applications</h5>
     <button i18n class="btn btn-light" (click)="goBack()">Trip</button>
   </legend>
 </div>
@@ -73,6 +71,13 @@
     <ngx-datatable-column i18n-name name="Status" prop="status">
       <ng-template let-value="value" ngx-datatable-cell-template>
         <p>{{ value }}</p>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column i18n-name name="Creation date" prop="createdAt">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p *ngIf="value">{{ value | date:'shortDate' }}</p>
+        <p class="text-center" *ngIf="!value"> - </p>
       </ng-template>
     </ngx-datatable-column>
 
