@@ -17,8 +17,7 @@ export class SponsorshipService {
   getSponsorships() {
     const url = `${this.sponsorshipsUrl}`;
     const headers = this.authService.getHeaders();
-    const res = this.http.get<Sponsorship[]>(url, { headers: headers } );
-    return res;
+    return this.http.get<Sponsorship[]>(url, { headers: headers });
   }
 
   getSponsorship(id: string) {

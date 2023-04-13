@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Actor } from 'src/app/models/actor';
 import { Picture } from 'src/app/models/picture';
@@ -26,10 +27,16 @@ export class TripListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tripService.searchTrips().subscribe(trips => {
+    const query = {};
+    this.tripService.searchTrips(query).subscribe(trips => {
       this.trips = trips;
     });
     this.actor = this.authService.getCurrentActor();
+  }
+
+  searchTrips(form: NgForm) {
+    const query = form.value;
+    this.tripService.searchTrips(query).subscribe((data: any) => (this.trips = data));
   }
 
   getTripMainPicture(trip: Trip): Picture {
