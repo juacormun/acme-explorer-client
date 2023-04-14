@@ -97,16 +97,12 @@ describe('AuthService', () => {
     } as User;
     service.setCurrentUser(user)
     const expected = JSON.parse(JSON.stringify(user));
-    await service.getCurrentUser().then((res) => {
-      expect(res).toEqual(expected);
-    })
+    expect(service.getCurrentUser()).toEqual(expected);
   })
 
   it ('should not get the current user', async () => {
     localStorage.removeItem('currentUser');
-    await service.getCurrentUser().then((res) => {
-      expect(res).toBeNull();
-    })
+    expect(service.getCurrentUser()).toBeNull();
   })
 
 });

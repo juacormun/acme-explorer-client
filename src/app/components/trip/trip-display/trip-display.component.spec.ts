@@ -59,7 +59,6 @@ describe('TripDisplayComponent', () => {
         { provide: TripService, useValue: tripSpy },
         { provide: AuthService, useValue: actorSpy },
         AngularFireAuth,
-
       ]
     })
     .compileComponents();
