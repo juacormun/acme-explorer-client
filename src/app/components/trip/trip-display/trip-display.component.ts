@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
 import { Picture } from 'src/app/models/picture';
+import { Sponsorship } from 'src/app/models/sponsorship';
 import { Trip } from 'src/app/models/trip';
 import { AuthService } from 'src/app/services/auth.service';
 import { TripService } from 'src/app/services/trip.service';
@@ -16,6 +17,7 @@ export class TripDisplayComponent implements OnInit {
 
   id: string;
   trip: Trip;
+  sponsorship: any;
   actor: Actor;
 
   hasExpired: boolean = false;
@@ -40,6 +42,7 @@ export class TripDisplayComponent implements OnInit {
       this.hasExpired = this.setHasExpired();
       this.isCancelled = trip.cancellationDate != null;
       this.isAboutToStart = this.setIsAboutToStart();
+      this.sponsorship = this.getRandomSponsorship();
     })
     this.actor = this.authService.getCurrentActor();
   }
@@ -50,6 +53,11 @@ export class TripDisplayComponent implements OnInit {
 
   getMainPicture(): Picture {
     return this.trip.pictures?.length > 0 ? this.trip.pictures[0] : new Picture()
+  }
+
+  getRandomSponsorship(): Sponsorship | null {
+    const paidSponsorships = this.trip.sponsorships?.filter(sponsorship => sponsorship.paidAt);
+    return paidSponsorships?.length > 0 ? paidSponsorships[Math.floor(Math.random() * paidSponsorships.length)] : null;
   }
 
   canDisplayActions(): boolean {

@@ -17,6 +17,14 @@
   </legend>
 </div>
 
+<div *ngIf="sponsorship !== null" class="row mb-3">
+  <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
+    <a [href]="sponsorship.link">
+    <img [src]="sponsorship.banner" class="img-fluid rounded" [alt]="sponsorship.link">
+    </a>
+  </div>
+</div>
+
 <div class="card">
   <div class="card-body">
     <div class="row">
