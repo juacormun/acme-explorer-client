@@ -3,7 +3,7 @@
     <legend>Dashboard</legend>
   </div>
   <div class="col-12 col-md-10 offset-md-1 mt-2">
-    <table class="table table-hover text-dark">
+    <table class="table table-hover text-dark text-center">
       <thead class="table-info text-dark">
         <tr>
           <th scope="col"></th>
@@ -15,31 +15,38 @@
       </thead>
       <tbody class="table-group-divider">
         <tr>
-          <th scope="row">number of trips managed per manager</th>
-          <td>value</td>
-          <td>value</td>
-          <td>value</td>
-          <td>value</td>
+          <th scope="row" class="text-start">number of trips managed per manager</th>
+          <td>{{dataWarehouse.tripsManagedByManager[0].averageTripsPerManager | number : ".1-4"}}</td>
+          <td>{{dataWarehouse.tripsManagedByManager[0].minTripsPerManager | number : ".1-4"}}</td>
+          <td>{{dataWarehouse.tripsManagedByManager[0].maxTripsPerManager | number : ".1-4"}}</td>
+          <td>{{dataWarehouse.tripsManagedByManager[0].stdDevTripsPerManager | number : ".1-4"}}</td>
         </tr>
         <tr>
-          <th scope="row">number of applications per trip</th>
-          <td>value</td>
-          <td>value</td>
-          <td>value</td>
-          <td>value</td>
+          <th scope="row" class="text-start">number of applications per trip</th>
+          <td>{{dataWarehouse.applicationsPerTrip[0].averageApplicationsPerTrip | number : ".1-4"}}</td>
+          <td>{{dataWarehouse.applicationsPerTrip[0].minApplicationsPerTrip | number : ".1-4"}}</td>
+          <td>{{dataWarehouse.applicationsPerTrip[0].maxApplicationsPerTrip | number : ".1-4"}}</td>
+          <td>{{dataWarehouse.applicationsPerTrip[0].stdDevApplicationsPerTrip | number : ".1-4"}}</td>
         </tr>
         <tr>
-          <th scope="row">price of the trips</th>
-          <td>value</td>
-          <td>value</td>
-          <td>value</td>
-          <td>value</td>
+          <th scope="row" class="text-start">price of the trips</th>
+          <td>{{dataWarehouse.tripsPrice[0].averagePrice | number : ".1-2"}}</td>
+          <td>{{dataWarehouse.tripsPrice[0].minPrice | number : ".1-2"}}</td>
+          <td>{{dataWarehouse.tripsPrice[0].maxPrice | number : ".1-2"}}</td>
+          <td>{{dataWarehouse.tripsPrice[0].stdDevPrice | number : ".1-2"}}</td>
         </tr>
       </tbody>
     </table>
   </div>
   <div class="col-12 col-md-10 offset-md-1 mt-2">
-    <table class="table table-hover text-dark">
+    <div class="w-100">
+      <canvas id="ratioChart">
+        {{ ratioChart }}
+      </canvas>
+    </div>
+  </div>
+  <div class="col-12 col-md-10 offset-md-1 mt-2">
+    <table class="table table-hover text-dark text-center">
       <thead class="table-info text-dark">
         <tr>
           <th scope="col"></th>
@@ -48,66 +55,21 @@
       </thead>
       <tbody class="table-group-divider">
         <tr>
-          <th scope="row">minimum average price (€)</th>
-          <td>100</td>
+          <th scope="row" class="text-start">minimum average price (€)</th>
+          <td>{{dataWarehouse.averagePriceRange[0].averageMinPrice | number : ".1-2"}}</td>
         </tr>
         <tr>
-          <th scope="row">maximum average price (€)</th>
-          <td>800</td>
+          <th scope="row" class="text-start">maximum average price (€)</th>
+          <td>{{dataWarehouse.averagePriceRange[0].averageMaxPrice | number : ".1-2"}}</td>
         </tr>
       </tbody>
     </table>
   </div>
   <div class="col-12 col-md-10 offset-md-1 mt-2">
-    <table class="table table-hover text-dark">
-      <thead class="table-info text-dark">
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Top 10 keywords that explorers indicate in their finders</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr>
-          <th scope="row"># 1</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 2</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 3</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 4</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 5</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 6</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 7</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 8</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 9</th>
-          <td>title</td>
-        </tr>
-        <tr>
-          <th scope="row"># 10</th>
-          <td>title</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="w-100">
+      <canvas id="topSearchesChart" class="d-inline-block">
+        {{ topSearchesChart }}
+      </canvas>
+    </div>
   </div>
 </div>

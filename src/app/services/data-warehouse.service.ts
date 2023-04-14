@@ -2,17 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { DataWarehouse } from '../models/data-warehouse';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataWarehouseService {
-  private dashboardUrl = environment.backendApiBaseUrl + '/api/v2/dashboard';
+  private dashboardUrl = environment.backendApiBaseUrl + '/v2/dashboard';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getIndicators() {
     const url = `${this.dashboardUrl}/latest`;
-    return this.http.get<DataWarehouse[]>(url);
+    const headers = this.authService.getHeaders();
+    return this.http.get<DataWarehouse[]>(url, { headers: headers });
   }
 }
