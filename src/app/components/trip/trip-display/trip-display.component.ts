@@ -49,7 +49,8 @@ export class TripDisplayComponent implements OnInit {
   }
 
   getRandomSponsorship(): Sponsorship | null {
-    return this.trip.sponsorships?.length > 0 ? this.trip.sponsorships[Math.floor(Math.random() * this.trip.sponsorships.length)] : null;
+    const paidSponsorships = this.trip.sponsorships?.filter(sponsorship => sponsorship.paidAt);
+    return paidSponsorships?.length > 0 ? paidSponsorships[Math.floor(Math.random() * paidSponsorships.length)] : null;
   }
 
   canDisplayActions(): boolean {
