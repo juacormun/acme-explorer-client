@@ -18,14 +18,14 @@
 
 <div *ngIf="trips && trips.length > 0" class="row">
   <div *ngFor="let trip of trips" class="col-md-4">
-    <div class="card mb-4 box-shadow clickable-card" (click)="displayTrip(trip)">
-      <img class="card-img-top" [src]="getTripMainPicture(trip).image" alt="getTripMainPicture(trip).title"
+    <div (click)="displayTrip(trip)" class="card mb-4 box-shadow clickable-card">
+      <img class="card-img-top" [ngClass]="{'notAvailableTrip': isNotAvailable(trip)}" [src]="getTripMainPicture(trip).image" alt="getTripMainPicture(trip).title"
         data-holder-rendered="true">
-      <div class="card-body">
+      <div class="card-body" [ngClass]="{'upcomingTrip': isAboutToStart(trip)}">
         <h5 class="card-title">{{trip.title}}</h5>
         <p class="card-text text-justify">{{trip.description | slice:0:125}}</p>
         <div class="d-flex justify-content-end align-items-center">
-          <small class="text-muted">
+          <small [ngClass]="isAboutToStart(trip) ? 'closeDate' : 'text-muted'">
             {{trip.startDate | date: 'shortDate'}} - {{trip.endDate | date: 'shortDate'}}
           </small>
         </div>

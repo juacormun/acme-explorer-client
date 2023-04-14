@@ -47,4 +47,18 @@ export class TripListComponent implements OnInit {
     this.router.navigate(['/trips', trip._id]);
   }
 
+  isAboutToStart(trip: Trip) {
+    const start = new Date(trip.startDate);
+    const now = new Date();
+    const timeDiff = start.getTime() - now.getTime();
+    const dayDiff = timeDiff / (1000 * 3600 * 24);
+    return start > now && dayDiff < 7;
+  }
+
+  isNotAvailable(trip: Trip) {
+    const start = new Date(trip.startDate);
+    const now = new Date();
+    return start < now || trip.cancellationDate;
+  }
+
 }

@@ -1,0 +1,18 @@
+.upcomingTrip {
+  border: solid 1px #008a83;
+  border-top: 0;
+  background-color: #afd4ff;
+}
+
+.notAvailableTrip {
+  filter: grayscale(100%);
+}
+
+.closeDate {
+  color: #008a83;
+  font-weight: bold;
+}
+
+.passDate {
+  visibility: hidden;
+}
