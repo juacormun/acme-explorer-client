@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Trip } from '../models/trip';
 import { AuthService } from './auth.service';
+import { Application } from '../models/application';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,17 @@ export class TripService {
     const url = `${this.tripsUrl}/${id}`;
     const headers = this.authService.getHeaders();
     return this.http.get<Trip>(url, { headers: headers });
+  }
+
+  getTrips() {
+    const url = this.tripsUrl;
+    const headers = this.authService.getHeaders();
+    return this.http.get<Trip[]>(url, { headers: headers } );
+  }
+
+  getTripApplications(id: string) {
+    const url = `${this.tripsUrl}/${id}/applications`;
+    const headers = this.authService.getHeaders();
+    return this.http.get<Application[]>(url, { headers: headers } );
   }
 }
