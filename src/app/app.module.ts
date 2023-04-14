@@ -1,3 +1,4 @@
+import { CountdownModule } from 'ngx-countdown';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -61,7 +62,8 @@ import { TripManagerListComponent } from './components/trip/trip-manager-list/tr
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    CountdownModule
   ],
   providers: [
     I18nModule.setLocale(),

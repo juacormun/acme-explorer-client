@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
@@ -10,13 +10,17 @@ import { TripService } from 'src/app/services/trip.service';
 @Component({
   selector: 'app-trip-display',
   templateUrl: './trip-display.component.html',
-  styleUrls: ['./trip-display.component.scss']
+  styleUrls: ['./trip-display.component.scss'],
 })
 export class TripDisplayComponent implements OnInit {
 
   id: string;
   trip: Trip;
   actor: Actor;
+
+  hasExpired: boolean = false;
+  isCancelled: boolean = false;
+  isAboutToStart: boolean = false;
 
   constructor(
     private tripService: TripService,
@@ -33,6 +37,9 @@ export class TripDisplayComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.tripService.getTrip(this.id).subscribe((trip) => {
       this.trip = trip;
+      this.hasExpired = this.setHasExpired();
+      this.isCancelled = trip.cancellationDate != null;
+      this.isAboutToStart = this.setIsAboutToStart();
     })
     this.actor = this.authService.getCurrentActor();
   }
@@ -51,6 +58,25 @@ export class TripDisplayComponent implements OnInit {
 
   displayTripApplications(trip: Trip) {
     this.router.navigate(['/trips', trip._id, 'applications']);
+  }
+
+  setHasExpired() {
+    const start = new Date(this.trip.startDate);
+    const now = new Date();
+    return start < now;
+  }
+
+  setIsAboutToStart() {
+    const start = new Date(this.trip.startDate);
+    const now = new Date();
+    const timeDiff = start.getTime() - now.getTime();
+    const dayDiff = timeDiff / (1000 * 3600 * 24);
+    return start > now && dayDiff < 7;
+  }
+
+  getTripStartTime() {
+    const date = new Date(this.trip.startDate);
+    return date.getTime();
   }
 
 }
