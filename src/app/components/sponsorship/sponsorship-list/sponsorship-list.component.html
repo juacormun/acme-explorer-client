@@ -1,4 +1,4 @@
-<div *ngIf="!sponsorships || sponsorships.length == 0">
+<div i18n *ngIf="!sponsorships || sponsorships.length == 0">
   Sorry, no sponsorships found.
 </div>
 
@@ -30,14 +30,14 @@
 
     <ngx-datatable-column name="Paid" prop="paidAt">
       <ng-template let-value="value" ngx-datatable-cell-template>
-        <p *ngIf="value">{{ value | date }}</p>
-        <p *ngIf="!value">Pending</p>
+        <p i18n *ngIf="value">{{ value | date }}</p>
+        <p i18n *ngIf="!value">Pending</p>
       </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Actions" prop="_id">
       <ng-template let-value="value" ngx-datatable-cell-template>
-        <button class="btn btn-info" routerLink="/sponsorships/{{ value }}">Details</button>
+        <button i18n class="btn btn-info" routerLink="/sponsorships/{{ value }}">Details</button>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>
