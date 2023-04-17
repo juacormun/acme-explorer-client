@@ -2,9 +2,9 @@
 
 ## Página de listado
 
-**Calificación obtenida: 95**
+Calificación obtenida: 95
 
-**Correcciones necesarias**
+### Correcciones necesarias
 
 Resultado de Lighthouse:
 
@@ -17,7 +17,7 @@ Resultados de AXE:
 - (Error) Los elementos deben tener un color de contraste suficiente.
 - (Error) El elemento <object> debe tener un texto alternativo.
 
-**Soluciones**
+### Soluciones
 
 Contraste bajo
 
