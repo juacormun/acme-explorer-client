@@ -5,6 +5,8 @@ import { DataWarehouse } from 'src/app/models/data-warehouse';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataWarehouseService } from 'src/app/services/data-warehouse.service';
 import Chart from 'chart.js/auto';
+import { ApplicationService } from 'src/app/services/application.service';
+import { Status } from 'src/app/enums/StatusEnum';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +23,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dataWarehouseService: DataWarehouseService,
     private authService: AuthService,
+    private applicationService: ApplicationService,
     private router: Router
   ) {
     this.dataWarehouse = new DataWarehouse();
@@ -42,7 +45,7 @@ export class DashboardComponent implements OnInit {
     const labels = new Array();
     const data = new Array();
     this.dataWarehouse.ratioOfApplicationsByStatus.forEach((dict) => {
-      labels.push(dict._id);
+      labels.push(this.applicationService.getStatusName(dict._id as Status));
       data.push(dict.numApplications);
     });
     return new Chart('ratioChart', {
@@ -51,7 +54,7 @@ export class DashboardComponent implements OnInit {
         labels,
         datasets: [
           {
-            label: $localize`Ratio of applications by status`,
+            label: $localize `Ratio of applications by status`,
             data,
             backgroundColor: [
               '#122c91',
@@ -73,7 +76,7 @@ export class DashboardComponent implements OnInit {
         plugins: {
           title: {
             display: true,
-            text: 'Ratio of applications by status',
+            text: $localize `Ratio of applications by status`,
             font: {
               family: "'Reem Kufi', sans-serif",
               size: 18,
@@ -108,7 +111,7 @@ export class DashboardComponent implements OnInit {
         labels,
         datasets: [
           {
-            label: $localize`Top searched keywords`,
+            label: $localize `Top searched keywords`,
             data,
             backgroundColor: [
               '#122c91',
@@ -130,7 +133,7 @@ export class DashboardComponent implements OnInit {
         plugins: {
           title: {
             display: true,
-            text: 'Top searched keywords',
+            text: $localize `Top searched keywords`,
             font: {
               family: "'Reem Kufi', sans-serif",
               size: 18,

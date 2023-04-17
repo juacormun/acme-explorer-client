@@ -13,7 +13,7 @@
     <h2 class="accordion-header" [id]="'heading' + appByStatus._id">
       <button class="accordion-button" type="button" data-bs-toggle="collapse"
       [attr.data-bs-target]="'#collapse' + appByStatus._id" aria-expanded="true" [attr.aria-controls]="'#collapse' + appByStatus._id">
-        {{appByStatus._id | titlecase}}
+        {{ getStatusName(appByStatus._id) }}
       </button>
     </h2>
     <div id="{{'collapse' + appByStatus._id}}" class="accordion-collapse collapse show" [attr.aria-labelledby]="'#heading' + appByStatus._id" data-bs-parent="#appsAccordion">

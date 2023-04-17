@@ -98,7 +98,7 @@
               "browserTarget": "acme-explorer:build:es"
             },
             "en-US": {
-              "browserTarget": "acme-explorer:build:en"
+              "browserTarget": "acme-explorer:build:en-US"
             }
           },
           "defaultConfiguration": "development"
