@@ -16,7 +16,9 @@ export class HeaderComponent implements OnInit {
   protected currentActor: Actor | undefined;
   protected activeRole: string = Role.ANONYMOUS;
 
-  constructor(private authService: AuthService, private messageService: MessageService) { }
+  constructor(private authService: AuthService, private messageService: MessageService) {
+    // TODO: Coger por primera vez el currentActor, por si está en el localStorage
+  }
 
   ngOnInit(): void {
     this.authService.getStatus().subscribe(loggedIn => {

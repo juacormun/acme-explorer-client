@@ -30,6 +30,8 @@ import { SponsorshipListComponent } from './components/sponsorship/sponsorship-l
 import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorship-display/sponsorship-display.component';
 import { TripManagerListComponent } from './components/trip/trip-manager-list/trip-manager-list.component';
 import { I18nModule } from './i18n.module';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 
 @NgModule({
@@ -53,6 +55,7 @@ import { I18nModule } from './i18n.module';
     SponsorshipListComponent,
     SponsorshipDisplayComponent,
     TripManagerListComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,12 +66,13 @@ import { I18nModule } from './i18n.module';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
     NgxDatatableModule,
-    CountdownModule
+    CountdownModule,
+    NgxPayPalModule
   ],
   providers: [
     I18nModule.setLocale(),
     I18nModule.setLocaleId(),
-    AngularFireAuth
+    AngularFireAuth,
   ],
   bootstrap: [
     AppComponent
