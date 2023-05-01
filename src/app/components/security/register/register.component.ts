@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageType } from 'src/app/enums/MessageEnum';
 import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
@@ -22,10 +22,10 @@ export class RegisterComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.registrationForm = this.fb.group({
-      name: [''],
-      surname: [''],
-      email: [''],
-      password: [''],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['', Validators.required],
       phone: [''],
       address: ['']
     });
@@ -50,5 +50,12 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  get name() { return this.registrationForm.get('name'); }
+  get surname() { return this.registrationForm.get('surname'); }
+  get password() { return this.registrationForm.get('password'); }
+  get email() { return this.registrationForm.get('email'); }
+  get phone() { return this.registrationForm.get('phone'); }
+  get address() { return this.registrationForm.get('address'); }
 
 }
