@@ -43,7 +43,6 @@ export class SponsorshipListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const user = this.authService.getCurrentUser();
     this.sponsorshipService.getSponsorships().subscribe(sponsorships => {
       this.sponsorships = sponsorships;
     });

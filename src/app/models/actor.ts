@@ -12,6 +12,7 @@ export class Actor extends Entity{
   private _address!: string;
   private _role: Role;
   private _ban!: Ban
+  private _language: string;
   private _customToken!: string;
 
   constructor() {
@@ -20,7 +21,8 @@ export class Actor extends Entity{
     this._surname = '';
     this._email = '';
     this._password = '';
-    this._role = Role.EXPLORER;
+    this._role = Role.ANONYMOUS;
+    this._language = 'en';
   }
 
   public get name(): string {
@@ -46,6 +48,9 @@ export class Actor extends Entity{
   }
   public get ban(): Ban {
     return this._ban;
+  }
+  public get language(): string {
+    return this._language;
   }
   public get customToken(): string {
     return this._customToken;
@@ -74,6 +79,9 @@ export class Actor extends Entity{
   }
   public set ban(ban: Ban) {
     this._ban = ban;
+  }
+  public set language(language: string) {
+    this._language = language;
   }
   public set customToken(token: string) {
     this._customToken = token;
