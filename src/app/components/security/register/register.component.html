@@ -4,15 +4,6 @@
     <form [formGroup]="registrationForm" (ngSubmit)="onRegister()">
       <div class="row g-3">
 
-        <div class="form-floating col-12">
-          <select id="role" class="form-select" formControlName="role" required>
-            <option *ngFor="let role of roleList" [value]="role">
-              {{role}}
-            </option>
-          </select>
-          <label i18n class="px-4" for="role">Role</label>
-        </div>
-
         <div class="form-floating col-md-6">
           <input id="name" class="form-control" type="text" formControlName="name" placeholder="name" required>
           <label i18n class="px-4" for="name">Name</label>
