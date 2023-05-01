@@ -22,7 +22,7 @@ $theme-colors: (
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 @import url('https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap');
 
-* {
+body {
   font-family: 'Reem Kufi', sans-serif !important;
   word-spacing: 0.15em;
 }
