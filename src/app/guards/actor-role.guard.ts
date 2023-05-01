@@ -16,25 +16,22 @@ export class ActorRoleGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise ((resolve, reject) => {
       const expectedRoles = route.data['expectedRoles'];
-      console.log('ROLES', expectedRoles)
-      const currentActor = this.authService.getCurrentActor();
-      if (currentActor) {
-        console.log('HABEMUS ACTOR', currentActor.role)
-        if (expectedRoles.includes(currentActor.role)) {
-          console.log('QUE PASE')
-          resolve(true);
-        } else {
-          this.router.navigate(['denied-access'], { queryParams: { previousURL: state.url } })
-        }
-      } else {
-        console.log('NO HAY ACTOR');
-
-        if (!expectedRoles.includes(Role.ANONYMOUS)) {
-          console.log('LOGIN REQUERIDO');
-          this.router.navigate(['login'], { queryParams: { returnUrl: state.url } })
-        }
-        console.log('PERO HAY ACCESO ANONIMO');
+      if (expectedRoles.length === 1 && expectedRoles[0] === Role.ANONYMOUS) {
         resolve(true);
+      } else {
+        const currentActor = this.authService.getCurrentActor();
+        if (currentActor) {
+          if (expectedRoles.includes(currentActor.role)) {
+            resolve(true);
+          } else {
+            this.router.navigate(['denied-access'], { queryParams: { previousURL: state.url } })
+          }
+        } else {
+          if (!expectedRoles.includes(Role.ANONYMOUS)) {
+            this.router.navigate(['login'], { queryParams: { returnUrl: state.url } })
+          }
+          resolve(true);
+        }
       }
     });
   }

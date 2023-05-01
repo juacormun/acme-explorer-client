@@ -1,12 +1,13 @@
-import { User } from './../models/user';
+import { MessageService } from './message.service';
 import { Injectable } from '@angular/core';
 import { Actor } from '../models/actor';
 import { Role } from "../enums/RoleEnum";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
 import { environment } from '../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { MessageType } from '../enums/MessageEnum';
+import { CookieService } from 'ngx-cookie-service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,10 +20,14 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private currentActor!: Actor;
   private loginStatus = new Subject<Boolean>();
 
-  constructor(private fireAuth: AngularFireAuth, private http: HttpClient) { }
+  constructor(
+    private fireAuth: AngularFireAuth,
+    private http: HttpClient,
+    private messageService: MessageService,
+    private cookieService: CookieService
+  ) { }
 
   registerUser(actor: Actor) {
     const url = environment.backendApiBaseUrl + '/v2/actors';
@@ -67,19 +72,16 @@ export class AuthService {
 
     return new Promise<any>((resolve, reject) => {
       this.http.post<Actor>(url, body).toPromise()
-        .then(res => {
-          if (res) {
-            this.fireAuth.signInWithCustomToken(res.customToken)
+        .then(actor => {
+          if (actor) {
+            this.fireAuth.signInWithCustomToken(actor.customToken)
             .then(userCredentials => {
-              const user = new User();
               userCredentials.user?.getIdToken()
                 .then((token: string) => {
-                  user.token = token;
-                  user.email = userCredentials.user?.uid ?? '';
-                  this.setCurrentUser(user);
-                  this.currentActor = res;
+                  this.setCurrentActor(actor, token);
                   this.loginStatus.next(true);
-                  resolve(user);
+                  const { password, ...actorData } = actor;
+                  resolve(actorData);
                 })
                 .catch(error => {
                   reject({ error: { message: 'No token retrieved' } });
@@ -106,7 +108,7 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       this.fireAuth.signOut()
         .then(_ => {
-          localStorage.clear();
+          this.setCurrentActor();
           this.loginStatus.next(false);
           resolve('Logout successful');
         }).catch(error => {
@@ -115,8 +117,22 @@ export class AuthService {
     });
   }
 
-  setCurrentUser(user: User) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+  setCurrentActor(actor?: Actor, token?: any) {
+    if (actor) {
+      localStorage.setItem('currentActor', JSON.stringify({
+        id: actor.id,
+        name: actor.name,
+        surname: actor.surname,
+        role: actor.role,
+        language: actor.language
+      }));
+      if (token) {
+        this.cookieService.set('currentToken', token);
+      }
+    } else {
+      localStorage.removeItem('currentActor');
+      this.cookieService.delete('currentToken');
+    }
   }
 
   getStatus(): Observable<Boolean> {
@@ -124,19 +140,35 @@ export class AuthService {
   }
 
   getCurrentActor(): Actor {
-    return this.currentActor;
+    let result = null;
+    const currentActor = localStorage.getItem('currentActor');
+    if (currentActor) {
+      result = JSON.parse(currentActor)
+    } else {
+      let message = $localize `User not found`;
+      this.messageService.notifyMessage(message, MessageType.DANGER);
+      result = new Actor();
+    }
+    return result;
   }
 
-  getCurrentUser(): User   {
-    const currentUser = localStorage.getItem('currentUser');
-    return currentUser ? JSON.parse(currentUser) : null;
+  checkRole(roles: Role[]): boolean {
+    let result = false;
+    const currentActor = this.getCurrentActor();
+    if (currentActor) {
+      result = roles.includes(currentActor.role);
+    } else {
+      result = roles.includes(Role.ANONYMOUS);
+    }
+    return result;
   }
 
   getHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
-    const user = this.getCurrentUser();
-    if (user) {
-      headers = headers.append('idtoken', user._token);
+    const actor = this.getCurrentActor();
+    if (actor) {
+      const token = this.cookieService.get('currentToken')
+      headers = headers.append('idtoken', token);
     }
     return headers;
   }

@@ -1,5 +1,4 @@
 import { Actor } from './../../../models/actor';
-import { User } from './../../../models/user';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Role } from 'src/app/enums/RoleEnum';
@@ -13,11 +12,12 @@ import { MessageService } from 'src/app/services/message.service';
 })
 export class HeaderComponent implements OnInit {
 
-  protected currentActor: Actor | undefined;
+  protected currentActor: Actor;
   protected activeRole: string = Role.ANONYMOUS;
 
   constructor(private authService: AuthService, private messageService: MessageService) {
-    // TODO: Coger por primera vez el currentActor, por si está en el localStorage
+    this.currentActor = this.authService.getCurrentActor();
+    this.activeRole = this.currentActor.role;
   }
 
   ngOnInit(): void {
@@ -27,9 +27,13 @@ export class HeaderComponent implements OnInit {
         this.activeRole = this.currentActor.role;
       } else {
         this.activeRole = Role.ANONYMOUS;
-        this.currentActor = undefined;
+        this.currentActor = new Actor();
       }
     })
+  }
+
+  isLoggedIn() {
+    return this.activeRole !== Role.ANONYMOUS;
   }
 
   changeLanguage(lan: string): void {

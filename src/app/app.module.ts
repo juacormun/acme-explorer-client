@@ -32,6 +32,8 @@ import { TripManagerListComponent } from './components/trip/trip-manager-list/tr
 import { I18nModule } from './i18n.module';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { MessageService } from './services/message.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -73,6 +75,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     I18nModule.setLocale(),
     I18nModule.setLocaleId(),
     AngularFireAuth,
+    MessageService,
+    CookieService
   ],
   bootstrap: [
     AppComponent
