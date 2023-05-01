@@ -4,45 +4,51 @@
     <form [formGroup]="registrationForm" (ngSubmit)="onRegister()">
       <div class="row g-3">
 
-        <div class="form-floating col-12">
-          <select id="role" class="form-select" formControlName="role" required>
-            <option *ngFor="let role of roleList" [value]="role">
-              {{role}}
-            </option>
-          </select>
-          <label i18n class="px-4" for="role">Role</label>
-        </div>
-
         <div class="form-floating col-md-6">
           <input id="name" class="form-control" type="text" formControlName="name" placeholder="name" required>
           <label i18n class="px-4" for="name">Name</label>
+          <div *ngIf="name!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
         </div>
         <div class="form-floating col-md-6">
           <input type="text" class="form-control" id="surname" formControlName="surname" placeholder="Surname" required>
           <label i18n class="px-4" for="surname">Surname</label>
+          <div *ngIf="surname!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
         </div>
 
         <div class="form-floating col-12">
           <input type="password" class="form-control" id="password" formControlName="password" placeholder="..." required>
           <label i18n class="px-4" for="password">Password</label>
+          <div *ngIf="password!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
         </div>
 
         <div class="form-floating col-md-6">
           <input type="email" class="form-control" id="email" placeholder="you@example.com" formControlName="email" required>
           <label i18n class="px-4" for="email">Email</label>
+          <div *ngIf="email!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="email!.errors?.['email']" class="text-danger" i18n>
+            Introduce a correct email
+          </div>
         </div>
         <div class="form-floating col-md-6">
-          <input id="phone" class="form-control" type="text" formControlName="phone" placeholder="699258147" required>
+          <input id="phone" class="form-control" type="text" formControlName="phone" placeholder="699258147">
           <label i18n class="px-4" for="phone">Phone</label>
         </div>
 
         <div class="form-floating col-12">
-          <input type="text" class="form-control" id="address" placeholder="1234 Main St" formControlName="address" required>
+          <input type="text" class="form-control" id="address" placeholder="1234 Main St" formControlName="address">
           <label i18n class="px-4" for="address">Address</label>
         </div>
 
         <div class="col-12">
-          <button i18n class="w-100 btn btn-primary btn-lg" type="submit">Sign up</button>
+          <button i18n class="w-100 btn btn-primary btn-lg" type="submit" [disabled]="registrationForm.invalid">Sign up</button>
           <span i18n class="text-center mt-1">Already registered? Return to </span><a i18n href="/login">login</a>
         </div>
       </div>
