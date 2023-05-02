@@ -34,6 +34,8 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { MessageService } from './services/message.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ActorListComponent } from './components/actor/actor-list/actor-list.component';
+import { ActorDisplayComponent } from './components/actor/actor-display/actor-display.component';
 
 
 @NgModule({
@@ -58,6 +60,8 @@ import { CookieService } from 'ngx-cookie-service';
     SponsorshipDisplayComponent,
     TripManagerListComponent,
     CheckoutComponent,
+    ActorListComponent,
+    ActorDisplayComponent,
   ],
   imports: [
     BrowserModule,

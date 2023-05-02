@@ -1,0 +1,52 @@
+<div class="breadcrumb">
+  <legend i18n>System actors</legend>
+</div>
+
+<div i18n *ngIf="!actors || actors.length == 0">
+  Sorry, no actors found.
+</div>
+
+<div *ngIf="actors && actors.length > 0">
+  <ngx-datatable [rows]="actors"
+    #sponsorshipTable
+    class="material"
+    [headerHeight]="40"
+    [footerHeight]="80"
+    [loadingIndicator]="loadingIndicator"
+    rowHeight="auto"
+    [columnMode]="ColumnMode.force"
+    [reorderable]="reorderable"
+    [limit]="10"
+    [sorts]="sorts">
+
+    <ngx-datatable-column i18n-name name="Name" prop="name">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>{{ value }}</p>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column i18n-name name="Surname" prop="surname">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>{{ value }}</p>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column i18n-name name="Email" prop="email">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>{{ value }}</p>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column i18n-name name="Role" prop="role">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>{{ getRoleName(value) }}</p>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Actions" prop="_id">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <a i18n class="btn btn-info" routerLink="/actors/{{ value }}">Details</a>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>
