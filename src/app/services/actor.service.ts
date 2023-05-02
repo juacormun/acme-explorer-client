@@ -36,6 +36,7 @@ export class ActorService {
     const headers = this.authService.getHeaders();
 
     const newActor = {
+      _id: actor._id,
       name: actor.name,
       surname: actor.surname,
       password: actor.password,
