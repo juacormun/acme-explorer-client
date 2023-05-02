@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { Actor } from '../models/actor';
 import { AuthService } from './auth.service';
 import { Role } from '../enums/RoleEnum';
+import { firstValueFrom } from 'rxjs';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,10 @@ export class ActorService {
 
   private actorsUrl = `${environment.backendApiBaseUrl}/v2/actors`;
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) { }
 
   getActors() {
     const url = this.actorsUrl;
@@ -29,7 +34,26 @@ export class ActorService {
   updateActor(actor: Actor) {
     const url = `${this.actorsUrl}/${actor._id}`;
     const headers = this.authService.getHeaders();
-    return this.http.put<Actor>(url, actor, { headers: headers } );
+
+    const newActor = {
+      name: actor.name,
+      surname: actor.surname,
+      password: actor.password,
+      email: actor.email,
+      phone: actor.phone,
+      address: actor.address,
+      role: actor.role
+    };
+
+    return new Promise<Actor>((resolve, reject) => {
+      firstValueFrom(this.http.put<Actor>(url, newActor, { headers: headers } ))
+        .then(updatedActor => {
+          resolve(updatedActor);
+        })
+        .catch(_ => {
+          reject(new Actor());
+        })
+    });
   }
 
   getRoleName(role: Role) {
