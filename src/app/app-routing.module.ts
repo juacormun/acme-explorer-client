@@ -18,6 +18,8 @@ import { TripManagerListComponent } from './components/trip/trip-manager-list/tr
 import { SponsorshipListComponent } from './components/sponsorship/sponsorship-list/sponsorship-list.component';
 import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorship-display/sponsorship-display.component';
 import { ExplorerApplicationsComponent } from './components/application/explorer-applications/explorer-applications.component';
+import { ActorListComponent } from './components/actor/actor-list/actor-list.component';
+import { ActorDisplayComponent } from './components/actor/actor-display/actor-display.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
@@ -33,6 +35,10 @@ const routes: Routes = [
     { path: ':id/applications', component: TripApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
     { path: ':id', component: TripDisplayComponent },
     { path: '', component: TripListComponent }
+  ]},
+  { path: 'actors', canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ADMINISTRATOR] }, children: [
+    { path: ':id', component: ActorDisplayComponent },
+    { path: '', component: ActorListComponent }
   ]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ADMINISTRATOR] } },
   { path: 'denied-access', component: DeniedAccessComponent },
