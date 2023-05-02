@@ -63,7 +63,9 @@ export class ActorDisplayComponent implements OnInit {
       .then((actor: Actor) => {
         const successMsg = $localize `Role changed successfully`;
         this.messageService.notifyMessage(successMsg, MessageType.SUCCESS);
-        this.router.navigateByUrl('/actors');
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/actors', actor._id]);
+        });
       })
       .catch(_ => {
         const errorMsg = $localize `An error has occurred`;
