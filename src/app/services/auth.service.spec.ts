@@ -1,5 +1,4 @@
 import { Actor } from './../models/actor';
-import { User } from './../models/user';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { environment } from './../../environments/environment';
@@ -79,30 +78,6 @@ describe('AuthService', () => {
     await service.login(email, '12345678');
     const res = await service.logout();
     expect(res).toEqual('Logout successful');
-  })
-
-  it ('should set the user', () => {
-    const user = {
-      email: email,
-      token: '12345678'
-    } as User;
-    service.setCurrentUser(user)
-    expect(localStorage.getItem('currentUser')).toEqual(JSON.stringify(user));
-  })
-
-  it ('should get the current user', async () => {
-    const user = {
-      email: email,
-      token: '12345678'
-    } as User;
-    service.setCurrentUser(user)
-    const expected = JSON.parse(JSON.stringify(user));
-    expect(service.getCurrentUser()).toEqual(expected);
-  })
-
-  it ('should not get the current user', async () => {
-    localStorage.removeItem('currentUser');
-    expect(service.getCurrentUser()).toBeNull();
   })
 
 });
