@@ -39,7 +39,6 @@ export class ActorService {
       _id: actor._id,
       name: actor.name,
       surname: actor.surname,
-      password: actor.password,
       email: actor.email,
       phone: actor.phone,
       address: actor.address,
