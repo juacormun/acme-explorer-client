@@ -1,0 +1,24 @@
+<div class="row mt-3">
+  <div class="col-12 col-md-10 offset-md-1">
+    <legend i18n>Finder settings</legend>
+  </div>
+  <div class="col-12 col-md-10 offset-md-1 mt-2">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <form [formGroup]="configForm" (ngSubmit)="updateFinderConfig()">
+              <div class="form-group p-2">
+                <label for="cacheLifetime" i18n>Cache lifetime (seconds)</label>
+                <input type="number" class="form-control" id="cacheLifetime" formControlName="cacheLifetime">
+                <label for="numResults" class="mt-3" i18n>Maximum number of results</label>
+                <input type="number" class="form-control" id="numResults" formControlName="numResults">
+                <button type="submit" class="btn btn-secondary mt-3" i18n>Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

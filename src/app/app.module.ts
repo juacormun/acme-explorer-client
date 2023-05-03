@@ -34,6 +34,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { MessageService } from './services/message.service';
 import { CookieService } from 'ngx-cookie-service';
+import { FinderConfigComponent } from './components/finder-config/finder-config.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { CookieService } from 'ngx-cookie-service';
     SponsorshipDisplayComponent,
     TripManagerListComponent,
     CheckoutComponent,
+    FinderConfigComponent,
   ],
   imports: [
     BrowserModule,

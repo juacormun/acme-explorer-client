@@ -18,6 +18,7 @@ import { TripManagerListComponent } from './components/trip/trip-manager-list/tr
 import { SponsorshipListComponent } from './components/sponsorship/sponsorship-list/sponsorship-list.component';
 import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorship-display/sponsorship-display.component';
 import { ExplorerApplicationsComponent } from './components/application/explorer-applications/explorer-applications.component';
+import { FinderConfigComponent } from './components/finder-config/finder-config.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
@@ -35,6 +36,7 @@ const routes: Routes = [
     { path: '', component: TripListComponent }
   ]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ADMINISTRATOR] } },
+  { path: 'finder-config', component: FinderConfigComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ADMINISTRATOR] } },
   { path: 'denied-access', component: DeniedAccessComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent }
