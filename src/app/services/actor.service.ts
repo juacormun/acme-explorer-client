@@ -43,7 +43,8 @@ export class ActorService {
       email: actor.email,
       phone: actor.phone,
       address: actor.address,
-      role: actor.role
+      role: actor.role,
+      language: actor.language
     };
 
     return new Promise<Actor>((resolve, reject) => {
