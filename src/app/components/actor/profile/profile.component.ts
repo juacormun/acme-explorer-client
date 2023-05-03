@@ -58,11 +58,13 @@ export class ProfileComponent implements OnInit {
       this.surname?.enable();
       this.phone?.enable();
       this.address?.enable();
+      this.language?.enable();
     } else {
       this.name?.disable();
       this.surname?.disable();
       this.phone?.disable();
       this.address?.disable();
+      this.language?.disable();
     }
     this.resetForm();
   }
