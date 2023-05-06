@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageType } from 'src/app/enums/MessageEnum';
 import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
+import { FormValidation } from 'src/app/models/form-validation';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 
@@ -12,9 +13,10 @@ import { MessageService } from 'src/app/services/message.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, FormValidation {
 
   registrationForm: FormGroup;
+  formSubmitted = false;
 
   constructor(
     private authService: AuthService,
@@ -31,7 +33,13 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  isFormValid() {
+    return this.formSubmitted || !this.registrationForm?.dirty;
+  }
+
   onRegister() {
+    this.formSubmitted = true;
+
     let newUser = new Actor();
     newUser = { ...this.registrationForm.value, role: Role.EXPLORER };
     this.authService.registerUser(newUser)

@@ -66,13 +66,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all",
-              "es": {
-                "localize": ["es"]
-              },
-              "en-US": {
-                "localize": ["en-US"]
-              }
+              "outputHashing": "all"
             },
             "development": {
               "buildOptimizer": false,

@@ -19,7 +19,7 @@ export class ActorDisplayComponent implements OnInit {
   actor: Actor;
   currentActor: Actor;
 
-  roleList : Role[];
+  roleList : any[];
 
   constructor(
     private actorService: ActorService,
@@ -31,14 +31,14 @@ export class ActorDisplayComponent implements OnInit {
     this.id = '0';
     this.actor = new Actor();
     this.currentActor = new Actor();
-    this.roleList = Object.values(Role);
+    this.roleList = actorService.getTransRoles();
   }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.actorService.getActor(this.id).subscribe((actor) => {
       this.actor = actor;
-      this.roleList = this.roleList.filter(r => r !== Role.ANONYMOUS && r !== actor.role);
+      this.roleList = this.roleList.filter(r => r.id !== Role.ANONYMOUS && r.id !== actor.role);
     })
     this.currentActor = this.authService.getCurrentActor();
   }

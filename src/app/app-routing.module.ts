@@ -20,18 +20,19 @@ import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorshi
 import { ExplorerApplicationsComponent } from './components/application/explorer-applications/explorer-applications.component';
 import { ActorListComponent } from './components/actor/actor-list/actor-list.component';
 import { ActorDisplayComponent } from './components/actor/actor-display/actor-display.component';
+import { LeaveFormGuard } from './guards/leave-form.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
-  { path: 'register', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [ActorRoleGuard], canDeactivate: [LeaveFormGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
+  { path: 'profile', component: ProfileComponent, canActivate: [ActorRoleGuard], canDeactivate: [LeaveFormGuard], data: { expectedRoles: [Role.EXPLORER, Role.ADMINISTRATOR, Role.SPONSOR, Role.MANAGER] } },
   { path: 'checkout', component: CheckoutComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.EXPLORER] } },
   { path: 'applications', component: ExplorerApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.EXPLORER] } },
   { path: 'mytrips', component: TripManagerListComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
   { path: 'sponsorships', component: SponsorshipListComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.SPONSOR] } },
   { path: 'sponsorships/:id', component: SponsorshipDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.SPONSOR] } },
   { path: 'trips', children: [
-    { path: 'create', component: TripCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
+    { path: 'create', component: TripCreateComponent, canActivate: [ActorRoleGuard], canDeactivate: [LeaveFormGuard], data: { expectedRoles: [Role.MANAGER] } },
     { path: ':id/applications', component: TripApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
     { path: ':id', component: TripDisplayComponent },
     { path: '', component: TripListComponent }
