@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MessageType } from 'src/app/enums/MessageEnum';
 import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
+import { FormValidation } from 'src/app/models/form-validation';
 import { ActorService } from 'src/app/services/actor.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -13,14 +14,14 @@ import { MessageService } from 'src/app/services/message.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, FormValidation {
 
   actor: Actor;
 
   isEditable = false;
 
   profileForm: FormGroup;
-  langs = ['es', 'en'];
+  formSubmitted = false;
 
   constructor(
     private actorService: ActorService,
@@ -47,6 +48,10 @@ export class ProfileComponent implements OnInit {
     this.initializeForm();
   }
 
+  isFormValid() {
+    return this.formSubmitted || !this.profileForm?.dirty;
+  }
+
   getRoleName(role: Role) {
     return this.actorService.getRoleName(role);
   }
@@ -70,6 +75,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formSubmitted = true;
     const newActor = this.profileForm.value;
 
     this.actorService.updateActor(newActor)
@@ -103,6 +109,7 @@ export class ProfileComponent implements OnInit {
   }
 
   resetForm() {
+    this.formSubmitted = false;
     this.profileForm.controls['_id'].setValue(this.actor._id);
     this.profileForm.controls['name'].setValue(this.actor.name);
     this.profileForm.controls['surname'].setValue(this.actor.surname);
