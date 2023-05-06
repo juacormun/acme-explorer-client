@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Trip } from '../models/trip';
 import { AuthService } from './auth.service';
 import { Application } from '../models/application';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,28 @@ export class TripService {
     const url = `${this.tripsUrl}/${id}/applications`;
     const headers = this.authService.getHeaders();
     return this.http.get<Application[]>(url, { headers: headers } );
+  }
+
+  createTrip(trip: Trip) {
+    const url = this.tripsUrl;
+    const headers = this.authService.getHeaders();
+
+    const newTrip = {
+      title: trip.title,
+      description: trip.description,
+      requirements: trip.requirements,
+      startDate: trip.startDate,
+      endDate: trip.endDate
+    };
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.post<Trip>(url, newTrip, { headers: headers } ))
+        .then(trip => {
+          resolve(trip);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
   }
 }
