@@ -72,4 +72,14 @@ export class ActorService {
     }
   }
 
+  getTransRoles() {
+    return [
+      { id: Role.ADMINISTRATOR, value: $localize `Administrator` },
+      { id: Role.SPONSOR, value: $localize `Sponsor` },
+      { id: Role.MANAGER, value: $localize `Manager` },
+      { id: Role.EXPLORER, value: $localize `Explorer` },
+      { id: Role.ANONYMOUS, value: $localize `Anonymous` },
+    ]
+  }
+
 }
