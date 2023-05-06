@@ -1,35 +1,98 @@
-<div class="breadcrumb">
-  <legend class="d-flex justify-content-between">
-    <div>
-      <h5>
-        <span style="margin-right: 15px;">{{ trip.title }}</span>
-        <span *ngIf="isCancelled" i18n class="badge bg-danger" >Cancelled</span>
-        <span *ngIf="hasExpired" i18n class="badge bg-dark">Expired</span>
-        <span *ngIf="isAboutToStart" class="badge bg-primary">
-          <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n> days</span>
-        </span>
-      </h5>
-      <h6 class="card-subtitle mb-2 text-muted">
-        {{ trip.startDate | date: 'shortDate' }} - {{ trip.endDate | date: 'shortDate' }}
-      </h6>
-    </div>
-    <button i18n class="btn btn-light" (click)="goBack()">Trips</button>
-  </legend>
+<div class="form-info row m-auto">
+  <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+    <h4 class="text-center">{{trip.ticker}}</h4>
+    <h5 class="text-center">
+      <span *ngIf="isCancelled" i18n class="badge bg-danger" >Cancelled</span>
+      <span *ngIf="hasExpired" i18n class="badge bg-dark">Expired</span>
+      <span *ngIf="isAboutToStart" class="badge bg-primary">
+        <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n> days</span>
+      </span>
+    </h5>
+    <p class="text-muted text-center"><small><ng-container i18n>Created at</ng-container> {{trip.createdAt | date: 'shortDate'}}</small></p>
+    <form [formGroup]="infoForm" (ngSubmit)="onInfoFormSubmit()">
+      <div class="row g-3">
+        <input type="hidden" class="form-control" id="_id" formControlName="_id" required>
+        <input type="hidden" class="form-control" id="creator" formControlName="creator" required>
+        <input type="hidden" class="form-control" id="stages" formControlName="stages" required>
+        <input type="hidden" class="form-control" id="pictures" formControlName="pictures" required>
+        <input type="hidden" class="form-control" id="price" formControlName="price" required>
+
+        <div class="form-floating col-md-12">
+          <input id="title" class="form-control" type="text" formControlName="title" placeholder="title" required>
+          <label i18n class="px-4" for="title">Title</label>
+          <div *ngIf="title!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="title!.errors?.['maxlength']" class="text-danger mb-0" i18n>
+            The maximum number of characters allowed is 100
+          </div>
+        </div>
+        <div class="form-floating col-md-12">
+          <textarea class="form-control" id="description" formControlName="description" required style="height: 100px"></textarea>
+          <label i18n class="px-4" for="description">Description</label>
+          <div *ngIf="description!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="description!.errors?.['minlength']" class="text-danger mb-0" i18n>
+            Introduce, at least, 10 characters
+          </div>
+          <div *ngIf="description!.errors?.['maxlength']" class="text-danger mb-0" i18n>
+            The maximum number of characters allowed is 255
+          </div>
+        </div>
+
+        <div class="form-floating col-12">
+          <textarea class="form-control" id="requirements" formControlName="requirements" required style="height: 100px"></textarea>
+            <label i18n class="px-4" for="requirements">Requirements</label>
+            <div *ngIf="requirements!.errors?.['required']" class="text-danger mb-0" i18n>
+              Please, fill in this field
+            </div>
+            <div *ngIf="requirements!.errors?.['minlength']" class="text-danger mb-0" i18n>
+              Introduce, at least, 10 characters
+            </div>
+            <div *ngIf="requirements!.errors?.['maxlength']" class="text-danger mb-0" i18n>
+              The maximum number of characters allowed is 255
+            </div>
+        </div>
+
+        <div class="form-floating col-12 col-md-6">
+          <input type="date" class="form-control" id="startDate" formControlName="startDate" required>
+          <label i18n class="px-4" for="startDate">Start date</label>
+          <div *ngIf="startDate!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="startDate!.errors?.['isFuture']" class="text-danger mb-0" i18n>
+            It is not allowed to introduce a past date
+          </div>
+        </div>
+
+        <div class="form-floating col-12 col-md-6">
+          <input type="date" class="form-control" id="endDate" formControlName="endDate" required>
+          <label i18n class="px-4" for="endDate">End date</label>
+          <div *ngIf="endDate!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="endDate!.errors?.['isFuture']" class="text-danger mb-0" i18n>
+            It is not allowed to introduce a past date
+          </div>
+        </div>
+
+        <div *ngIf="infoForm!.errors?.['endDateAfterStartDate']" class="col-12 text-center text-danger my-0" i18n>
+          End date must be after start date
+        </div>
+
+        <div *ngIf="infoFormIsEditable" class="col-12">
+          <button i18n class="w-100 btn btn-primary btn-lg" type="submit" [disabled]="infoForm.invalid">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
-<div class="card">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-4">
-        <img [src]="getMainPicture().image" class="img-fluid rounded" [alt]="getMainPicture().title">
-      </div>
-      <div class="col-md-8">
-        <p class="card-text">{{ trip.description }}</p>
-        <p class="card-text"><strong i18n>Price:</strong> {{ trip.price }}</p>
-        <p class="card-text"><strong i18n>Requirements:</strong> {{ trip.requirements }}</p>
-      </div>
-    </div>
-  </div>
+<hr
+>
+
+<!-- <div class="card">
   <div *ngIf="canDisplayActions()" class="card-footer text-muted d-flex justify-content-around" id="tripActions">
     <button i18n class="btn btn-primary mr-2">Edit</button>
     <button i18n class="btn btn-danger mr-2">Delete</button>
@@ -63,4 +126,4 @@
     <img [src]="sponsorship.banner" class="img-fluid rounded" [alt]="sponsorship.link">
     </a>
   </div>
-</div>
+</div> -->

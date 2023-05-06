@@ -1,4 +1,4 @@
-<div class="form-signin row m-auto">
+<div class="form-info row m-auto">
   <div class="col-10 offset-1 col-lg-8 offset-lg-2">
     <h4 i18n class="text-center mb-3">New trip</h4>
     <p i18n class="text-muted text-center">Introduce the main info of your trip. After that, you could edit and add new data</p>
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="form-floating col-md-12">
-          <textarea class="form-control" id="description" formControlName="description" required rows="100"></textarea>
+          <textarea class="form-control" id="description" formControlName="description" required style="height: 100px"></textarea>
           <label i18n class="px-4" for="description">Description</label>
           <div *ngIf="description!.errors?.['required']" class="text-danger mb-0" i18n>
             Please, fill in this field
@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-floating col-12">
-          <textarea class="form-control" id="requirements" formControlName="requirements" required rows="100"></textarea>
+          <textarea class="form-control" id="requirements" formControlName="requirements" required style="height: 100px"></textarea>
             <label i18n class="px-4" for="requirements">Requirements</label>
             <div *ngIf="requirements!.errors?.['required']" class="text-danger mb-0" i18n>
               Please, fill in this field
