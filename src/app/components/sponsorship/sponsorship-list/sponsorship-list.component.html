@@ -16,26 +16,26 @@
     [sorts]="sorts"
     [scrollbarH]="true">
 
-    <ngx-datatable-column name="Trip" prop="trip">
+    <ngx-datatable-column i18n-name name="Trip" prop="trip">
       <ng-template let-value="value" ngx-datatable-cell-template>
         <a href="#" routerLink="/trips/{{ value._id }}">{{ value.ticker }}</a>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Link" prop="link">
+    <ngx-datatable-column i18n-name name="Link" prop="link">
       <ng-template let-value="value" ngx-datatable-cell-template>
         <a href="{{value}}">{{ value }}</a>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Paid" prop="paidAt">
+    <ngx-datatable-column i18n-name name="Paid date" prop="paidAt">
       <ng-template let-value="value" ngx-datatable-cell-template>
         <p i18n *ngIf="value">{{ value | date }}</p>
         <p i18n *ngIf="!value">Pending</p>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Actions" prop="_id">
+    <ngx-datatable-column i18n-name name="Actions" prop="_id">
       <ng-template let-value="value" ngx-datatable-cell-template>
         <button i18n class="btn btn-info" routerLink="/sponsorships/{{ value }}">Details</button>
       </ng-template>
