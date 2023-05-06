@@ -11,6 +11,7 @@ import { Application } from '../models/application';
 export class TripService {
 
   private tripsUrl = `${environment.backendApiBaseUrl}/v2/trips`;
+  private applicationsUrl = `${environment.backendApiBaseUrl}/v2/applications`;
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -45,12 +46,20 @@ export class TripService {
   getTrips() {
     const url = this.tripsUrl;
     const headers = this.authService.getHeaders();
-    return this.http.get<Trip[]>(url, { headers: headers } );
+    return this.http.get<Trip[]>(url, { headers: headers });
   }
 
   getTripApplications(id: string) {
     const url = `${this.tripsUrl}/${id}/applications`;
     const headers = this.authService.getHeaders();
-    return this.http.get<Application[]>(url, { headers: headers } );
+    return this.http.get<Application[]>(url, { headers: headers });
+  }
+
+  createApplication(explorerId: string, tripId: string, comments?: string) {
+    const url = this.applicationsUrl;
+    const headers = this.authService.getHeaders();
+    const body = comments ? { explorer: explorerId, trip: tripId, comments: comments } : { explorer: explorerId, trip: tripId };
+    console.log(body)
+    return this.http.post<Application>(url, body, { headers: headers });
   }
 }
