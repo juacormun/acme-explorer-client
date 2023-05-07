@@ -154,6 +154,14 @@ export class TripDisplayComponent implements OnInit {
   get pictures() { return this.infoForm.get('pictures'); }
   get price() { return this.infoForm.get('price'); }
 
+  addStage () {
+    console.log('Adding new stage...');
+  }
+
+  addPicture () {
+    console.log('Adding new picture...');
+  }
+
   goBack(): void {
     this.router.navigate(['/trips']);
   }

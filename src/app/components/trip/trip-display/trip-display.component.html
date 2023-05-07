@@ -113,7 +113,78 @@
   </div>
 </div>
 
+<div id="stagesSection">
+  <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+    <hr>
+    <h4 i18n class="text-center">Stages</h4>
+    <p *ngIf="!trip.stages || trip.stages.length == 0" class="text-muted text-center mb-0">
+      Sorry, no stages found for this trip.
+    </p>
+    <div *ngIf="trip.stages && trip.stages.length > 0" id="stagesAccordion">
+      <div *ngFor="let stage in trip.stages" class="card">
+        <div class="card-header" id="heading{{stage._id}}">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" attr.data-target="#collapse{{stage._id}}" aria-expanded="true" attr.aria-controls="collapse{{stage._id}}">
+              {{stage.title}}
+            </button>
+          </h5>
+        </div>
 
+        <div id="collapse{{stage._id}}" class="collapse show" attr.aria-labelledby="heading{{stage._id}}" data-parent="#accordion">
+          <div class="card-body">
+            <span i18n *ngIf="canDisplayActions()">Price: </span>{{stage.price}}
+            <p>{{stage.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="canDisplayActions()" class="px-2 py-3 mt-0" id="stagesActions">
+      <div class="d-flex justify-content-around">
+        <div class="text-center">
+          <button i18n class="btn btn-block btn-primary" (click)="addStage()">New</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="picturesSection">
+  <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+    <hr>
+    <h4 i18n class="text-center">Pictures</h4>
+    <p *ngIf="!trip.pictures || trip.pictures.length == 0" class="text-muted text-center mb-0">
+      Sorry, no pictures found for this trip.
+    </p>
+    <div *ngIf="trip.pictures && trip.pictures.length > 0" id="picturesList">
+      <div *ngFor="let picture of trip.pictures" class="col-md-4">
+        <div class="card mb-4 box-shadow clickable-card">
+          <img class="card-img-top" [src]="picture.image" [alt]="picture.title"
+            data-holder-rendered="true">
+          <div class="card-body">
+            <h5 class="card-title">{{picture.title}}</h5>
+            <p class="card-text text-justify">{{trip.description | slice:0:125}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="canDisplayActions()" class="px-2 py-3 mt-0" id="picturesActions">
+      <div class="d-flex justify-content-around">
+        <div class="text-center">
+          <button i18n class="btn btn-block btn-primary" (click)="addPicture()">New</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="sponsorship != null" class="row">
+  <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+    <hr>
+    <a [href]="sponsorship.link">
+    <img [src]="sponsorship.banner" class="img-fluid rounded" [alt]="sponsorship.link">
+    </a>
+  </div>
+</div>
 
 <!-- <div class="card">
   <div *ngIf="canDisplayActions()" class="card-footer text-muted d-flex justify-content-around" id="tripActions">
