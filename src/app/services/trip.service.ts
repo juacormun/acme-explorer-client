@@ -77,4 +77,31 @@ export class TripService {
         })
     });
   }
+
+  updateTrip(trip: Trip) {
+    const url = `${this.tripsUrl}/${trip._id}`;
+    const headers = this.authService.getHeaders();
+
+    const newTrip = {
+      creator: trip.creator,
+      title: trip.title,
+      description: trip.description,
+      requirements: trip.requirements,
+      startDate: trip.startDate,
+      endDate: trip.endDate,
+      price: trip.price,
+      stages: trip.stages,
+      pictures: trip.pictures
+    };
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.put<Trip>(url, newTrip, { headers: headers } ))
+        .then(updatedtrip => {
+          resolve(updatedtrip);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
 }

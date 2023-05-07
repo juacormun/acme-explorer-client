@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageType } from 'src/app/enums/MessageEnum';
 import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
 import { Picture } from 'src/app/models/picture';
@@ -44,11 +46,11 @@ export class TripDisplayComponent implements OnInit {
     this.actor = new Actor();
 
     this.infoForm = this.fb.group({
-      _id: [{ value:'', disabled: true }],
-      creator: [{ value:'', disabled: true }],
-      stages: [{ value:'', disabled: true }],
-      pictures: [{ value:'', disabled: true }],
-      price: [{ value:'', disabled: true }],
+      _id: ['', Validators.required],
+      creator: ['', Validators.required],
+      stages: ['', Validators.required],
+      pictures: ['', Validators.required],
+      price: [{ value:'', disabled: true }, Validators.compose([Validators.required, Validators.min(0)])],
       title: [{ value:'', disabled: true }, Validators.compose([Validators.required, Validators.maxLength(100)])],
       description: [{ value:'', disabled: true }, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(255)])],
       requirements: [{ value:'', disabled: true }, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(255)])],
@@ -81,16 +83,17 @@ export class TripDisplayComponent implements OnInit {
   }
 
   resetInfoForm() {
+    const locale = localStorage.getItem('locale') ?? 'en';
     this.infoFormSubmitted = false;
     this.infoForm.controls['_id'].setValue(this.trip._id);
     this.infoForm.controls['creator'].setValue(this.trip.creator);
     this.infoForm.controls['title'].setValue(this.trip.title);
     this.infoForm.controls['description'].setValue(this.trip.description);
     this.infoForm.controls['requirements'].setValue(this.trip.requirements);
-    this.infoForm.controls['startDate'].setValue(this.trip.startDate);
-    this.infoForm.controls['endDate'].setValue(this.trip.endDate);
-    this.infoForm.controls['stages'].setValue(this.trip.stages);
-    this.infoForm.controls['pictures'].setValue(this.trip.pictures);
+    this.infoForm.controls['startDate'].setValue(formatDate(this.trip.startDate, 'yyyy-MM-dd', locale));
+    this.infoForm.controls['endDate'].setValue(formatDate(this.trip.endDate, 'yyyy-MM-dd', locale));
+    this.infoForm.controls['stages'].setValue(JSON.stringify(this.trip.stages));
+    this.infoForm.controls['pictures'].setValue(JSON.stringify(this.trip.pictures));
     this.infoForm.controls['price'].setValue(this.trip.price);
   }
 
@@ -102,12 +105,14 @@ export class TripDisplayComponent implements OnInit {
       this.requirements?.enable();
       this.startDate?.enable();
       this.endDate?.enable();
+      this.price?.enable();
     } else {
       this.title?.disable();
       this.description?.disable();
       this.requirements?.disable();
       this.startDate?.disable();
       this.endDate?.disable();
+      this.price?.disable();
     }
     this.resetInfoForm();
   }
@@ -115,21 +120,27 @@ export class TripDisplayComponent implements OnInit {
   onInfoFormSubmit() {
     this.infoFormSubmitted = true;
 
-    console.log('Send trip with this data: ', this.infoForm.value);
-
-    // this.tripService.createTrip(this.infoForm.value)
-    //   .then((trip: Trip) => {
-    //     let successMsg = $localize `Trip created successfully, complete its info and publish`
-    //     this.messageService.notifyMessage(successMsg, MessageType.SUCCESS);
-    //     this.router.navigate(['/trips', trip._id]);
-    //   })
-    //   .catch(error => {
-    //     let errorMsg = $localize `Something wrong occurred...`;
-    //     if (error.status === 422) {
-    //       errorMsg = $localize `There are some errors in the data introduced`;
-    //     }
-    //     this.messageService.notifyMessage(errorMsg, MessageType.DANGER);
-    //   });
+    let newTrip = {
+      ...this.infoForm.value,
+      price: new Number(this.price?.value),
+      stages: JSON.parse(this.stages?.value),
+      pictures: JSON.parse(this.pictures?.value),
+    }
+    this.tripService.updateTrip(newTrip)
+      .then((trip: Trip) => {
+        let successMsg = $localize `Trip updated successfully`
+        this.messageService.notifyMessage(successMsg, MessageType.SUCCESS);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/trips', trip._id]);
+        });
+      })
+      .catch(error => {
+        let errorMsg = $localize `Something wrong occurred...`;
+        if (error.status === 422) {
+          errorMsg = $localize `There are some errors in the data introduced`;
+        }
+        this.messageService.notifyMessage(errorMsg, MessageType.DANGER);
+      });
   }
 
   get _id() { return this.infoForm.get('id'); }
