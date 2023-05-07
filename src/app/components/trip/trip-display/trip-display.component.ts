@@ -7,6 +7,7 @@ import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
 import { Picture } from 'src/app/models/picture';
 import { Sponsorship } from 'src/app/models/sponsorship';
+import { Stage } from 'src/app/models/stage';
 import { Trip } from 'src/app/models/trip';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -122,7 +123,7 @@ export class TripDisplayComponent implements OnInit {
 
     let newTrip = {
       ...this.infoForm.value,
-      price: new Number(this.price?.value),
+      price: this.price?.value,
       stages: JSON.parse(this.stages?.value),
       pictures: JSON.parse(this.pictures?.value),
     }
@@ -154,14 +155,6 @@ export class TripDisplayComponent implements OnInit {
   get pictures() { return this.infoForm.get('pictures'); }
   get price() { return this.infoForm.get('price'); }
 
-  addStage () {
-    console.log('Adding new stage...');
-  }
-
-  addPicture () {
-    console.log('Adding new picture...');
-  }
-
   goBack(): void {
     this.router.navigate(['/trips']);
   }
@@ -179,8 +172,31 @@ export class TripDisplayComponent implements OnInit {
     return this.actor && this.actor.role === Role.EXPLORER && !this.hasExpired && !this.isCancelled;
   }
 
-  displayTripApplications(trip: Trip) {
+  goToTripApplications(trip: Trip) {
     this.router.navigate(['/trips', trip._id, 'applications']);
+  }
+
+  deleteStage(stageId: string) {
+    let newStages = this.trip.stages.filter(s => s._id !== stageId);
+    const newTrip = {
+      ...this.trip,
+      stages: newStages
+    }
+    this.tripService.updateTrip(newTrip as Trip)
+      .then((trip: Trip) => {
+        let successMsg = $localize `Stage deleted successfully`
+        this.messageService.notifyMessage(successMsg, MessageType.SUCCESS);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/trips', trip._id]);
+        });
+      })
+      .catch(error => {
+        let errorMsg = $localize `Something wrong occurred...`;
+        if (error.status === 422) {
+          errorMsg = $localize `There are some errors in the data introduced`;
+        }
+        this.messageService.notifyMessage(errorMsg, MessageType.DANGER);
+      });
   }
 
   applyToTrip(trip: Trip, comments?: string) {
