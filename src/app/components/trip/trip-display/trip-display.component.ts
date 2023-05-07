@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageType } from 'src/app/enums/MessageEnum';
@@ -39,7 +39,7 @@ export class TripDisplayComponent implements OnInit {
     private fb: FormBuilder,
     private messageService: MessageService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.id = '0';
     this.trip = new Trip();
@@ -175,8 +175,18 @@ export class TripDisplayComponent implements OnInit {
     return this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
   }
 
+  canBeApplied(): boolean {
+    return this.actor && this.actor.role === Role.EXPLORER && !this.hasExpired && !this.isCancelled;
+  }
+
   displayTripApplications(trip: Trip) {
     this.router.navigate(['/trips', trip._id, 'applications']);
+  }
+
+  applyToTrip(trip: Trip, comments?: string) {
+    this.tripService.createApplication(this.actor._id, trip._id, comments).subscribe((application) => {
+      this.router.navigate(['/applications']);
+    });
   }
 
   setHasExpired() {
