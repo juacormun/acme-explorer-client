@@ -1,21 +1,42 @@
-<div class="modal-dialog modal-dialog-centered">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h1 i18n class="modal-title fs-3" id="exampleModalLabel">New stage</h1>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <p i18n class="fs-5">Would you like to add any comment?</p>
-        <div class="form-floating mb-3">
-          <textarea class="form-control" id="comments"></textarea>
-          <label i18n for="comments" class="col-form-label">Comments</label>
+<div id="pictureModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="pictureCreationForm" (ngSubmit)="onSubmit()">
+        <div class="modal-header">
+          <h1 i18n class="modal-title fs-3" id="exampleModalLabel">New picture</h1>
+          <button #closeModalButton type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body row g-3">
+          <div class="alert alert-danger alert-dismissible fade d-flex justify-content-between show my-0" role="alert"
+            *ngIf="formError != null && formError.length > 0">
+            <span>{{formError}}</span>
+            <button class="btn btn-link text-decoration-none text-reset p-0" (click)="closeError()">
+              <strong>x</strong>
+            </button>
+          </div>
+          <div class="form-floating col-md-12">
+            <input id="title" class="form-control" type="text" formControlName="title" placeholder="title" required>
+            <label i18n class="px-4" for="title">Title</label>
+            <div *ngIf="title!.errors?.['required']" class="text-danger mb-0" i18n>
+              Please, fill in this field
+            </div>
+            <div *ngIf="title!.errors?.['maxlength']" class="text-danger mb-0" i18n>
+              The maximum number of characters allowed is 100
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label i18n class="form-label" for="image">Image</label>
+            <input id="image" class="form-control" type="file" accept="image/png" formControlName="image" (change)="onFileChange($event)" required>
+            <div *ngIf="image!.errors?.['required']" class="text-danger mb-0" i18n>
+              Please, fill in this field
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button i18n class="btn btn-primary" type="submit" [disabled]="pictureCreationForm.invalid">Submit</button>
+          <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
         </div>
       </form>
-    </div>
-    <div class="modal-footer">
-      <button i18n type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onSubmit()">Submit</button>
-      <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
     </div>
   </div>
 </div>

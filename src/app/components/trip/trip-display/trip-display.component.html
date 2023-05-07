@@ -157,18 +157,20 @@
 <div id="picturesSection">
   <div class="col-10 offset-1 col-lg-8 offset-lg-2">
     <hr>
-    <h4 i18n class="text-center">Pictures</h4>
+    <h5 i18n class="text-center">Pictures</h5>
     <p *ngIf="!trip.pictures || trip.pictures.length == 0" class="text-muted text-center mb-0">
       Sorry, no pictures found for this trip.
     </p>
-    <div *ngIf="trip.pictures && trip.pictures.length > 0" id="picturesList">
+    <div *ngIf="trip.pictures && trip.pictures.length > 0" id="picturesList" class="row py-2">
       <div *ngFor="let picture of trip.pictures" class="col-md-4">
         <div class="card mb-4 box-shadow clickable-card">
-          <img class="card-img-top" [src]="picture.image" [alt]="picture.title"
+          <img class="card-img-top" src="data:image/png;base64,{{picture.image}}" [alt]="picture.title"
             data-holder-rendered="true">
           <div class="card-body">
             <h5 class="card-title">{{picture.title}}</h5>
-            <p class="card-text text-justify">{{trip.description | slice:0:125}}</p>
+            <div class="d-flex justify-content-end">
+              <button i18n class="btn btn-sm btn-danger" (click)="deletePicture(picture._id)">Delete</button>
+            </div>
           </div>
         </div>
       </div>
@@ -219,6 +221,4 @@
 
 <app-stage-create [trip]="trip"></app-stage-create>
 
-<div id="pictureModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <app-picture-create [trip]="trip"></app-picture-create>
-</div>
+<app-picture-create [trip]="trip"></app-picture-create>

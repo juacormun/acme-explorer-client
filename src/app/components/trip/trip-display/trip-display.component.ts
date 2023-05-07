@@ -199,6 +199,29 @@ export class TripDisplayComponent implements OnInit {
       });
   }
 
+  deletePicture(pictureId: string) {
+    let newPictures = this.trip.pictures.filter(p => p._id !== pictureId);
+    const newTrip = {
+      ...this.trip,
+      pictures: newPictures
+    }
+    this.tripService.updateTrip(newTrip as Trip)
+      .then((trip: Trip) => {
+        let successMsg = $localize `Picture deleted successfully`
+        this.messageService.notifyMessage(successMsg, MessageType.SUCCESS);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/trips', trip._id]);
+        });
+      })
+      .catch(error => {
+        let errorMsg = $localize `Something wrong occurred...`;
+        if (error.status === 422) {
+          errorMsg = $localize `There are some errors in the data introduced`;
+        }
+        this.messageService.notifyMessage(errorMsg, MessageType.DANGER);
+      });
+  }
+
   applyToTrip(trip: Trip, comments?: string) {
     this.tripService.createApplication(this.actor._id, trip._id, comments).subscribe((application) => {
       this.router.navigate(['/applications']);
