@@ -26,7 +26,7 @@
           </div>
           <div class="col-md-12">
             <label i18n class="form-label" for="image">Image</label>
-            <input id="image" class="form-control" type="file" accept="image/png" formControlName="image" (change)="onFileChange($event)" required>
+            <input id="image" class="form-control" type="file" accept="image/jpg,image/jpeg" formControlName="image" (change)="onFileChange($event)" required>
             <div *ngIf="image!.errors?.['required']" class="text-danger mb-0" i18n>
               Please, fill in this field
             </div>

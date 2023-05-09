@@ -1,15 +1,27 @@
 <div class="form-info row m-auto">
   <div class="col-10 offset-1 col-lg-8 offset-lg-2">
-    <h4 class="text-center">{{trip.ticker}}</h4>
-    <h5 class="text-center">
-      <span *ngIf="isCancelled" i18n class="badge bg-danger" >Cancelled</span>
-      <span *ngIf="hasExpired" i18n class="badge bg-dark">Expired</span>
-      <span *ngIf="isAboutToStart" class="badge bg-primary">
-        <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n> days</span>
-      </span>
-    </h5>
-    <p class="text-muted text-center"><small><ng-container i18n>Created at</ng-container> {{trip.createdAt | date: 'shortDate'}}</small></p>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h4 class="mb-0">{{trip.ticker}}</h4>
+        <p class="text-muted mb-0"><small><ng-container i18n>Created at</ng-container> {{trip.createdAt | date: 'shortDate'}}</small></p>
+      </div>
+      <div class="col-12 col-md-6" id="buttons">
+        <div class="d-flex justify-content-end">
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable" i18n class="btn btn-sm btn-info mr-5" (click)="goToTripApplications(trip)">Applications</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable" i18n class="btn btn-sm btn-primary" (click)="toggleEditInfo()">Edit</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable" i18n class="btn btn-sm btn-danger">Delete</button>
+          <button *ngIf="canBeApplied()" i18n class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
+        </div>
+      </div>
+    </div>
     <form [formGroup]="infoForm" (ngSubmit)="onInfoFormSubmit()">
+      <h5 class="text-center">
+        <span *ngIf="isCancelled" i18n class="badge bg-danger" >Cancelled</span>
+        <span *ngIf="hasExpired" i18n class="badge bg-dark">Expired</span>
+        <span *ngIf="isAboutToStart" class="badge bg-primary">
+          <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n> days</span>
+        </span>
+      </h5>
       <div class="row g-3">
         <input type="hidden" class="form-control" id="_id" formControlName="_id" required>
         <input type="hidden" class="form-control" id="creator" formControlName="creator" required>
@@ -90,29 +102,15 @@
           End date must be after start date
         </div>
 
-        <div *ngIf="canDisplayActions()" class="px-2 py-3 mt-0" id="tripActions">
-          <div *ngIf="infoFormIsEditable" class="d-flex justify-content-around">
-            <div class="text-center">
-              <button i18n class="btn btn-block btn-primary" type="submit" [disabled]="infoForm.invalid">Guardar</button>
-            </div>
-            <div class="text-center">
-              <button i18n class="btn btn-block btn-danger" (click)="toggleEditInfo()">Cancel</button>
-            </div>
-          </div>
-          <div *ngIf="!infoFormIsEditable" class="d-flex justify-content-around">
-            <div class="text-center">
-              <button i18n class="btn btn-block btn-primary" (click)="toggleEditInfo()">Edit</button>
-            </div>
-            <div class="text-center">
-              <button i18n class="btn btn-block btn-danger">Delete</button>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="canBeApplied()" class="px-2 py-3 mt-0" id="tripExplorerActions">
+        <div *ngIf="canDisplayActions() && infoFormIsEditable" class="d-flex justify-content-around">
           <div class="text-center">
-            <button i18n class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
+            <button i18n class="btn btn-block btn-primary" type="submit" [disabled]="infoForm.invalid">Save</button>
+          </div>
+          <div class="text-center">
+            <button i18n class="btn btn-block btn-danger" (click)="toggleEditInfo()">Cancel</button>
           </div>
         </div>
+
       </div>
     </form>
   </div>
@@ -164,7 +162,7 @@
     <div *ngIf="trip.pictures && trip.pictures.length > 0" id="picturesList" class="row py-2">
       <div *ngFor="let picture of trip.pictures" class="col-md-4">
         <div class="card mb-4 box-shadow clickable-card">
-          <img class="card-img-top" src="data:image/png;base64,{{picture.image}}" [alt]="picture.title"
+          <img class="card-img-top" src="{{picture.image}}" [alt]="picture.title"
             data-holder-rendered="true">
           <div class="card-body">
             <h5 class="card-title">{{picture.title}}</h5>

@@ -1,12 +1,11 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject } from 'rxjs';
 import { MessageType } from 'src/app/enums/MessageEnum';
-import { Picture } from 'src/app/models/picture';
 import { Trip } from 'src/app/models/trip';
 import { MessageService } from 'src/app/services/message.service';
 import { TripService } from 'src/app/services/trip.service';
+import { convertBase64, resizeImage } from 'src/app/utils/file.utils';
 
 @Component({
   selector: 'app-picture-create',
@@ -48,22 +47,18 @@ export class PictureCreateComponent implements OnInit {
   onFileChange(event: any) {
     this.file = event.target.files[0];
 
-    this.convertFile(this.file).subscribe(base64 => {
-      this.base64Image = base64;
+    convertBase64(this.file).then((base64: string) => {
+      resizeImage(base64).then((resizedimage: string) => {
+        this.base64Image = resizedimage;
+      })
+      .catch(_ => {
+        this.base64Image = base64;
+      });
+    })
+    .catch(_ => {
+      this.formError = $localize `Could not upload the image`;
+      this.image?.reset();
     });
-  }
-
-  convertFile(file : File) : Observable<string> {
-    const result = new ReplaySubject<string>(1);
-    const reader = new FileReader();
-    reader.readAsBinaryString(file);
-
-    reader.onload = (event) => {
-      if (event != null) {
-        result.next(btoa(event.target?.result as string));
-      }
-    }
-    return result;
   }
 
   onSubmit() {
