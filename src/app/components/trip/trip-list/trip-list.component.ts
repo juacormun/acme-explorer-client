@@ -56,12 +56,17 @@ export class TripListComponent implements OnInit {
     const expirationDate = new Date().getTime() + (cacheTime * 1000 * 60 * 60);
     const queryId = objectHash.sha1(query);
     const cachedTrips = this.tripService.getCachedTrips(queryId);
+    const maxResults = form.value.maxResults && form.value.maxResults > 0 && form.value.maxResults <= 100 ?
+      form.value.maxResults : 10;
 
     if (cachedTrips) {
       this.trips = cachedTrips;
       return;
     } else {
       this.tripService.searchTrips(query).subscribe((data: any) => {
+        if (data.length > maxResults) {
+          data = data.slice(0, maxResults);
+        }
         this.trips = data;
         this.tripService.saveResultInCache(queryId, { trips: this.trips, expirationDate });
       });
