@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
@@ -28,7 +29,7 @@ export class TripDisplayComponent implements OnInit {
     private tripService: TripService,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.id = '0';
     this.trip = new Trip();
@@ -64,8 +65,18 @@ export class TripDisplayComponent implements OnInit {
     return this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
   }
 
+  canBeApplied(): boolean {
+    return this.actor && this.actor.role === Role.EXPLORER && !this.hasExpired && !this.isCancelled;
+  }
+
   displayTripApplications(trip: Trip) {
     this.router.navigate(['/trips', trip._id, 'applications']);
+  }
+
+  applyToTrip(trip: Trip, comments?: string) {
+    this.tripService.createApplication(this.actor._id, trip._id, comments).subscribe((application) => {
+      this.router.navigate(['/applications']);
+    });
   }
 
   setHasExpired() {

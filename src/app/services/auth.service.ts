@@ -120,7 +120,7 @@ export class AuthService {
   setCurrentActor(actor?: Actor, token?: any) {
     if (actor) {
       localStorage.setItem('currentActor', JSON.stringify({
-        id: actor.id,
+        _id: actor._id,
         name: actor.name,
         surname: actor.surname,
         role: actor.role,

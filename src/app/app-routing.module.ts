@@ -18,25 +18,30 @@ import { TripManagerListComponent } from './components/trip/trip-manager-list/tr
 import { SponsorshipListComponent } from './components/sponsorship/sponsorship-list/sponsorship-list.component';
 import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorship-display/sponsorship-display.component';
 import { ExplorerApplicationsComponent } from './components/application/explorer-applications/explorer-applications.component';
-import { FinderConfigComponent } from './components/finder-config/finder-config.component';
+import { ActorListComponent } from './components/actor/actor-list/actor-list.component';
+import { ActorDisplayComponent } from './components/actor/actor-display/actor-display.component';
+import { LeaveFormGuard } from './guards/leave-form.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
-  { path: 'register', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
-  { path: 'profile/:id', component: ProfileComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [ActorRoleGuard], canDeactivate: [LeaveFormGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
+  { path: 'profile', component: ProfileComponent, canActivate: [ActorRoleGuard], canDeactivate: [LeaveFormGuard], data: { expectedRoles: [Role.EXPLORER, Role.ADMINISTRATOR, Role.SPONSOR, Role.MANAGER] } },
   { path: 'checkout', component: CheckoutComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.EXPLORER] } },
   { path: 'applications', component: ExplorerApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.EXPLORER] } },
   { path: 'mytrips', component: TripManagerListComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
   { path: 'sponsorships', component: SponsorshipListComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.SPONSOR] } },
   { path: 'sponsorships/:id', component: SponsorshipDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.SPONSOR] } },
   { path: 'trips', children: [
-    { path: 'create', component: TripCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
+    { path: 'create', component: TripCreateComponent, canActivate: [ActorRoleGuard], canDeactivate: [LeaveFormGuard], data: { expectedRoles: [Role.MANAGER] } },
     { path: ':id/applications', component: TripApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
     { path: ':id', component: TripDisplayComponent },
     { path: '', component: TripListComponent }
   ]},
+  { path: 'actors', canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ADMINISTRATOR] }, children: [
+    { path: ':id', component: ActorDisplayComponent },
+    { path: '', component: ActorListComponent }
+  ]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ADMINISTRATOR] } },
-  { path: 'finder-config', component: FinderConfigComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ADMINISTRATOR] } },
   { path: 'denied-access', component: DeniedAccessComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: NotFoundComponent }

@@ -34,7 +34,8 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { MessageService } from './services/message.service';
 import { CookieService } from 'ngx-cookie-service';
-import { FinderConfigComponent } from './components/finder-config/finder-config.component';
+import { ActorListComponent } from './components/actor/actor-list/actor-list.component';
+import { ActorDisplayComponent } from './components/actor/actor-display/actor-display.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { FinderConfigComponent } from './components/finder-config/finder-config.
     SponsorshipDisplayComponent,
     TripManagerListComponent,
     CheckoutComponent,
-    FinderConfigComponent,
+    ActorListComponent,
+    ActorDisplayComponent,
   ],
   imports: [
     BrowserModule,

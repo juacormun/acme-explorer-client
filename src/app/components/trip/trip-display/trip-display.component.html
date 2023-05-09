@@ -3,10 +3,11 @@
     <div>
       <h5>
         <span style="margin-right: 15px;">{{ trip.title }}</span>
-        <span *ngIf="isCancelled" i18n class="badge bg-danger" >Cancelled</span>
+        <span *ngIf="isCancelled" i18n class="badge bg-danger">Cancelled</span>
         <span *ngIf="hasExpired" i18n class="badge bg-dark">Expired</span>
         <span *ngIf="isAboutToStart" class="badge bg-primary">
-          <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n> days</span>
+          <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n>
+            days</span>
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">
@@ -35,6 +36,33 @@
     <button i18n class="btn btn-danger mr-2">Delete</button>
     <button i18n class="btn btn-info" (click)="displayTripApplications(trip)">Applications</button>
   </div>
+  <div *ngIf="canBeApplied()" class="card-footer text-muted d-flex justify-content-center" id="tripApplication">
+    <button i18n class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
+  </div>
+</div>
+
+<div id="applicationModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 i18n class="modal-title fs-3" id="exampleModalLabel">New application</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <p i18n class="fs-5">Would you like to add any comment?</p>
+          <div class="form-floating mb-3">
+            <textarea class="form-control" id="comments"></textarea>
+            <label i18n for="comments" class="col-form-label">Comments</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
+        <button i18n type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="applyToTrip(trip)">Submit</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div *ngIf="trip.stages && trip.stages.length > 0" class="mt-3" id="stagesAccordion">
@@ -42,13 +70,15 @@
   <div *ngFor="let stage in trip.stages" class="card">
     <div class="card-header" id="heading{{stage._id}}">
       <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" attr.data-target="#collapse{{stage._id}}" aria-expanded="true" attr.aria-controls="collapse{{stage._id}}">
+        <button class="btn btn-link" data-toggle="collapse" attr.data-target="#collapse{{stage._id}}"
+          aria-expanded="true" attr.aria-controls="collapse{{stage._id}}">
           {{stage.title}}
         </button>
       </h5>
     </div>
 
-    <div id="collapse{{stage._id}}" class="collapse show" attr.aria-labelledby="heading{{stage._id}}" data-parent="#accordion">
+    <div id="collapse{{stage._id}}" class="collapse show" attr.aria-labelledby="heading{{stage._id}}"
+      data-parent="#accordion">
       <div class="card-body">
         <span i18n>Price: </span>{{stage.price}}
         <p>{{stage.description}}</p>
@@ -60,7 +90,7 @@
 <div *ngIf="sponsorship != null" class="row mt-3">
   <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
     <a [href]="sponsorship.link">
-    <img [src]="sponsorship.banner" class="img-fluid rounded" [alt]="sponsorship.link">
+      <img [src]="sponsorship.banner" class="img-fluid rounded" [alt]="sponsorship.link">
     </a>
   </div>
 </div>
