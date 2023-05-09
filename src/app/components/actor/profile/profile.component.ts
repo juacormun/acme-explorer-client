@@ -82,6 +82,8 @@ export class ProfileComponent implements OnInit, FormValidation {
     .then((actor: Actor) => {
       const successMsg = $localize `Profile updated correctly`;
       this.messageService.notifyMessage(successMsg, MessageType.SUCCESS);
+      localStorage.setItem('locale', actor.language);
+      location.reload();
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/profile']);
       });
