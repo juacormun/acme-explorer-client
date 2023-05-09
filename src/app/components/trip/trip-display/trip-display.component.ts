@@ -12,6 +12,7 @@ import { Trip } from 'src/app/models/trip';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 import { TripService } from 'src/app/services/trip.service';
+import { addMinutes, daysBetween } from 'src/app/utils/file.utils';
 import { endDateAfterStartDate, isFuture } from 'src/app/validators/dates.validator';
 
 @Component({
@@ -165,15 +166,71 @@ export class TripDisplayComponent implements OnInit {
   }
 
   canDisplayActions(): boolean {
-    return this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
+    return this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator && this.trip.publicationDate === null;
   }
 
   canBeApplied(): boolean {
     return this.actor && this.actor.role === Role.EXPLORER && !this.hasExpired && !this.isCancelled;
   }
 
+  canBePublished(): boolean {
+    return this.trip.publicationDate === null;
+  }
+
+  canBeDeleted(): boolean {
+    const isCreator = this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
+    const daysTilStart = daysBetween(new Date(this.trip.startDate), new Date());
+
+    return isCreator && !this.trip.publicationDate && daysTilStart > 9;
+  }
+
+  canBeCancelled(): boolean {
+    const isCreator = this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
+    const daysTilStart = daysBetween(new Date(this.trip.startDate), new Date());
+
+    console.log(daysTilStart);
+
+    return isCreator && this.trip.publicationDate && !this.trip.cancellationDate && daysTilStart > 6;
+  }
+
   goToTripApplications(trip: Trip) {
     this.router.navigate(['/trips', trip._id, 'applications']);
+  }
+
+  publishTrip() {
+    const confirmMessage = $localize `Are you sure you want to publish this trip?`;
+    const pubDate = addMinutes(new Date(), 5);
+    if (confirm(confirmMessage)) {
+      this.tripService.publishTrip(this.trip, pubDate)
+      .then(trip => {
+        const successMsg = $localize `Trip published successfully, it will appear in the main page after 5 minutes`;
+        this.messageService.notifyMessage(successMsg, MessageType.SUCCESS)
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/trips', trip._id]);
+        });
+      })
+      .catch(_ => {
+        const errorMsg = $localize `An error ocurred while publishing the trip`;
+        this.messageService.notifyMessage(errorMsg, MessageType.DANGER)
+      })
+    }
+  }
+
+  deleteTrip() {
+    const trip = this.trip;
+    const confirmMessage = $localize `Are you sure you want to delete this trip?`;
+    if (confirm(confirmMessage)) {
+      this.tripService.deleteTrip(this.trip)
+      .then(_ => {
+        const successMsg = $localize `Trip ${trip.ticker} deleted successfully`;
+        this.messageService.notifyMessage(successMsg, MessageType.SUCCESS)
+        this.router.navigate(['/mytrips']);
+      })
+      .catch(_ => {
+        const errorMsg = $localize `An error ocurred while deleting the trip`;
+        this.messageService.notifyMessage(errorMsg, MessageType.DANGER)
+      })
+    }
   }
 
   deleteStage(stageId: string) {

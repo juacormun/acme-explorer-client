@@ -43,3 +43,13 @@ export function resizeImage(base64Str: string, maxWidth: number = 400, maxHeight
     }
   })
 }
+
+export function daysBetween(first: Date, second: Date) {
+  first.setHours(0,0,0,0);
+  second.setHours(0,0,0,0);
+  return Math.round((first.getTime() - second.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+export function addMinutes(date: Date, minutes: number) {
+  return new Date(date.getTime() + minutes*60000);
+}

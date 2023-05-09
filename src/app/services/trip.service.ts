@@ -113,4 +113,50 @@ export class TripService {
         })
     });
   }
+
+  deleteTrip(trip: Trip) {
+    const url = `${this.tripsUrl}/${trip._id}`;
+    const headers = this.authService.getHeaders();
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.delete<any>(url, { headers: headers } ))
+        .then(_ => {
+          resolve(_);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
+  publishTrip(trip: Trip, publicationDate: Date) {
+    const url = `${this.tripsUrl}/${trip._id}/publish`;
+    const headers = this.authService.getHeaders();
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.patch<Trip>(url, { publicationDate }, { headers: headers } ))
+        .then(updatedTrip => {
+          resolve(updatedTrip);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
+  cancelTrip(trip: Trip, cancellationReason: string) {
+    const url = `${this.tripsUrl}/${trip._id}/cancel`;
+    const headers = this.authService.getHeaders();
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.patch<Trip>(url, { cancellationReason }, { headers: headers } ))
+        .then(updatedTrip => {
+          resolve(updatedTrip);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
 }

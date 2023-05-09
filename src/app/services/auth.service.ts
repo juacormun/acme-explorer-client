@@ -145,8 +145,7 @@ export class AuthService {
     if (currentActor) {
       result = JSON.parse(currentActor)
     } else {
-      let message = $localize `User not found`;
-      this.messageService.notifyMessage(message, MessageType.DANGER);
+      console.log('User not found')
       result = new Actor();
     }
     return result;

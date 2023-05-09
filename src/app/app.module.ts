@@ -38,6 +38,7 @@ import { ActorListComponent } from './components/actor/actor-list/actor-list.com
 import { ActorDisplayComponent } from './components/actor/actor-display/actor-display.component';
 import { StageCreateComponent } from './components/trip/trip-display/modals/stage-create/stage-create.component';
 import { PictureCreateComponent } from './components/trip/trip-display/modals/picture-create/picture-create.component';
+import { TripCancelComponent } from './components/trip/trip-display/modals/trip-cancel/trip-cancel.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { PictureCreateComponent } from './components/trip/trip-display/modals/pi
     ActorDisplayComponent,
     StageCreateComponent,
     PictureCreateComponent,
+    TripCancelComponent,
   ],
   imports: [
     BrowserModule,
