@@ -11,25 +11,30 @@
       <button i18n class="btn btn-outline-secondary" type="submit">Search</button>
     </div>
     <div *ngIf="activeRole === 'explorer'" class="row">
-      <div class="col-6 col-md-2  col-xl-1 offset-xl-3">
+      <div class="col-6 col-md-2  col-xl-1 offset-xl-2">
         <label i18n class="small">Min. Price</label>
-        <input class="form-control shadow-sm" type="number" min="0" aria-label="Search"
+        <input class="form-control shadow-sm" placeholder="€" type="number" min="0" aria-label="Min. Price"
           name="minPrice" ngModel />
       </div>
       <div class="col-6 col-md-2 col-xl-1">
         <label i18n class="small">Max. Price</label>
-        <input class="form-control shadow-sm" type="number" min="0" aria-label="Search"
+        <input class="form-control shadow-sm" placeholder="€" type="number" min="0" aria-label="Max. Price"
           name="maxPrice" ngModel />
       </div>
-      <div class="col-6 col-md-4 col-xl-2">
+      <div class="col-6 col-md-3 col-xl-2">
         <label i18n class="small">Minimum Date</label>
-        <input class="form-control shadow-sm" type="date" aria-label="Search"
+        <input class="form-control shadow-sm" type="date" aria-label="Minimum Date"
           name="minDate" ngModel />
       </div>
-      <div class="col-6 col-md-4 col-xl-2">
+      <div class="col-6 col-md-3 col-xl-2">
         <label i18n class="small">Maximum Date</label>
-        <input class="form-control shadow-sm" type="date" aria-label="Search"
+        <input class="form-control shadow-sm" type="date" aria-label="Maximum Date"
           name="maxDate" ngModel />
+      </div>
+      <div class="col-6 col-md-2 col-xl-1 offset-3 offset-md-0">
+        <label i18n class="small">Cache</label>
+        <input class="form-control shadow-sm" i18n-placeholder placeholder="hours" type="number" min="1" max="24" aria-label="Cache Time"
+          name="cacheTime" ngModel />
       </div>
     </div>
   </form>

@@ -48,6 +48,44 @@ export class TripService {
     return this.http.get<Trip[]>(url, { headers: headers } );
   }
 
+  getCachedTrips(queryId: string): Trip[] | undefined {
+    const cachedTrips = localStorage.getItem(queryId);
+    if (cachedTrips) {
+      const parsedTrips = JSON.parse(cachedTrips) as any;
+      const now = new Date().getTime();
+
+      if (now < parsedTrips.expirationDate) {
+        this.saveResultInCache(queryId, parsedTrips);
+        return parsedTrips.trips;
+      } else {
+        localStorage.removeItem(queryId);
+      }
+    }
+    return undefined;
+  }
+
+  saveResultInCache(queryId: any, finderResult: any) {
+    localStorage.setItem(queryId, JSON.stringify(finderResult));
+    this.clearExpiredCache();
+  }
+
+  clearExpiredCache() {
+    const now = new Date().getTime();
+    Object.keys(localStorage).forEach((key) => {
+      const cachedTrips = localStorage.getItem(key);
+      if (cachedTrips) {
+        try {
+          const parsedTrips = JSON.parse(cachedTrips) as any;
+          if (now > parsedTrips.expirationDate) {
+            localStorage.removeItem(key);
+          }
+        } catch (error) {
+          // console.log(cachedTrips);
+        }
+      }
+    });
+  }
+
   getTripApplications(id: string) {
     const url = `${this.tripsUrl}/${id}/applications`;
     const headers = this.authService.getHeaders();
