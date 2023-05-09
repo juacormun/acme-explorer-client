@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Role } from 'src/app/enums/RoleEnum';
 import { Actor } from 'src/app/models/actor';
 import { Picture } from 'src/app/models/picture';
 import { Trip } from 'src/app/models/trip';
 import { AuthService } from 'src/app/services/auth.service';
 import { TripService } from 'src/app/services/trip.service';
+import * as objectHash from 'object-hash';
 
 @Component({
   selector: 'app-trip-list',
@@ -16,6 +18,7 @@ export class TripListComponent implements OnInit {
 
   trips: Trip[];
   actor: Actor;
+  activeRole: string;
 
   constructor(
     private tripService: TripService,
@@ -24,19 +27,50 @@ export class TripListComponent implements OnInit {
   ) {
     this.trips = [];
     this.actor = new Actor();
+    this.activeRole = Role.ANONYMOUS;
   }
 
   ngOnInit(): void {
-    const query = {};
-    this.tripService.searchTrips(query).subscribe(trips => {
-      this.trips = trips;
-    });
     this.actor = this.authService.getCurrentActor();
+    this.activeRole = this.actor?.role || Role.ANONYMOUS;
+
+    const query = {};
+    const expirationDate = new Date().getTime() + (1 * 1000 * 60 * 60);
+    const queryId = objectHash.sha1(query);
+    const cachedTrips = this.tripService.getCachedTrips(queryId);
+    if (cachedTrips) {
+      this.trips = cachedTrips;
+      return;
+    } else {
+      this.tripService.searchTrips(query).subscribe((data: any) => {
+        this.trips = data;
+        this.tripService.saveResultInCache(queryId, { trips: this.trips, expirationDate });
+      });
+    }
   }
 
   searchTrips(form: NgForm) {
     const query = form.value;
-    this.tripService.searchTrips(query).subscribe((data: any) => (this.trips = data));
+    const cacheTime: number = form.value.cacheTime && form.value.cacheTime > 0 && form.value.cacheTime <= 24 ?
+      form.value.cacheTime : 1;
+    const expirationDate = new Date().getTime() + (cacheTime * 1000 * 60 * 60);
+    const queryId = objectHash.sha1(query);
+    const cachedTrips = this.tripService.getCachedTrips(queryId);
+    const maxResults = form.value.maxResults && form.value.maxResults > 0 && form.value.maxResults <= 100 ?
+      form.value.maxResults : 10;
+
+    if (cachedTrips) {
+      this.trips = cachedTrips;
+      return;
+    } else {
+      this.tripService.searchTrips(query).subscribe((data: any) => {
+        if (data.length > maxResults) {
+          data = data.slice(0, maxResults);
+        }
+        this.trips = data;
+        this.tripService.saveResultInCache(queryId, { trips: this.trips, expirationDate });
+      });
+    }
   }
 
   getTripMainPicture(trip: Trip): Picture {
