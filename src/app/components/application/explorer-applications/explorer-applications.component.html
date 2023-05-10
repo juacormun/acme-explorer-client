@@ -20,15 +20,15 @@
       <div *ngFor="let application of appByStatus.applications; let i=index" class="accordion-body">
         <div class="card-text row">
           <span class="col-2">#{{i+1}}</span>
-          <span class="col-4">{{application.comments}}</span>
+          <span class="col-4">{{ getCommentsText(application.comments) }}</span>
           <span class="col-2 text-center">{{application.createdAt | date:'shortDate'}}</span>
-          <span *ngIf="appByStatus._id === 'due'">
+          <div class="col-2 text-center">
+            <a i18n class="btn btn-light" href="#" routerLink="/trips/{{application.trip}}">Trip</a>
+          </div>
+          <div *ngIf="appByStatus._id === 'due'" class="col-2 text-center">
             <a i18n class="btn btn-primary" routerLink="/checkout">
               Checkout
             </a>
-          </span>
-          <div class="col-2 text-center">
-            <a i18n class="btn btn-light" href="#" routerLink="/trips/{{application.trip}}">Trip</a>
           </div>
         </div>
       </div>

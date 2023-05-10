@@ -27,6 +27,10 @@ export class ExplorerApplicationsComponent implements OnInit {
     })
   }
 
+  getCommentsText(comments: string) {
+    return comments ? comments : $localize`No comments`;
+  }
+
   getStatusName(st: Status) {
     return this.applicationService.getStatusName(st);
   }
