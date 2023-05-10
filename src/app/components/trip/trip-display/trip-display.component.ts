@@ -177,7 +177,7 @@ export class TripDisplayComponent implements OnInit {
     return this.trip.publicationDate === null;
   }
 
-  canBeDeleted(): boolean {
+  canBeModified(): boolean {
     const isCreator = this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
     const daysTilStart = daysBetween(new Date(this.trip.startDate), new Date());
 
