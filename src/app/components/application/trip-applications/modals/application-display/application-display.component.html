@@ -1,0 +1,68 @@
+<div id="displayModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="rejectionForm" (ngSubmit)="rejectApplication()">
+        <div class="modal-header">
+          <h1 i18n class="modal-title fs-3" id="exampleModalLabel">Application</h1>
+          <button #closeModalButton type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body row g-3">
+          <div class="alert alert-danger alert-dismissible fade d-flex justify-content-between show my-0" role="alert"
+            *ngIf="formError != null && formError.length > 0">
+            <span>{{formError}}</span>
+            <button class="btn btn-link text-decoration-none text-reset p-0" (click)="closeError()">
+              <strong>x</strong>
+            </button>
+          </div>
+          <div class="form-floating col-12 col-md-6">
+            <input type="text" class="form-control" id="explorer" disabled="true" value="{{application.explorer}}"/>
+            <label i18n class="px-4" for="explorer">Explorer</label>
+          </div>
+          <div class="form-floating col-12 col-md-6">
+            <input type="text" class="form-control" id="status" disabled="true" value="{{getStatusName(application.status)}}"/>
+            <label i18n class="px-4" for="status">Status</label>
+          </div>
+          <div *ngIf="application.rejectionReason" class="form-floating col-md-12">
+            <textarea class="form-control" id="rejectionReason" style="height: 150px" disabled="true" value="{{application.rejectionReason}}"></textarea>
+            <label i18n class="px-4" for="rejectionReason">Rejection reason</label>
+          </div>
+          <div *ngIf="application.paidAt" class="form-floating col-md-12">
+            <input class="form-control" id="paidAt" disabled="true" value="{{application.paidAt | date: 'shortDate'}}">
+            <label i18n class="px-4" for="paidAt">Paid at</label>
+          </div>
+          <div *ngIf="application.cancellationDate" class="form-floating col-md-12">
+            <input class="form-control" id="cancellationDate" disabled="true" value="{{application.cancellationDate | date: 'shortDate'}}">
+            <label i18n class="px-4" for="cancellationDate">Cancellation date</label>
+          </div>
+          <div class="form-floating col-md-12">
+            <textarea class="form-control" id="comments" style="height: 150px" disabled="true" value="{{application.comments}}"></textarea>
+            <label i18n class="px-4" for="comments">Comments</label>
+          </div>
+          <div *ngIf="canChangeStatus()" class="mt-0">
+            <hr>
+            <div class="d-grid">
+              <button i18n class="btn btn-primary" type="button" (click)="acceptApplication()">Accept</button>
+            </div>
+            <hr>
+            <div class="form-floating col-md-12">
+              <textarea class="form-control" id="reason" formControlName="reason" required style="height: 100px"></textarea>
+              <label i18n class="px-4" for="reason">Reason</label>
+              <div *ngIf="reason!.errors?.['required']" class="text-danger mb-0" i18n>
+                Please, fill in this field
+              </div>
+              <div *ngIf="reason!.errors?.['minlength']" class="text-danger mb-0" i18n>
+                Introduce, at least, 10 characters
+              </div>
+              <div *ngIf="reason!.errors?.['maxlength']" class="text-danger mb-0" i18n>
+                The maximum number of characters allowed is 255
+              </div>
+            </div>
+            <div class="d-grid mt-3">
+              <button i18n class="btn btn-danger" type="submit" [disabled]="rejectionForm.invalid">Reject</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

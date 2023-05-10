@@ -9,7 +9,7 @@
         <div class="d-flex py-2 justify-content-around py-md-0 justify-content-md-end">
           <button *ngIf="canDisplayActions() && !infoFormIsEditable" i18n class="btn btn-sm btn-info" (click)="goToTripApplications(trip)">Applications</button>
           <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBePublished()" i18n class="btn btn-sm btn-secondary" (click)="publishTrip()">Publish</button>
-          <button *ngIf="canDisplayActions() && !infoFormIsEditable" i18n class="btn btn-sm btn-primary" (click)="toggleEditInfo()">Edit</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" i18n class="btn btn-sm btn-primary" (click)="toggleEditInfo()">Edit</button>
           <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeDeleted()" i18n class="btn btn-sm btn-danger" (click)="deleteTrip()">Delete</button>
           <button *ngIf="canBeCancelled()" i18n class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
           <button *ngIf="canBeApplied()" i18n class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
@@ -136,7 +136,7 @@
         <div id="collapse{{i}}" class="accordion-collapse collapse" attr.aria-labelledby="heading{{i}}" data-bs-parent="#stagesAccordion">
           <div class="accordion-body">
             <p>{{stage.description}}</p>
-            <div *ngIf="canDisplayActions()" class="d-flex justify-content-between">
+            <div *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" class="d-flex justify-content-between">
               <span><ng-container i18n>Price:</ng-container> {{stage.price}}</span>
               <button i18n class="btn btn-sm btn-danger" (click)="deleteStage(stage._id)">Delete</button>
             </div>
@@ -144,7 +144,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="canDisplayActions()" class="px-2 py-2 mt-0" id="stagesActions">
+    <div *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" class="px-2 py-2 mt-0" id="stagesActions">
       <div class="d-flex justify-content-around">
         <div class="text-center">
           <button i18n class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#stageModal">New</button>
@@ -168,14 +168,14 @@
             data-holder-rendered="true">
           <div class="card-body">
             <h5 class="card-title">{{picture.title}}</h5>
-            <div *ngIf="canDisplayActions()" class="d-flex justify-content-end">
+            <div *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" class="d-flex justify-content-end">
               <button i18n class="btn btn-sm btn-danger" (click)="deletePicture(picture._id)">Delete</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div *ngIf="canDisplayActions()" class="px-2 py-3 mt-0" id="picturesActions">
+    <div *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" class="px-2 py-3 mt-0" id="picturesActions">
       <div class="d-flex justify-content-around">
         <div class="text-center">
           <button i18n class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pictureModal">New</button>

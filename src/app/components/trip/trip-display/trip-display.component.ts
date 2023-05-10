@@ -166,7 +166,7 @@ export class TripDisplayComponent implements OnInit {
   }
 
   canDisplayActions(): boolean {
-    return this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator && this.trip.publicationDate === null;
+    return this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
   }
 
   canBeApplied(): boolean {

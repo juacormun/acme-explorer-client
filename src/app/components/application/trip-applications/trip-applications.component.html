@@ -34,34 +34,7 @@
     [limit]="10"
     [sorts]="sorts">
 
-    <!-- Row Detail Template -->
-    <ngx-datatable-row-detail [rowHeight]="50" #myDetailRow>
-      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-        <p class="text-center">{{row.comments}}</p>
-      </ng-template>
-    </ngx-datatable-row-detail>
-
      <!-- Column Templates -->
-    <ngx-datatable-column
-     [width]="50"
-     [resizeable]="false"
-     [sortable]="false"
-     [draggable]="false"
-     [canAutoResize]="false"
-    >
-      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-        <a
-          href="javascript:void(0)"
-          [class.datatable-icon-right]="!expanded"
-          [class.datatable-icon-down]="expanded"
-          title="Expand/Collapse Row"
-          class="btn btn-light py-0"
-          (click)="toggleExpandRow(row)"
-        >
-        +
-        </a>
-      </ng-template>
-    </ngx-datatable-column>
     <ngx-datatable-column i18n-name name="Explorer" prop="explorer">
       <ng-template let-value="value" ngx-datatable-cell-template>
         <p>{{ value }}</p>
@@ -70,7 +43,7 @@
 
     <ngx-datatable-column i18n-name name="Status" prop="status">
       <ng-template let-value="value" ngx-datatable-cell-template>
-        <p>{{ value }}</p>
+        <p>{{ getStatusName(value) }}</p>
       </ng-template>
     </ngx-datatable-column>
 
@@ -81,18 +54,12 @@
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column i18n-name name="Cancellation date" prop="cancellationDate">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p *ngIf="value">{{ value | date:'shortDate' }}</p>
-        <p class="text-center" *ngIf="!value"> - </p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Cancellation reason" prop="cancellationReason">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p *ngIf="value">{{ value }}</p>
-        <p class="text-center" *ngIf="!value"> - </p>
+    <ngx-datatable-column i18n-name name="Actions">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <button i18n class="btn btn-sm btn-info" (click)="showApplicationDetails(row)" data-bs-toggle="modal" data-bs-target="#displayModal">Details</button>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>
 </div>
+
+<app-application-display [application]="selectedApplication" [actor]="actor"></app-application-display>

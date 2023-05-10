@@ -6,7 +6,8 @@ export class Application extends Entity {
   private _trip: string;
   private _status: Status;
   private _cancellationDate!: Date;
-  private _cancellationReason!: string;
+  private _rejectionReason!: string;
+  private _paidAt!: Date;
   private _comments: string;
 
   constructor () {
@@ -45,11 +46,18 @@ export class Application extends Entity {
     this._cancellationDate = value;
   }
 
-  public get cancellationReason(): string {
-    return this._cancellationReason;
+  public get rejectionReason(): string {
+    return this._rejectionReason;
   }
-  public set cancellationReason(value: string) {
-    this._cancellationReason = value;
+  public set rejectionReason(value: string) {
+    this._rejectionReason = value;
+  }
+
+  public get paidAt(): Date {
+    return this._paidAt;
+  }
+  public set paidAt(value: Date) {
+    this._paidAt = value;
   }
 
   public get comments(): string {
