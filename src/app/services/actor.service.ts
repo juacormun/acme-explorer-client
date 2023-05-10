@@ -51,8 +51,8 @@ export class ActorService {
         .then(updatedActor => {
           resolve(updatedActor);
         })
-        .catch(_ => {
-          reject(new Actor());
+        .catch(error => {
+          reject(error);
         })
     });
   }

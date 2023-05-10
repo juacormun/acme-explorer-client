@@ -1,22 +1,22 @@
 export class Stage {
-  private _id: string;
+  private __id: string;
   private _title: string;
   private _description: string;
   private _price: number;
 
   constructor() {
-    this._id = '';
+    this.__id = '';
     this._title = '';
     this._description = '';
     this._price = 0;
   }
 
-  get id(): string {
-    return this._id;
+  get _id(): string {
+    return this.__id;
   }
 
-  set id(value: string) {
-    this._id = value;
+  set _id(value: string) {
+    this.__id = value;
   }
 
   get title(): string {

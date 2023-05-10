@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 import { ApplicationsByStatus } from '../models/applications-by-status';
 import { Status } from '../enums/StatusEnum';
+import { Application } from '../models/application';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,36 @@ export class ApplicationService {
     const url = `${this.applicationsUrl}`;
     const headers = this.authService.getHeaders();
     return this.http.get<ApplicationsByStatus[]>(url, { headers: headers } );
+  }
+
+  acceptApplication(application: Application) {
+    const url = `${this.applicationsUrl}/${application._id}/accept`;
+    const headers = this.authService.getHeaders();
+
+    return new Promise<Application>((resolve, reject) => {
+      firstValueFrom(this.http.patch<Application>(url, {}, { headers: headers } ))
+        .then(updatedApplication => {
+          resolve(updatedApplication);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
+  rejectApplication(application: Application, rejectionReason: string) {
+    const url = `${this.applicationsUrl}/${application._id}/reject`;
+    const headers = this.authService.getHeaders();
+
+    return new Promise<Application>((resolve, reject) => {
+      firstValueFrom(this.http.patch<Application>(url, { rejectionReason }, { headers: headers } ))
+        .then(updatedApplication => {
+          resolve(updatedApplication);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
   }
 
   getStatusName(st: Status) {

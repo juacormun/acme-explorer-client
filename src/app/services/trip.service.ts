@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Trip } from '../models/trip';
 import { AuthService } from './auth.service';
 import { Application } from '../models/application';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -100,4 +101,100 @@ export class TripService {
     console.log(body)
     return this.http.post<Application>(url, body, { headers: headers });
   }
+
+  createTrip(trip: Trip) {
+    const url = this.tripsUrl;
+    const headers = this.authService.getHeaders();
+
+    const newTrip = {
+      title: trip.title,
+      description: trip.description,
+      requirements: trip.requirements,
+      startDate: trip.startDate,
+      endDate: trip.endDate
+    };
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.post<Trip>(url, newTrip, { headers: headers } ))
+        .then(trip => {
+          resolve(trip);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
+  updateTrip(trip: Trip) {
+    const url = `${this.tripsUrl}/${trip._id}`;
+    const headers = this.authService.getHeaders();
+
+    const newTrip = {
+      creator: trip.creator,
+      title: trip.title,
+      description: trip.description,
+      requirements: trip.requirements,
+      startDate: trip.startDate,
+      endDate: trip.endDate,
+      price: trip.price,
+      stages: trip.stages,
+      pictures: trip.pictures
+    };
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.put<Trip>(url, newTrip, { headers: headers } ))
+        .then(updatedtrip => {
+          resolve(updatedtrip);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
+  deleteTrip(trip: Trip) {
+    const url = `${this.tripsUrl}/${trip._id}`;
+    const headers = this.authService.getHeaders();
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.delete<any>(url, { headers: headers } ))
+        .then(_ => {
+          resolve(_);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
+  publishTrip(trip: Trip, publicationDate: Date) {
+    const url = `${this.tripsUrl}/${trip._id}/publish`;
+    const headers = this.authService.getHeaders();
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.patch<Trip>(url, { publicationDate }, { headers: headers } ))
+        .then(updatedTrip => {
+          resolve(updatedTrip);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
+  cancelTrip(trip: Trip, cancellationReason: string) {
+    const url = `${this.tripsUrl}/${trip._id}/cancel`;
+    const headers = this.authService.getHeaders();
+
+    return new Promise<Trip>((resolve, reject) => {
+      firstValueFrom(this.http.patch<Trip>(url, { cancellationReason }, { headers: headers } ))
+        .then(updatedTrip => {
+          resolve(updatedTrip);
+        })
+        .catch(error => {
+          reject(error);
+        })
+    });
+  }
+
 }

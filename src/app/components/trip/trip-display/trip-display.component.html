@@ -1,45 +1,199 @@
-<div class="breadcrumb">
-  <legend class="d-flex justify-content-between">
-    <div>
-      <h5>
-        <span style="margin-right: 15px;">{{ trip.title }}</span>
-        <span *ngIf="isCancelled" i18n class="badge bg-danger">Cancelled</span>
+<div class="form-info row m-auto">
+  <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h4 class="mb-0">{{trip.ticker}}</h4>
+        <p class="text-muted mb-0"><small><ng-container i18n>Created at</ng-container> {{trip.createdAt | date: 'shortDate'}}</small></p>
+      </div>
+      <div class="col-12 col-md-6" id="buttons">
+        <div class="d-flex py-2 justify-content-around py-md-0 justify-content-md-end">
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable" i18n class="btn btn-sm btn-info" (click)="goToTripApplications(trip)">Applications</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBePublished()" i18n class="btn btn-sm btn-secondary" (click)="publishTrip()">Publish</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeModified()" i18n class="btn btn-sm btn-primary" (click)="toggleEditInfo()">Edit</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeModified()" i18n class="btn btn-sm btn-danger" (click)="deleteTrip()">Delete</button>
+          <button *ngIf="canBeCancelled()" i18n class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
+          <button *ngIf="canBeApplied()" i18n class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="infoForm" (ngSubmit)="onInfoFormSubmit()">
+      <h5 class="text-center mb-3">
+        <span *ngIf="isCancelled" i18n class="badge bg-danger" data-toggle="tooltip" data-html="true" title="{{trip.cancellationReason}}">Cancelled</span>
         <span *ngIf="hasExpired" i18n class="badge bg-dark">Expired</span>
         <span *ngIf="isAboutToStart" class="badge bg-primary">
-          <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n>
-            days</span>
+          <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n> days</span>
         </span>
       </h5>
-      <h6 class="card-subtitle mb-2 text-muted">
-        {{ trip.startDate | date: 'shortDate' }} - {{ trip.endDate | date: 'shortDate' }}
-      </h6>
-    </div>
-    <button i18n class="btn btn-light" (click)="goBack()">Trips</button>
-  </legend>
+      <div class="row g-3">
+        <input type="hidden" class="form-control" id="_id" formControlName="_id" required>
+        <input type="hidden" class="form-control" id="creator" formControlName="creator" required>
+        <input type="hidden" class="form-control" id="stages" formControlName="stages" required>
+        <input type="hidden" class="form-control" id="pictures" formControlName="pictures" required>
+
+        <div class="form-floating col-md-9">
+          <input id="title" class="form-control" type="text" formControlName="title" required>
+          <label i18n class="px-4" for="title">Title</label>
+          <div *ngIf="title!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="title!.errors?.['maxlength']" class="text-danger mb-0" i18n>
+            The maximum number of characters allowed is 100
+          </div>
+        </div>
+        <div class="form-floating col-md-3">
+          <input id="price" class="form-control" type="number" step="0.01" min="0" formControlName="price" required>
+          <label i18n class="px-4" for="price">Price</label>
+          <div *ngIf="price!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="price!.errors?.['min']" class="text-danger mb-0" i18n>
+            You can't set a negative amount
+          </div>
+        </div>
+        <div class="form-floating col-md-12">
+          <textarea class="form-control" id="description" formControlName="description" required style="height: 100px"></textarea>
+          <label i18n class="px-4" for="description">Description</label>
+          <div *ngIf="description!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="description!.errors?.['minlength']" class="text-danger mb-0" i18n>
+            Introduce, at least, 10 characters
+          </div>
+          <div *ngIf="description!.errors?.['maxlength']" class="text-danger mb-0" i18n>
+            The maximum number of characters allowed is 255
+          </div>
+        </div>
+
+        <div class="form-floating col-12">
+          <textarea class="form-control" id="requirements" formControlName="requirements" required style="height: 100px"></textarea>
+            <label i18n class="px-4" for="requirements">Requirements</label>
+            <div *ngIf="requirements!.errors?.['required']" class="text-danger mb-0" i18n>
+              Please, fill in this field
+            </div>
+            <div *ngIf="requirements!.errors?.['minlength']" class="text-danger mb-0" i18n>
+              Introduce, at least, 10 characters
+            </div>
+            <div *ngIf="requirements!.errors?.['maxlength']" class="text-danger mb-0" i18n>
+              The maximum number of characters allowed is 255
+            </div>
+        </div>
+
+        <div class="form-floating col-12 col-md-6">
+          <input type="date" class="form-control" id="startDate" formControlName="startDate" required>
+          <label i18n class="px-4" for="startDate">Start date</label>
+          <div *ngIf="startDate!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="startDate!.errors?.['isFuture']" class="text-danger mb-0" i18n>
+            It is not allowed to introduce a past date
+          </div>
+        </div>
+
+        <div class="form-floating col-12 col-md-6">
+          <input type="date" class="form-control" id="endDate" formControlName="endDate" required>
+          <label i18n class="px-4" for="endDate">End date</label>
+          <div *ngIf="endDate!.errors?.['required']" class="text-danger mb-0" i18n>
+            Please, fill in this field
+          </div>
+          <div *ngIf="endDate!.errors?.['isFuture']" class="text-danger mb-0" i18n>
+            It is not allowed to introduce a past date
+          </div>
+        </div>
+
+        <div *ngIf="infoForm!.errors?.['endDateAfterStartDate']" class="col-12 text-center text-danger my-0" i18n>
+          End date must be after start date
+        </div>
+
+        <div *ngIf="canDisplayActions() && infoFormIsEditable" class="d-flex justify-content-around">
+          <div class="text-center">
+            <button i18n class="btn btn-block btn-primary" type="submit" [disabled]="infoForm.invalid">Save</button>
+          </div>
+          <div class="text-center">
+            <button i18n class="btn btn-block btn-danger" (click)="toggleEditInfo()">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
 </div>
 
-<div class="card">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-4">
-        <img [src]="getMainPicture().image" class="img-fluid rounded" [alt]="getMainPicture().title">
+<div id="stagesSection">
+  <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+    <hr>
+    <h4 i18n class="text-center">Stages</h4>
+    <p *ngIf="!trip.stages || trip.stages.length == 0" class="text-muted text-center mb-0">
+      Sorry, no stages found for this trip.
+    </p>
+    <div *ngIf="trip.stages && trip.stages.length > 0" id="stagesAccordion" class="accordion p-2">
+      <div *ngFor="let stage of trip.stages; let i = index" class="accordion-item">
+        <h5 class="accordion-header" id="heading{{i}}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#collapse{{i}}" aria-expanded="false" attr.aria-controls="#collapse{{i}}">
+            {{stage.title}}
+          </button>
+        </h5>
+
+        <div id="collapse{{i}}" class="accordion-collapse collapse" attr.aria-labelledby="heading{{i}}" data-bs-parent="#stagesAccordion">
+          <div class="accordion-body">
+            <p>{{stage.description}}</p>
+            <div *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" class="d-flex justify-content-between">
+              <span><ng-container i18n>Price:</ng-container> {{stage.price}}</span>
+              <button i18n class="btn btn-sm btn-danger" (click)="deleteStage(stage._id)">Delete</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-8">
-        <p class="card-text">{{ trip.description }}</p>
-        <p class="card-text"><strong i18n>Price:</strong> {{ trip.price }}</p>
-        <p class="card-text"><strong i18n>Requirements:</strong> {{ trip.requirements }}</p>
+    </div>
+    <div *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" class="px-2 py-2 mt-0" id="stagesActions">
+      <div class="d-flex justify-content-around">
+        <div class="text-center">
+          <button i18n class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#stageModal">New</button>
+        </div>
       </div>
     </div>
   </div>
-  <div *ngIf="canDisplayActions()" class="card-footer text-muted d-flex justify-content-around" id="tripActions">
-    <button i18n class="btn btn-primary mr-2">Edit</button>
-    <button i18n class="btn btn-danger mr-2">Delete</button>
-    <button i18n class="btn btn-info" (click)="displayTripApplications(trip)">Applications</button>
-  </div>
-  <div *ngIf="canBeApplied()" class="card-footer text-muted d-flex justify-content-center" id="tripApplication">
-    <button i18n class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
+</div>
+
+<div id="picturesSection">
+  <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+    <hr>
+    <h5 i18n class="text-center">Pictures</h5>
+    <p *ngIf="!trip.pictures || trip.pictures.length == 0" class="text-muted text-center mb-0">
+      Sorry, no pictures found for this trip.
+    </p>
+    <div *ngIf="trip.pictures && trip.pictures.length > 0" id="picturesList" class="row py-2">
+      <div *ngFor="let picture of trip.pictures" class="col-md-4">
+        <div class="card mb-4 box-shadow clickable-card">
+          <img class="card-img-top" src="{{picture.image}}" [alt]="picture.title"
+            data-holder-rendered="true">
+          <div class="card-body">
+            <h5 class="card-title">{{picture.title}}</h5>
+            <div *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" class="d-flex justify-content-end">
+              <button i18n class="btn btn-sm btn-danger" (click)="deletePicture(picture._id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="canDisplayActions() && !infoFormIsEditable && !trip.publicationDate" class="px-2 py-3 mt-0" id="picturesActions">
+      <div class="d-flex justify-content-around">
+        <div class="text-center">
+          <button i18n class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pictureModal">New</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<div *ngIf="sponsorship != null" class="row">
+  <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+    <hr>
+    <a [href]="sponsorship.link">
+    <img [src]="sponsorship.banner" class="img-fluid rounded" [alt]="sponsorship.link">
+    </a>
+  </div>
+</div>
+
 
 <div id="applicationModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -65,32 +219,8 @@
   </div>
 </div>
 
-<div *ngIf="trip.stages && trip.stages.length > 0" class="mt-3" id="stagesAccordion">
-  <h4 i18n>Stages</h4>
-  <div *ngFor="let stage in trip.stages" class="card">
-    <div class="card-header" id="heading{{stage._id}}">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" attr.data-target="#collapse{{stage._id}}"
-          aria-expanded="true" attr.aria-controls="collapse{{stage._id}}">
-          {{stage.title}}
-        </button>
-      </h5>
-    </div>
+<app-stage-create [trip]="trip"></app-stage-create>
 
-    <div id="collapse{{stage._id}}" class="collapse show" attr.aria-labelledby="heading{{stage._id}}"
-      data-parent="#accordion">
-      <div class="card-body">
-        <span i18n>Price: </span>{{stage.price}}
-        <p>{{stage.description}}</p>
-      </div>
-    </div>
-  </div>
-</div>
+<app-picture-create [trip]="trip"></app-picture-create>
 
-<div *ngIf="sponsorship != null" class="row mt-3">
-  <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
-    <a [href]="sponsorship.link">
-      <img [src]="sponsorship.banner" class="img-fluid rounded" [alt]="sponsorship.link">
-    </a>
-  </div>
-</div>
+<app-trip-cancel [trip]="trip"></app-trip-cancel>
