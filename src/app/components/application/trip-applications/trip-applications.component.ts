@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Status } from 'src/app/enums/StatusEnum';
 import { Actor } from 'src/app/models/actor';
 import { Application } from 'src/app/models/application';

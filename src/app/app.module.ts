@@ -24,7 +24,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TripApplicationsComponent } from './components/application/trip-applications/trip-applications.component';
 import { MessageComponent } from './components/master/message/message.component';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ExplorerApplicationsComponent } from './components/application/explorer-applications/explorer-applications.component';
 import { SponsorshipListComponent } from './components/sponsorship/sponsorship-list/sponsorship-list.component';
 import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorship-display/sponsorship-display.component';
@@ -79,7 +78,6 @@ import { ApplicationDisplayComponent } from './components/application/trip-appli
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
-    NgxDatatableModule,
     CountdownModule,
     NgxPayPalModule
   ],

@@ -2,43 +2,25 @@
   Sorry, no sponsorships found.
 </div>
 
-<div *ngIf="sponsorships && sponsorships.length > 0">
-  <ngx-datatable [rows]="sponsorships"
-    #sponsorshipTable
-    class="material"
-    [headerHeight]="40"
-    [footerHeight]="80"
-    [loadingIndicator]="loadingIndicator"
-    rowHeight="auto"
-    [columnMode]="ColumnMode.force"
-    [reorderable]="reorderable"
-    [limit]="10"
-    [sorts]="sorts"
-    [scrollbarH]="true">
-
-    <ngx-datatable-column i18n-name name="Trip" prop="trip">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <a href="#" routerLink="/trips/{{ value._id }}">{{ value.ticker }}</a>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Link" prop="link">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <a href="{{value}}">{{ value }}</a>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Paid date" prop="paidAt">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p i18n *ngIf="value">{{ value | date }}</p>
-        <p i18n *ngIf="!value">Pending</p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Actions" prop="_id">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <button i18n class="btn btn-info" routerLink="/sponsorships/{{ value }}">Details</button>
-      </ng-template>
-    </ngx-datatable-column>
-  </ngx-datatable>
-</div>
+<table *ngIf="sponsorships && sponsorships.length > 0" id="sponsorshipTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th i18n scope="col">Trip</th>
+      <th i18n scope="col">Link</th>
+      <th i18n scope="col" class="text-center">Paid at</th>
+      <th i18n scope="col" class="text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sponsorship of sponsorships">
+      <td class="align-middle" scope="row">{{sponsorship.trip.ticker}}</td>
+      <td class="align-middle">{{sponsorship.link}}</td>
+      <td *ngIf="sponsorship.paidAt" class="text-center align-middle">{{sponsorship.paidAt | date: 'shortDate'}}</td>
+      <td *ngIf="!sponsorship.paidAt" class="text-center align-middle"> - </td>
+      <td class="text-center align-middle">
+        <a i18n class="btn btn-info" routerLink="/sponsorships/{{ sponsorship._id }}">Details</a>
+        <a i18n class="btn btn-secondary" routerLink="/trips/{{ sponsorship.trip._id }}">Trip</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
