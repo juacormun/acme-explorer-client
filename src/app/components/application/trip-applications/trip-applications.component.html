@@ -1,19 +1,12 @@
-<div class="breadcrumb">
-  <legend class="d-flex justify-content-between">
-    <h5 i18n class="my-auto">Applications</h5>
-    <button i18n class="btn btn-light" (click)="goBack()">Trip</button>
-  </legend>
-</div>
-
-<div class="card mb-4">
-  <div i18n class="card-header">
-    Trip info
+<div class="row mb-3">
+  <div class="col-12 col-md-6">
+    <h5 class="mb-0">{{trip.ticker}} - <ng-container i18n>Applications</ng-container></h5>
+    <p class="text-muted mb-0"><small><ng-container i18n>Created at</ng-container> {{trip.createdAt | date: 'shortDate'}}</small></p>
   </div>
-  <div class="card-body row">
-    <div class="col-2 text-center">{{trip.ticker}}</div>
-    <div class="col-4">{{trip.title}}</div>
-    <div class="col-3 text-center">{{trip.startDate | date:'shortDate'}}</div>
-    <div class="col-3 text-center">{{trip.endDate | date:'shortDate'}}</div>
+  <div class="col-12 col-md-6" id="buttons">
+    <div class="d-flex py-2 justify-content-around py-md-0 justify-content-md-end">
+      <button i18n class="btn btn-light" (click)="goBack()">Trip</button>
+    </div>
   </div>
 </div>
 
@@ -21,45 +14,25 @@
   Sorry, no applications found.
 </div>
 
-<div *ngIf="applications && applications.length > 0">
-  <ngx-datatable [rows]="applications"
-    #applicationsTable
-    class="material"
-    [headerHeight]="40"
-    [footerHeight]="80"
-    [loadingIndicator]="loadingIndicator"
-    rowHeight="auto"
-    [columnMode]="ColumnMode.force"
-    [reorderable]="reorderable"
-    [limit]="10"
-    [sorts]="sorts">
-
-     <!-- Column Templates -->
-    <ngx-datatable-column i18n-name name="Explorer" prop="explorer">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p>{{ value }}</p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Status" prop="status">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p>{{ getStatusName(value) }}</p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Creation date" prop="createdAt">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p *ngIf="value">{{ value | date:'shortDate' }}</p>
-        <p class="text-center" *ngIf="!value"> - </p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Actions">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        <button i18n class="btn btn-sm btn-info" (click)="showApplicationDetails(row)" data-bs-toggle="modal" data-bs-target="#displayModal">Details</button>
-      </ng-template>
-    </ngx-datatable-column>
-  </ngx-datatable>
-</div>
+<table *ngIf="applications && applications.length > 0" id="applicationTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th i18n scope="col">Explorer</th>
+      <th i18n scope="col" class="text-center">Status</th>
+      <th i18n scope="col" class="text-center">Creation date</th>
+      <th i18n scope="col" class="text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let application of applications">
+      <td class="align-middle" scope="row">{{application.explorer}}</td>
+      <td class="text-center align-middle">{{ getStatusName(application.status) }}</td>
+      <td class="text-center align-middle">{{application.createdAt | date: 'shortDate'}}</td>
+      <td class="text-center align-middle">
+        <button i18n class="btn btn-sm btn-info" (click)="showApplicationDetails(application)" data-bs-toggle="modal" data-bs-target="#displayModal">Details</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <app-application-display [application]="selectedApplication" [actor]="actor"></app-application-display>

@@ -4,7 +4,6 @@ import { Actor } from 'src/app/models/actor';
 import { Sponsorship } from 'src/app/models/sponsorship';
 import { AuthService } from 'src/app/services/auth.service';
 import { SponsorshipService } from 'src/app/services/sponsorship.service';
-import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-sponsorship-list',
@@ -15,23 +14,6 @@ export class SponsorshipListComponent implements OnInit {
 
   sponsorships: Sponsorship[];
   actor: Actor;
-
-  sorts = [{
-    prop: 'id',
-    dir: 'desc'
-  },
-  {
-    prop: 'link',
-    dir: 'desc'
-  },
-  {
-    prop: 'paidAt',
-    dir: 'desc'
-  },]
-
-  loadingIndicator = true;
-  reorderable = true;
-  ColumnMode = ColumnMode;
 
   constructor(
     private sponsorshipService: SponsorshipService,

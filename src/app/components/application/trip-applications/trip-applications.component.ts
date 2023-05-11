@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Status } from 'src/app/enums/StatusEnum';
 import { Actor } from 'src/app/models/actor';
 import { Application } from 'src/app/models/application';
@@ -21,19 +20,6 @@ export class TripApplicationsComponent implements OnInit {
   applications: Application[];
   selectedApplication: Application;
   actor: Actor;
-
-  @ViewChild('applicationsTable') table: any;
-
-  sorts = [
-    { prop: 'explorer', dir: 'desc' },
-    { prop: 'status', dir: 'desc' },
-    { prop: 'cancellationDate', dir: 'desc' },
-    { prop: 'cancellationReason', dir: 'desc' }
-  ];
-
-  loadingIndicator = true;
-  reorderable = true;
-  ColumnMode = ColumnMode;
 
   constructor(
     private tripService: TripService,
