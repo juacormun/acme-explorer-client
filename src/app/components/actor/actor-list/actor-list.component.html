@@ -6,47 +6,23 @@
   Sorry, no actors found.
 </div>
 
-<div *ngIf="actors && actors.length > 0">
-  <ngx-datatable [rows]="actors"
-    #sponsorshipTable
-    class="material"
-    [headerHeight]="40"
-    [footerHeight]="80"
-    [loadingIndicator]="loadingIndicator"
-    rowHeight="auto"
-    [columnMode]="ColumnMode.force"
-    [reorderable]="reorderable"
-    [limit]="10"
-    [sorts]="sorts">
-
-    <ngx-datatable-column i18n-name name="Name" prop="name">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p>{{ value }}</p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Surname" prop="surname">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p>{{ value }}</p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Email" prop="email">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p>{{ value }}</p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Role" prop="role">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <p>{{ getRoleName(value) }}</p>
-      </ng-template>
-    </ngx-datatable-column>
-
-    <ngx-datatable-column i18n-name name="Actions" prop="_id">
-      <ng-template let-value="value" ngx-datatable-cell-template>
-        <a i18n class="btn btn-info" routerLink="/actors/{{ value }}">Details</a>
-      </ng-template>
-    </ngx-datatable-column>
-  </ngx-datatable>
-</div>
+<table *ngIf="actors && actors.length > 0" id="actorTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th i18n scope="col">Name</th>
+      <th i18n scope="col">Surname</th>
+      <th i18n scope="col">Email</th>
+      <th i18n scope="col">Role</th>
+      <th i18n scope="col" class="text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let actor of actors">
+      <td class="align-middle" scope="row">{{actor.name}}</td>
+      <td class="align-middle">{{actor.surname}}</td>
+      <td class="align-middle">{{actor.email}}</td>
+      <td class="align-middle">{{ getRoleName(actor.role) }}</td>
+      <td class="text-center align-middle"><a i18n class="btn btn-info" routerLink="/actors/{{ actor._id }}">Details</a></td>
+    </tr>
+  </tbody>
+</table>

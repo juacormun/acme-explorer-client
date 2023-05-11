@@ -16,19 +16,6 @@ export class ActorListComponent implements OnInit {
 
   actors: Actor[];
 
-  @ViewChild('actorsTable') table: any;
-
-  sorts = [
-    { prop: 'Name', dir: 'desc' },
-    { prop: 'Surname', dir: 'desc' },
-    { prop: 'Email', dir: 'desc' },
-    { prop: 'Role', dir: 'desc' },
-  ];
-
-  loadingIndicator = true;
-  reorderable = true;
-  ColumnMode = ColumnMode;
-
   constructor(
     private actorService: ActorService,
     private router: Router

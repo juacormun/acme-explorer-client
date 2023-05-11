@@ -22,19 +22,6 @@ export class TripApplicationsComponent implements OnInit {
   selectedApplication: Application;
   actor: Actor;
 
-  @ViewChild('applicationsTable') table: any;
-
-  sorts = [
-    { prop: 'explorer', dir: 'desc' },
-    { prop: 'status', dir: 'desc' },
-    { prop: 'cancellationDate', dir: 'desc' },
-    { prop: 'cancellationReason', dir: 'desc' }
-  ];
-
-  loadingIndicator = true;
-  reorderable = true;
-  ColumnMode = ColumnMode;
-
   constructor(
     private tripService: TripService,
     private applicationService: ApplicationService,

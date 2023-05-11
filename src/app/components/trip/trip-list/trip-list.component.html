@@ -58,7 +58,7 @@
         <h5 class="card-title">{{trip.title}}</h5>
         <p class="card-text text-justify">{{trip.description | slice:0:125}}</p>
         <div class="d-flex justify-content-end align-items-center">
-          <small [ngClass]="isAboutToStart(trip) ? 'text-secondary fw-bold' : 'text-muted'">
+          <small [ngClass]="isAboutToStart(trip) ? '' : 'text-muted'">
             {{trip.startDate | date: 'shortDate'}} - {{trip.endDate | date: 'shortDate'}}
           </small>
         </div>

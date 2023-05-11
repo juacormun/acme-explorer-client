@@ -16,18 +16,6 @@ export class TripManagerListComponent implements OnInit {
   trips: Trip[];
   actor: Actor;
 
-  sorts = [
-    { prop: 'ticker', dir: 'desc' },
-    { prop: 'title', dir: 'desc' },
-    { prop: 'startDate', dir: 'desc' },
-    { prop: 'endDate', dir: 'desc' },
-    { prop: 'price', dir: 'desc' }
-  ];
-
-  loadingIndicator = true;
-  reorderable = true;
-  ColumnMode = ColumnMode;
-
   constructor(
     private tripService: TripService,
     private authService: AuthService,
