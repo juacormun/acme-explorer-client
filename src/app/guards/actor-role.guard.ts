@@ -16,22 +16,18 @@ export class ActorRoleGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise ((resolve, reject) => {
       const expectedRoles = route.data['expectedRoles'];
-      if (expectedRoles.length === 1 && expectedRoles[0] === Role.ANONYMOUS) {
-        resolve(true);
-      } else {
-        const currentActor = this.authService.getCurrentActor();
-        if (currentActor) {
-          if (expectedRoles.includes(currentActor.role)) {
-            resolve(true);
-          } else {
-            this.router.navigate(['denied-access'], { queryParams: { previousURL: state.url } })
-          }
-        } else {
-          if (!expectedRoles.includes(Role.ANONYMOUS)) {
-            this.router.navigate(['login'], { queryParams: { returnUrl: state.url } })
-          }
+      const currentActor = this.authService.getCurrentActor();
+      if (currentActor) {
+        if (expectedRoles.includes(currentActor.role)) {
           resolve(true);
+        } else {
+          this.router.navigate(['denied-access'], { queryParams: { previousURL: state.url } })
         }
+      } else {
+        if (!expectedRoles.includes(Role.ANONYMOUS)) {
+          this.router.navigate(['login'], { queryParams: { returnUrl: state.url } })
+        }
+        resolve(true);
       }
     });
   }

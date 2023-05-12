@@ -57,7 +57,7 @@ export class ActorDisplayComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     let newActor = structuredClone(this.actor);
-    newActor.role = form.value.role;
+    newActor.role = form.value.role != '' ? form.value.role : this.actor.role;
 
     this.actorService.updateActor(newActor)
       .then((actor: Actor) => {
