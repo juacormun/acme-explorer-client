@@ -19,8 +19,79 @@ $theme-colors: (
   "dark": $dark
 );
 
+
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 @import url('https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap');
+
+@include color-mode(dark) {
+
+  h1, h2, h3, h4, h5, h6, p {
+    color: $light !important;
+  }
+
+  legend {
+    color: $light !important;
+  }
+
+  small {
+    color: $info !important;
+  }
+
+  div #paymentModalBody {
+    background-color: white !important;
+  }
+
+  .text-dark {
+    color: $info !important;
+  }
+
+  .text-primary:active {
+    color: $light !important;
+  }
+
+  a.nav-link.px-2.text-body-secondary {
+    color: $primary !important;
+  }
+
+  .form-control {
+    color: $light !important;
+  }
+
+  .form-date {
+    color: var(--bs-body-color) !important;
+  }
+
+  .card-title {
+    color: $light !important;
+  }
+
+  .card-text {
+    color: $light !important;
+  }
+
+  .upcomingTrip {
+    background-color: $primary !important;
+  }
+
+  .table-info {
+    --bs-table-bg: $dark !important;
+  }
+
+  .admin-chart {
+    background-color: $info !important;
+  }
+
+  .btn-outline-secondary {
+    color: $light !important;
+    border-color: $light !important;
+  }
+
+  .btn-light {
+    background-color: $info !important;
+    border-color: $info !important;
+  }
+}
+
 
 body {
   font-family: 'Reem Kufi', sans-serif !important;

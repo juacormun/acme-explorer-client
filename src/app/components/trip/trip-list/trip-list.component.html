@@ -1,45 +1,55 @@
 <div class="row mt-2 mb-3">
   <form class="row" role="search" (ngSubmit)="searchTrips(filters)" #filters="ngForm">
-    <div class="breadcrumb col-3 col-lg-2">
+    <div class="breadcrumb col-2">
       <legend i18n>Trips</legend>
     </div>
     <div class="col-6 col-lg-7">
       <input id="keyword" class="form-control shadow-sm" type="search" i18-placeholder placeholder="Keyword" aria-label="Search"
         name="keyword" ngModel />
     </div>
-    <div class="col-3 col-lg-1">
+    <div class="col-3 col-lg-1 p-0">
       <button i18n class="btn btn-outline-secondary" type="submit">Search</button>
     </div>
-    <div *ngIf="activeRole === 'explorer'" class="row">
-      <div class="col-6 col-md-2  col-xl-1 offset-md-1 offset-xl-3">
-        <label i18n class="small">Min. Price</label>
-        <input class="form-control shadow-sm" placeholder="€" type="number" min="0" aria-label="Min. Price"
-          name="minPrice" ngModel />
-      </div>
-      <div class="col-6 col-md-2 col-xl-1">
-        <label i18n class="small">Max. Price</label>
-        <input class="form-control shadow-sm" placeholder="€" type="number" min="0" aria-label="Max. Price"
-          name="maxPrice" ngModel />
-      </div>
-      <div class="col-6 col-md-3 col-xl-2">
-        <label i18n class="small">Minimum Date</label>
-        <input class="form-control shadow-sm" type="date" aria-label="Minimum Date" name="minDate" ngModel />
-      </div>
-      <div class="col-6 col-md-3 col-xl-2">
-        <label i18n class="small">Maximum Date</label>
-        <input class="form-control shadow-sm" type="date" aria-label="Maximum Date" name="maxDate" ngModel />
-      </div>
+    <div *ngIf="activeRole === 'explorer'" class="col-1 p-0">
+      <button i18n class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" href="#filtersCollapse"
+        role="button" aria-expanded="false" aria-controls="filtersCollapse">
+        <i class="fa-solid fa-sliders"></i>
+      </button>
     </div>
-    <div *ngIf="activeRole === 'explorer'" class="row">
-      <div class="col-6 col-md-2 offset-md-4">
-        <label i18n class="small">Cache Time</label>
-        <input class="form-control shadow-sm" i18n-placeholder placeholder="hours" type="number" min="1" max="24"
-          aria-label="Cache Time" name="cacheTime" ngModel />
+    <div *ngIf="activeRole === 'explorer'" id="filtersCollapse" class="row collapse">
+      <div class="row">
+        <div class="col-6 col-md-2  col-xl-1 offset-md-1 offset-xl-3">
+          <label i18n class="small">Min. Price</label>
+          <input class="form-control shadow-sm" placeholder="€" type="number" min="0" aria-label="Min. Price"
+            name="minPrice" ngModel />
+        </div>
+        <div class="col-6 col-md-2 col-xl-1">
+          <label i18n class="small">Max. Price</label>
+          <input class="form-control shadow-sm" placeholder="€" type="number" min="0" aria-label="Max. Price"
+            name="maxPrice" ngModel />
+        </div>
+        <div class="col-6 col-md-3 col-xl-2">
+          <label i18n class="small">Minimum Date</label>
+          <input class="form-control form-date shadow-sm" type="date" aria-label="Minimum Date" name="minDate"
+            ngModel />
+        </div>
+        <div class="col-6 col-md-3 col-xl-2">
+          <label i18n class="small">Maximum Date</label>
+          <input class="form-control form-date shadow-sm" type="date" aria-label="Maximum Date" name="maxDate"
+            ngModel />
+        </div>
       </div>
-      <div class="col-6 col-md-2">
-        <label i18n class="small">Max. Results</label>
-        <input class="form-control shadow-sm" i18n-placeholder placeholder="1-100" type="number" min="1" max="100"
-          aria-label="Max Results" name="maxResults" ngModel />
+      <div class="row">
+        <div class="col-6 col-md-2 offset-md-4">
+          <label i18n class="small">Cache Time</label>
+          <input class="form-control shadow-sm" i18n-placeholder placeholder="hours" type="number" min="1" max="24"
+            aria-label="Cache Time" name="cacheTime" ngModel />
+        </div>
+        <div class="col-6 col-md-2">
+          <label i18n class="small">Max. Results</label>
+          <input class="form-control shadow-sm" i18n-placeholder placeholder="1-100" type="number" min="1" max="100"
+            aria-label="Max Results" name="maxResults" ngModel />
+        </div>
       </div>
     </div>
   </form>
@@ -58,7 +68,7 @@
         <h5 class="card-title">{{trip.title}}</h5>
         <p class="card-text text-justify">{{trip.description | slice:0:125}}</p>
         <div class="d-flex justify-content-end align-items-center">
-          <small [ngClass]="isAboutToStart(trip) ? '' : 'text-muted'">
+          <small [ngClass]="isAboutToStart(trip) ? '' : 'text-body-secondary'">
             {{trip.startDate | date: 'shortDate'}} - {{trip.endDate | date: 'shortDate'}}
           </small>
         </div>

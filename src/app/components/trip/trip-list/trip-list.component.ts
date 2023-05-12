@@ -63,12 +63,18 @@ export class TripListComponent implements OnInit {
       this.trips = cachedTrips;
       return;
     } else {
-      this.tripService.searchTrips(query).subscribe((data: any) => {
-        if (data.length > maxResults) {
-          data = data.slice(0, maxResults);
+      this.tripService.searchTrips(query).subscribe({
+        next: (data: any) => {
+          if (data.length > maxResults) {
+            data = data.slice(0, maxResults);
+          }
+          this.trips = data;
+          this.tripService.saveResultInCache(queryId, { trips: this.trips, expirationDate });
+        },
+        error: (err: any) => {
+          this.trips = [];
+          console.log(err);
         }
-        this.trips = data;
-        this.tripService.saveResultInCache(queryId, { trips: this.trips, expirationDate });
       });
     }
   }

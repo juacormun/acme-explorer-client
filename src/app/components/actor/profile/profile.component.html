@@ -5,7 +5,7 @@
       <button *ngIf="isEditable" i18n class="col-2 btn btn-danger" (click)="toggleEdit()">Return</button>
       <button *ngIf="!isEditable" i18n class="col-2 btn btn-primary" (click)="toggleEdit()">Edit</button>
     </div>
-    <div class="col-12 mt-1 mb-3 small text-center text-muted">{{actor.email}}</div>
+    <div class="col-12 mt-1 mb-3 small text-center text-body-secondary">{{actor.email}}</div>
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <div class="row g-3">
         <input type="hidden" class="form-control" id="_id" formControlName="_id" required>
