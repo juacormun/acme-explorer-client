@@ -48,7 +48,7 @@ export class AuthService {
                 reject(error);
               });
           } else {
-            reject({ error: { message: 'Problem while registering new user' } });
+            reject({ error: { message: $localize `Problem while registering new user` } });
           }
         }, error => {
           reject(error);
@@ -84,7 +84,7 @@ export class AuthService {
                   resolve(actorData);
                 })
                 .catch(error => {
-                  reject({ error: { message: 'No token retrieved' } });
+                  reject({ error: { message: $localize `No token retrieved` } });
                 })
             })
             .catch(error => {
@@ -92,7 +92,7 @@ export class AuthService {
               reject(error);
             });
           } else {
-            reject({ error: { message: 'Problem while login' } });
+            reject({ error: { message: $localize `Problem while login` } });
           }
         }, error => {
           reject(error);
@@ -110,7 +110,7 @@ export class AuthService {
         .then(_ => {
           this.setCurrentActor();
           this.loginStatus.next(false);
-          resolve('Logout successful');
+          resolve($localize `Logout successful`);
         }).catch(error => {
           reject(error);
         });
@@ -145,8 +145,7 @@ export class AuthService {
     if (currentActor) {
       result = JSON.parse(currentActor)
     } else {
-      let message = $localize `User not found`;
-      this.messageService.notifyMessage(message, MessageType.DANGER);
+      console.log('User not found')
       result = new Actor();
     }
     return result;

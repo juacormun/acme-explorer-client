@@ -24,7 +24,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TripApplicationsComponent } from './components/application/trip-applications/trip-applications.component';
 import { MessageComponent } from './components/master/message/message.component';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ExplorerApplicationsComponent } from './components/application/explorer-applications/explorer-applications.component';
 import { SponsorshipListComponent } from './components/sponsorship/sponsorship-list/sponsorship-list.component';
 import { SponsorshipDisplayComponent } from './components/sponsorship/sponsorship-display/sponsorship-display.component';
@@ -36,6 +35,10 @@ import { MessageService } from './services/message.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ActorListComponent } from './components/actor/actor-list/actor-list.component';
 import { ActorDisplayComponent } from './components/actor/actor-display/actor-display.component';
+import { StageCreateComponent } from './components/trip/trip-display/modals/stage-create/stage-create.component';
+import { PictureCreateComponent } from './components/trip/trip-display/modals/picture-create/picture-create.component';
+import { TripCancelComponent } from './components/trip/trip-display/modals/trip-cancel/trip-cancel.component';
+import { ApplicationDisplayComponent } from './components/application/trip-applications/modals/application-display/application-display.component';
 
 
 @NgModule({
@@ -62,6 +65,10 @@ import { ActorDisplayComponent } from './components/actor/actor-display/actor-di
     CheckoutComponent,
     ActorListComponent,
     ActorDisplayComponent,
+    StageCreateComponent,
+    PictureCreateComponent,
+    TripCancelComponent,
+    ApplicationDisplayComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +78,6 @@ import { ActorDisplayComponent } from './components/actor/actor-display/actor-di
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
-    NgxDatatableModule,
     CountdownModule,
     NgxPayPalModule
   ],

@@ -1,20 +1,20 @@
 export class Picture {
-  private _id: string;
+  private __id: string;
   private _title: string;
   private _image: string;
 
   constructor() {
-    this._id = '';
+    this.__id = '';
     this._title = 'Default Image';
     this._image = '../../assets/images/default-trip.jpg';
   }
 
-  get id(): string {
-    return this._id;
+  get _id(): string {
+    return this.__id;
   }
 
-  set id(value: string) {
-    this._id = value;
+  set _id(value: string) {
+    this.__id = value;
   }
 
   get title(): string {
