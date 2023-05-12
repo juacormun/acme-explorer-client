@@ -28,6 +28,18 @@ export class ApplicationService {
     return this.http.post<Application>(url, body, { headers: headers });
   }
 
+  cancelApplication(applicationId: string) {
+    const url = `${this.applicationsUrl}/${applicationId}/cancel`;
+    const headers = this.authService.getHeaders();
+    return this.http.patch<Application>(url, "", { headers: headers });
+  }
+
+  payApplication(applicationId: string) {
+    const url = `${this.applicationsUrl}/${applicationId}/pay`;
+    const headers = this.authService.getHeaders();
+    return this.http.patch<Application>(url, "", { headers: headers });
+  }
+
   getStatusName(st: Status) {
     switch (st) {
       case Status.PENDING:
