@@ -139,6 +139,7 @@
     "5891045323022617759": "Registration successful, navigate to login page",
     "8823079929175229730": "There are some errors in the data introduced",
     "4841262400330711370": " Restricted access to resource: {$INTERPOLATION}\n",
+    "4805856709306554498": " Page not found\n",
     "8545453449757610687": "Sponsorship #{$INTERPOLATION}",
     "5781265097053625867": "Sponsorships",
     "5809220893359362278": "Link:",
