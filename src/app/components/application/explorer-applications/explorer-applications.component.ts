@@ -1,4 +1,3 @@
-import { MessageType } from 'src/app/enums/MessageEnum';
 import { ApplicationService } from './../../../services/application.service';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';

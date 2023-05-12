@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('TripDisplayComponent', () => {
   let component: TripDisplayComponent;
@@ -53,12 +54,18 @@ describe('TripDisplayComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ TripDisplayComponent ],
-      imports: [AngularFireModule.initializeApp(environment.firebaseConfig), HttpClientModule],
+      imports: [
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: mockactivatedRoute },
         { provide: TripService, useValue: tripSpy },
         { provide: AuthService, useValue: actorSpy },
         AngularFireAuth,
+        FormBuilder
       ]
     })
     .compileComponents();
@@ -92,7 +99,7 @@ describe('TripDisplayComponent', () => {
   });
 
   it('should display trip actions', () => {
-    let actions = fixture.nativeElement.querySelector('#tripActions');
+    let actions = fixture.nativeElement.querySelectorAll('.managerButton');
     fixture.detectChanges();
     expect(actions).not.toBeNull();
   });
