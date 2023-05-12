@@ -11,6 +11,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { TripService } from 'src/app/services/trip.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 describe('TripCreateComponent', () => {
   let component: TripCreateComponent;
@@ -23,15 +24,16 @@ describe('TripCreateComponent', () => {
   beforeEach(async () => {
     // Create mocks
     testTrip = new Trip();
+    testTrip._id = "63fbaa3db0300ae7e5d9b3d9";
     testTrip.title = "Test1";
     testTrip.creator = "63fbaa3db0300ae7e5d9b3d8";
     testTrip.description = "Jungle party";
     testTrip.requirements = "Test Requirements";
-    testTrip.startDate = new Date("2021-07-01");
-    testTrip.endDate = new Date("2021-07-06");
-    testTrip.price = 1000;
+    testTrip.startDate = new Date("2023-07-01");
+    testTrip.endDate = new Date("2023-07-06");
     testTrip.ticker = "TESTTICKER";
-    testTrip.publicationDate = new Date("2021-06-23");
+    testActor = new Actor();
+    testActor._id = "63fbaa3db0300ae7e5d9b3d8";
     // Create spy for searchTrips
     let tripSpy = jasmine.createSpyObj('TripService', ['createTrip']);
     createTripSpy = tripSpy.createTrip.and.returnValue(of(testTrip));
@@ -65,4 +67,30 @@ describe('TripCreateComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create new trip, the form button is not disabled', () => {
+    const locale = localStorage.getItem('locale') ?? 'en';
+    component.creationForm.controls['title'].setValue("Test1");
+    component.creationForm.controls['description'].setValue("Jungle party");
+    component.creationForm.controls['requirements'].setValue("Requirements1");
+    component.creationForm.controls['startDate'].setValue(formatDate(new Date("2023-07-01"), 'yyyy-MM-dd', locale));
+    component.creationForm.controls['endDate'].setValue(formatDate(new Date("2023-07-06"), 'yyyy-MM-dd', locale));
+    fixture.detectChanges();
+    let button = fixture.nativeElement.querySelector('#submitButton');
+    expect(button.disabled).toBeFalsy();
+  });
+
+  it('should not create new trip, the form button is disabled', () => {
+    const locale = localStorage.getItem('locale') ?? 'en';
+    component.creationForm.controls['title'].setValue("Test1");
+    component.creationForm.controls['description'].setValue("Jungle party");
+    component.creationForm.controls['requirements'].setValue("Requirements1");
+    component.creationForm.controls['startDate'].setValue(formatDate(new Date("2021-07-01"), 'yyyy-MM-dd', locale));
+    component.creationForm.controls['endDate'].setValue(formatDate(new Date("2021-07-06"), 'yyyy-MM-dd', locale));
+    fixture.detectChanges();
+    let button = fixture.nativeElement.querySelector('#submitButton');
+    expect(button.disabled).toBeTrue();
+  });
+
+
 });
