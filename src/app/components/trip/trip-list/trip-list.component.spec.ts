@@ -19,6 +19,7 @@ describe('TripListComponent', () => {
   let testTrip2: Trip;
   let testActor: Actor;
   let searchTripsSpy: any;
+  let getCachedTripsSpy: any;
   let getActorSpy: any;
 
   beforeEach(async () => {
@@ -50,8 +51,9 @@ describe('TripListComponent', () => {
     testActor.id = "63fbaa3db0300ae7e5d9b3d8";
 
     // Create spy for searchTrips
-    let tripSpy = jasmine.createSpyObj('TripService', ['searchTrips']);
+    let tripSpy = jasmine.createSpyObj('TripService', ['searchTrips', 'getCachedTrips']);
     searchTripsSpy = tripSpy.searchTrips.and.returnValue(of([testTrip, testTrip2]));
+    getCachedTripsSpy = tripSpy.getCachedTrips.and.returnValue(null);
 
     // Create spy for getActor
     let actorSpy = jasmine.createSpyObj('AuthService', ['getCurrentActor']);
@@ -82,6 +84,8 @@ describe('TripListComponent', () => {
   });
 
   it('should have two trips', () => {
+    console.log(component.trips);
+
     expect(component.trips.length === 2).toBeTrue();
   });
 

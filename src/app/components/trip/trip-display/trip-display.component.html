@@ -7,12 +7,12 @@
       </div>
       <div class="col-12 col-md-6" id="buttons">
         <div class="d-flex py-2 justify-content-around py-md-0 justify-content-md-end">
-          <button *ngIf="canDisplayActions() && !infoFormIsEditable" i18n class="btn btn-sm btn-info" (click)="goToTripApplications(trip)">Applications</button>
-          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBePublished()" i18n class="btn btn-sm btn-secondary" (click)="publishTrip()">Publish</button>
-          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeModified()" i18n class="btn btn-sm btn-primary" (click)="toggleEditInfo()">Edit</button>
-          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeModified()" i18n class="btn btn-sm btn-danger" (click)="deleteTrip()">Delete</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable" i18n class="managerButton btn btn-sm btn-info" (click)="goToTripApplications(trip)">Applications</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBePublished()" i18n class="managerButton btn btn-sm btn-secondary" (click)="publishTrip()">Publish</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeModified()" i18n class="managerButton btn btn-sm btn-primary" (click)="toggleEditInfo()">Edit</button>
+          <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeModified()" i18n class="managerButton btn btn-sm btn-danger" (click)="deleteTrip()">Delete</button>
           <button *ngIf="canBeCancelled()" i18n class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
-          <button *ngIf="canBeApplied()" i18n class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
+          <button *ngIf="canBeApplied()" i18n id="applyButton" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
         </div>
       </div>
     </div>

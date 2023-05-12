@@ -24,7 +24,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let application of applications">
+    <tr *ngFor="let application of applications" class="applicationTableRow">
       <td class="align-middle" scope="row">{{application.explorer}}</td>
       <td class="text-center align-middle">{{ getStatusName(application.status) }}</td>
       <td class="text-center align-middle">{{application.createdAt | date: 'shortDate'}}</td>

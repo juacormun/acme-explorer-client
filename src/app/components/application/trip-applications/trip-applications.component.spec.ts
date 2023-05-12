@@ -14,7 +14,6 @@ import { ActivatedRoute } from '@angular/router';
 import { TripApplicationsComponent } from './trip-applications.component';
 import { Application } from 'src/app/models/application';
 import { Status } from 'src/app/enums/StatusEnum';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 describe('TripApplicationsComponent', () => {
   let component: TripApplicationsComponent;
@@ -72,8 +71,7 @@ describe('TripApplicationsComponent', () => {
       declarations: [ TripApplicationsComponent ],
       imports: [
         AngularFireModule.initializeApp(environment.firebaseConfig),
-        HttpClientModule,
-        NgxDatatableModule
+        HttpClientModule
       ],
       providers: [
         { provide: ActivatedRoute, useValue: mockactivatedRoute },
@@ -99,8 +97,8 @@ describe('TripApplicationsComponent', () => {
 
   it('should be two applications in the table', () => {
     fixture.detectChanges();
-    // let appRows = fixture.nativeElement.querySelector('datatable-row-wrapper');
-    let appRows = component.table.rows;
+    let appRows = fixture.nativeElement.querySelectorAll('.applicationTableRow');
+
     expect(appRows.length === 2).toBeTrue();
   });
 

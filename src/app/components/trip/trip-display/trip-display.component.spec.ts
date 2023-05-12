@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('TripDisplayComponent', () => {
   let component: TripDisplayComponent;
@@ -20,8 +21,10 @@ describe('TripDisplayComponent', () => {
   let mockactivatedRoute: ActivatedRouteStub;
   let testTrip: Trip;
   let testActor: Actor;
+  let testActorExplorer: Actor;
   let getTripSpy: any;
   let getActorSpy: any;
+  let actorSpy: any;
 
   beforeEach(async () => {
     mockactivatedRoute = new ActivatedRouteStub();
@@ -33,8 +36,8 @@ describe('TripDisplayComponent', () => {
     testTrip.creator = "63fbaa3db0300ae7e5d9b3d8";
     testTrip.description = "Test Description";
     testTrip.requirements = "Test Requirements";
-    testTrip.startDate = new Date();
-    testTrip.endDate = new Date();
+    testTrip.startDate = new Date('2030-01-01');
+    testTrip.endDate = new Date('2030-01-05');
     testTrip.price = 100;
     testTrip.ticker = "TESTTICKER";
 
@@ -42,23 +45,32 @@ describe('TripDisplayComponent', () => {
     testActor = new Actor();
     testActor.role = Role.MANAGER;
     testActor.id = "63fbaa3db0300ae7e5d9b3d8";
+    testActorExplorer = new Actor();
+    testActorExplorer.role = Role.EXPLORER;
+    testActorExplorer.id = "63fbaa3db0300ae7e5d9b3d9";
 
     // Create spy for getTrip
     let tripSpy = jasmine.createSpyObj('TripService', ['getTrip']);
     getTripSpy = tripSpy.getTrip.and.returnValue(of(testTrip));
 
     // Create spy for getActor
-    let actorSpy = jasmine.createSpyObj('AuthService', ['getCurrentActor']);
+    actorSpy = jasmine.createSpyObj('AuthService', ['getCurrentActor']);
     getActorSpy = actorSpy.getCurrentActor.and.returnValue((testActor));
 
     await TestBed.configureTestingModule({
       declarations: [ TripDisplayComponent ],
-      imports: [AngularFireModule.initializeApp(environment.firebaseConfig), HttpClientModule],
+      imports: [
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: mockactivatedRoute },
         { provide: TripService, useValue: tripSpy },
         { provide: AuthService, useValue: actorSpy },
         AngularFireAuth,
+        FormBuilder
       ]
     })
     .compileComponents();
@@ -92,15 +104,35 @@ describe('TripDisplayComponent', () => {
   });
 
   it('should display trip actions', () => {
-    let actions = fixture.nativeElement.querySelector('#tripActions');
+    let actions = fixture.nativeElement.querySelectorAll('.managerButton');
     fixture.detectChanges();
     expect(actions).not.toBeNull();
   });
 
-  it('should return true', () => {
+  it('should return true displayActions condition', () => {
     fixture.detectChanges();
     expect(component.canDisplayActions()).toBeTrue();
   });
 
+  it('should apply to trip, the button is shown', () => {
+    component.actor.role = Role.EXPLORER;
+
+    fixture.detectChanges();
+
+    let applyTripButton = fixture.nativeElement.querySelector('#applyButton');
+    expect(applyTripButton).not.toBeNull();
+
+  });
+
+  it('should not apply to expired trip, the button is not shown', () => {
+    component.actor.role = Role.EXPLORER;
+    component.trip.startDate = new Date('2010-01-01');
+    component.hasExpired = true;
+
+    fixture.detectChanges();
+
+    let applyTripButton = fixture.nativeElement.querySelector('#applyButton');
+    expect(applyTripButton).toBeNull();
+  });
 
 });
