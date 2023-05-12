@@ -1,7 +1,7 @@
-<header class="navbar navbar-expand-lg bg-white sticky-top">
+<header class="navbar navbar-expand-lg sticky-top">
   <div class="container-fluid">
     <a href="#" routerLink="/" class="navbar-brand d-flex align-items-center">
-      <object data="../../../../assets/images/logo.svg" width="40" height="40" alt="Logo de acme-explorer"></object>
+      <object id="acmeLogo" data="../../../../assets/images/logo.svg" width="40" height="40" alt="Logo de acme-explorer"></object>
       <span class="fs-3 ms-2 text-dark">ACME-EXPLORER</span>
     </a>
 
@@ -81,7 +81,11 @@
             </li>
           </ul>
         </li>
-        <li *ngIf="isLoggedIn()" class="nav-item dropdown">
+        <li>
+          <button id="btnSwitchTheme" (click)="switchTheme()" class="nav-link ms-2">
+            <i id="switchThemeIcon" class="fa-solid fa-moon"></i></button>
+        </li>
+        <li *ngIf="isLoggedIn()" class="nav-item dropdown ms-2">
           <a href="#" class="nav-link dropdown-toggle" id="dropdownActor"
             data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-user"></i>

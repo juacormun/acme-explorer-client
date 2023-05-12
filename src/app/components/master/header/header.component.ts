@@ -21,6 +21,22 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const defaultDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const theme = localStorage.getItem('theme');
+    const body = document.querySelector('body');
+    const switchThemeIcon = document.querySelector('#switchThemeIcon');
+    if (theme) {
+      body?.setAttribute('data-bs-theme', theme);
+      if (theme === 'dark') {
+        switchThemeIcon?.classList.replace('fa-moon', 'fa-sun');
+      }
+    } else if (defaultDark.matches) {
+      body?.setAttribute('data-bs-theme', 'dark');
+      switchThemeIcon?.classList.replace('fa-moon', 'fa-sun');
+    } else {
+      body?.setAttribute('data-bs-theme', 'light');
+    }
+
     this.authService.getStatus().subscribe(loggedIn => {
       if (loggedIn) {
         this.currentActor = this.authService.getCurrentActor();
@@ -39,6 +55,22 @@ export class HeaderComponent implements OnInit {
   changeLanguage(lan: string): void {
     localStorage.setItem('locale', lan);
     location.reload();
+  }
+
+  switchTheme(): void {
+    const body = document.querySelector('body');
+    const switchThemeIcon = document.querySelector('#switchThemeIcon');
+    body?.getAttribute('data-bs-theme') === 'light' ?
+      (
+        body?.setAttribute('data-bs-theme', 'dark'),
+        switchThemeIcon?.classList.replace('fa-moon', 'fa-sun'),
+        localStorage.setItem('theme', 'dark')
+      ) :
+      (
+        body?.setAttribute('data-bs-theme', 'light'),
+        switchThemeIcon?.classList.replace('fa-sun', 'fa-moon'),
+        localStorage.setItem('theme', 'light')
+      );
   }
 
   logOut(): void {
