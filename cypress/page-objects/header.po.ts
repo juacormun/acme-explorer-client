@@ -9,4 +9,9 @@ export class HeaderPage {
     return cy.get("#navbarNavDropdown > ul > li:nth-child(3) > ul > li:nth-child(1) > a");
   }
 
+  getSearchTripsLink() {
+    cy.get("#dropdownTrips").click();
+    return cy.get("#navbarNavDropdown > ul > li:nth-child(1) > ul > li:nth-child(1) > a");
+  }
+
 }

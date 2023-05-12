@@ -188,8 +188,6 @@ export class TripDisplayComponent implements OnInit {
     const isCreator = this.actor && this.actor.role === Role.MANAGER && this.actor._id === this.trip.creator;
     const daysTilStart = daysBetween(new Date(this.trip.startDate), new Date());
 
-    console.log(daysTilStart);
-
     return isCreator && this.trip.publicationDate && !this.trip.cancellationDate && daysTilStart > 6;
   }
 
