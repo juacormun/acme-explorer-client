@@ -10,28 +10,54 @@
 
 <div *ngIf="applicationsByStatus && applicationsByStatus.length > 0" class="accordion" id="appsAccordion">
   <div *ngFor="let appByStatus of applicationsByStatus" class="accordion-item">
+
     <h2 class="accordion-header" [id]="'heading' + appByStatus._id">
       <button class="accordion-button" type="button" data-bs-toggle="collapse"
-      [attr.data-bs-target]="'#collapse' + appByStatus._id" aria-expanded="true" [attr.aria-controls]="'#collapse' + appByStatus._id">
+        [attr.data-bs-target]="'#collapse' + appByStatus._id" aria-expanded="true">
         {{ getStatusName(appByStatus._id) }}
       </button>
     </h2>
-    <div id="{{'collapse' + appByStatus._id}}" class="accordion-collapse collapse show" [attr.aria-labelledby]="'#heading' + appByStatus._id" data-bs-parent="#appsAccordion">
+
+    <div id="{{'collapse' + appByStatus._id}}" class="accordion-collapse collapse show"
+      [attr.aria-labelledby]="'#heading' + appByStatus._id" data-bs-parent="#appsAccordion">
       <div *ngFor="let application of appByStatus.applications; let i=index" class="accordion-body">
+
         <div class="card-text row">
-          <span class="col-2">#{{i+1}}</span>
-          <span class="col-4">{{application.comments}}</span>
-          <span class="col-2 text-center">{{application.createdAt | date:'shortDate'}}</span>
-          <span *ngIf="appByStatus._id === 'due'">
-            <a i18n class="btn btn-primary" routerLink="/checkout">
-              Checkout
-            </a>
-          </span>
-          <div class="col-2 text-center">
-            <a i18n class="btn btn-light" href="#" routerLink="/trips/{{application.trip}}">Trip</a>
+          <span class="col-12 col-md-1">#{{i+1}}</span>
+          <span *ngIf="getCommentsText(application.comments) == 'No comments'" i18n
+            class="col-12 col-md-4 mt-2 mt-md-0 fst-italic">No comments</span>
+          <span *ngIf="getCommentsText(application.comments) != 'No comments'" class="col-12 col-md-4 mt-2 mt-md-0">{{
+            getCommentsText(application.comments) }}</span>
+          <span class="col-12 col-md-1 mt-2 mt-md-0 text-center">{{application.createdAt | date:'shortDate'}}</span>
+
+          <div class="col-12 col-md-6">
+            <div class="row mt-3 mt-md-0">
+              <div class="col-3 offset-2 offset-md-0 text-center">
+                <a i18n class="btn btn-light" href="#" routerLink="/trips/{{application.trip}}">Trip</a>
+              </div>
+              <div *ngIf="appByStatus._id === 'pending' || appByStatus._id === 'due'" class="col-3 text-center">
+                <button id="cancel{{'App' + application._id}}" type="button" i18n
+                  class="btn btn-danger text-light cancel-button" data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#cancelModal' + application._id">
+                  Cancel
+                </button>
+                <app-cancel-application [applicationId]="application._id">
+                </app-cancel-application>
+              </div>
+              <div *ngIf="appByStatus._id === 'due'" class="col-3 text-center">
+                <button id="checkout{{'App' + application._id + 'Trip' + application.trip}}" type="button" i18n
+                  class="btn btn-primary text-light pay-button" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+                  Checkout
+                </button>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<app-checkout>
+</app-checkout>

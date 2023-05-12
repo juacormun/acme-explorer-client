@@ -1,0 +1,19 @@
+<div [attr.id]="'cancelModal' + applicationId" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 i18n class="modal-title fs-3" id="exampleModalLabel">Cancellation</h1>
+        <button type="button" id="modalClose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="fs-3" i18n>Are you sure you want to cancel this application?</p>
+      </div>
+      <div class="modal-footer">
+        <button i18n type="button" class="btn btn-dark text-light" data-bs-dismiss="modal"
+          (click)="cancelApplication(applicationId)">Yes</button>
+        <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>

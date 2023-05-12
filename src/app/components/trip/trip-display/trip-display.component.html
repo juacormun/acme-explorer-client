@@ -202,19 +202,19 @@
         <h1 i18n class="modal-title fs-3" id="exampleModalLabel">New application</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form>
+      <form role="apply" (ngSubmit)="applyToTrip(comments)" #comments="ngForm">
+        <div class="modal-body">
           <p i18n class="fs-5">Would you like to add any comment?</p>
           <div class="form-floating mb-3">
-            <textarea class="form-control" id="comments"></textarea>
+            <textarea class="form-control" name="comments" id="comments" ngModel></textarea>
             <label i18n for="comments" class="col-form-label">Comments</label>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
-        <button i18n type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="applyToTrip(trip)">Submit</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
+          <button i18n type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Submit</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
