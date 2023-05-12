@@ -13,9 +13,12 @@ import { TripService } from 'src/app/services/trip.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  @Input() tripId!: string;
-  @Input() applicationId!: string;
+  tripId!: string;
+  applicationId!: string;
   trip: Trip;
+  paymentError = '';
+  paymentSuccess = '';
+
 
   protected paypalConfig?: IPayPalConfig;
 
@@ -39,20 +42,19 @@ export class CheckoutComponent implements OnInit {
     const payButtons = document.querySelectorAll('.pay-button');
     payButtons.forEach((button) => {
       button.addEventListener('click', (event) => {
-        console.log('click');
         const ids = button.id.split('App')[1].split('Trip');
         this.applicationId = ids[0];
         this.tripId = ids[1];
+        this.paymentError = '';
+        this.paymentSuccess = '';
+        this.paypalConfig = undefined;
+
         this.tripService.getTrip(this.tripId).subscribe((data) => {
           this.trip = data;
           if (new Date(this.trip.startDate) < new Date()) {
-            // trip has already started
-            const checkoutModal = document.getElementById('checkoutModal');
-            checkoutModal?.addEventListener('shown.bs.modal', event => {
-              // hide the modal
-              document.getElementById('modalClose')?.click();
-            })
-            this.messageService.notifyMessage($localize`This trip has already started, you should cancel your application`, MessageType.DANGER);
+            this.paymentError = $localize`This trip has already started, you should cancel your application`;
+          } else if (this.trip.cancellationDate) {
+            this.paymentError = $localize`This trip has been cancelled, you should cancel your application`;
           } else {
             this.initConfig();
           }
@@ -89,7 +91,8 @@ export class CheckoutComponent implements OnInit {
         this.applicationService.payApplication(this.applicationId)
           .subscribe({
             next: () => {
-              this.messageService.notifyMessage($localize`Payment successful`, MessageType.SUCCESS);
+              this.paymentSuccess = $localize`Payment successful`;
+              this.paypalConfig = undefined;
               document.getElementById('modalClose')?.click();
               location.reload();
             },

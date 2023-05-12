@@ -41,26 +41,8 @@
                   [attr.data-bs-target]="'#cancelModal' + application._id">
                   Cancel
                 </button>
-                <div [attr.id]="'cancelModal' + application._id" class="modal fade" data-bs-backdrop="static"
-                  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 i18n class="modal-title fs-3" id="exampleModalLabel">Cancellation</h1>
-                        <button type="button" id="modalClose" class="btn-close" data-bs-dismiss="modal"
-                          aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p class="fs-3" i18n>Are you sure you want to cancel this application?</p>
-                      </div>
-                      <div class="modal-footer">
-                        <button i18n type="button" class="btn btn-dark text-light" data-bs-dismiss="modal"
-                          (click)="cancelApplication(application._id)">Yes</button>
-                        <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">No</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <app-cancel-application [applicationId]="application._id">
+                </app-cancel-application>
               </div>
               <div *ngIf="appByStatus._id === 'due'" class="col-3 text-center">
                 <button id="checkout{{'App' + application._id + 'Trip' + application.trip}}" type="button" i18n
@@ -77,21 +59,5 @@
   </div>
 </div>
 
-<div id="checkoutModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 i18n class="modal-title fs-3" id="exampleModalLabel">Checkout</h1>
-        <button type="button" id="modalClose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <app-checkout>
-        </app-checkout>
-      </div>
-      <div class="modal-footer">
-        <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-checkout>
+</app-checkout>

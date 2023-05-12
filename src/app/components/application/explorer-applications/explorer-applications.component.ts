@@ -32,19 +32,6 @@ export class ExplorerApplicationsComponent implements OnInit {
     })
   }
 
-  cancelApplication(applicationId: string) {
-    this.applicationService.cancelApplication(applicationId).subscribe({
-      next: () => {
-        this.messageService.notifyMessage($localize`Application cancelled`, MessageType.SUCCESS);
-        location.reload();
-      },
-      error: (err) => {
-        this.messageService.notifyMessage($localize`An error has occurred while cancellation`, MessageType.DANGER);
-        console.log(err);
-      }
-    })
-  }
-
   getCommentsText(comments: string) {
     return comments ? comments : $localize`No comments`;
   }

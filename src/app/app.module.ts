@@ -39,6 +39,7 @@ import { StageCreateComponent } from './components/trip/trip-display/modals/stag
 import { PictureCreateComponent } from './components/trip/trip-display/modals/picture-create/picture-create.component';
 import { TripCancelComponent } from './components/trip/trip-display/modals/trip-cancel/trip-cancel.component';
 import { ApplicationDisplayComponent } from './components/application/trip-applications/modals/application-display/application-display.component';
+import { CancelApplicationComponent } from './components/application/explorer-applications/modals/cancel-application/cancel-application.component';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { ApplicationDisplayComponent } from './components/application/trip-appli
     PictureCreateComponent,
     TripCancelComponent,
     ApplicationDisplayComponent,
+    CancelApplicationComponent,
   ],
   imports: [
     BrowserModule,

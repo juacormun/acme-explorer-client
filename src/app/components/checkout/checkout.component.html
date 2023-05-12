@@ -1,7 +1,31 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <ngx-paypal [config]="paypalConfig"></ngx-paypal>
+<div id="checkoutModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 i18n class="modal-title fs-3">Checkout</h1>
+        <button type="button" id="modalClose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="alert alert-danger alert-dismissible fade d-flex justify-content-between show my-0" role="alert"
+              *ngIf="paymentError != null && paymentError.length > 0">
+              <span>{{paymentError}}</span>
+            </div>
+            <div class="alert alert-success alert-dismissible fade d-flex justify-content-between show my-0"
+              role="alert" *ngIf="paymentSuccess != null && paymentSuccess.length > 0">
+              <span>{{paymentSuccess}}</span>
+            </div>
+            <div class="col-12">
+              <ngx-paypal [config]="paypalConfig"></ngx-paypal>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button i18n type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
