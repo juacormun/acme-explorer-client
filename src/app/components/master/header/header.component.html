@@ -34,6 +34,9 @@
               <a i18n class="dropdown-item" routerLink="/mytrips">My trips</a>
             </li>
             <li *ngIf="activeRole === 'manager'">
+              <a i18n class="dropdown-item" routerLink="/pre-cancelled-trips">Pre-cancelled trips</a>
+            </li>
+            <li *ngIf="activeRole === 'manager'">
               <a i18n class="dropdown-item" routerLink="/trips/create">Create</a>
             </li>
           </ul>

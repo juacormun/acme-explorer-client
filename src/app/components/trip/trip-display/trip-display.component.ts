@@ -33,6 +33,7 @@ export class TripDisplayComponent implements OnInit {
   hasExpired: boolean = false;
   isCancelled: boolean = false;
   isAboutToStart: boolean = false;
+  isPreCancelled: boolean = false;
 
   constructor(
     private tripService: TripService,
@@ -78,6 +79,7 @@ export class TripDisplayComponent implements OnInit {
 
         this.hasExpired = this.setHasExpired();
         this.isCancelled = trip.cancellationDate != null;
+        this.isPreCancelled = this.setIsPreCancelled();
         this.isAboutToStart = this.setIsAboutToStart();
         this.sponsorship = this.getRandomSponsorship();
       })
@@ -297,6 +299,13 @@ export class TripDisplayComponent implements OnInit {
       });
   }
 
+  preCancelTrip() {
+    this.tripService.preCancelTrip(this.trip)
+    let successMsg = $localize `Trip pre-cancelled successfully`
+    this.messageService.notifyMessage(successMsg, MessageType.SUCCESS);
+    this.isPreCancelled = true;
+  }
+
   setHasExpired() {
     const start = new Date(this.trip.startDate);
     const now = new Date();
@@ -309,6 +318,16 @@ export class TripDisplayComponent implements OnInit {
     const timeDiff = start.getTime() - now.getTime();
     const dayDiff = timeDiff / (1000 * 3600 * 24);
     return start > now && dayDiff < 7;
+  }
+
+  setIsPreCancelled() {
+    const preCancelledTrips = this.tripService.getPreCancelledTrips();
+    if (preCancelledTrips) {
+      const preCancelledTrip = preCancelledTrips.find(t => t._id === this.trip._id);
+      return preCancelledTrip !== undefined;
+    } else {
+      return false;
+    }
   }
 
   getTripStartTime() {

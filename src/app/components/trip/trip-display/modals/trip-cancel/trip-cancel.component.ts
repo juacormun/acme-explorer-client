@@ -48,16 +48,30 @@ export class TripCancelComponent implements OnInit {
         this.formError = '';
         this.closeModalButton.nativeElement.click();
 
-        let successMsg = $localize `Trip cancelled successfully`
+        const preCancelledTrips = this.tripService.getPreCancelledTrips();
+        if (preCancelledTrips) {
+          if (preCancelledTrips.length > 1) {
+            const index = preCancelledTrips.findIndex((t: Trip) => t._id === trip._id);
+            if (index !== -1) {
+              preCancelledTrips.splice(index, 1);
+              localStorage.setItem('preCancelledTrips', JSON.stringify(preCancelledTrips));
+            }
+          } else {
+            localStorage.removeItem('preCancelledTrips');
+          }
+          location.reload();
+        }
+
+        let successMsg = $localize`Trip cancelled successfully`
         this.messageService.notifyMessage(successMsg, MessageType.SUCCESS);
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/trips', trip._id]);
         });
       })
       .catch(error => {
-        let errorMsg = $localize `Something wrong occurred...`;
+        let errorMsg = $localize`Something wrong occurred...`;
         if (error.status === 422) {
-          errorMsg = $localize `There are paid applications for this trip, it can't be cancelled`;
+          errorMsg = $localize`There are paid applications for this trip, it can't be cancelled`;
         }
         this.formError = errorMsg;
       });

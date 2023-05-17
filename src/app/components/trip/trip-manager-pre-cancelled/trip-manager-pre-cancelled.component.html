@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="breadcrumb col-12 col-md-9 col-lg-10">
+    <legend i18n>Pre-cancelled trips</legend>
+  </div>
+  <div class="col-12 col-md-3 col-lg-2">
+    <a *ngIf="trips && trips.length > 0" i18n class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelAllModal">Cancel all</a>
+  </div>
+</div>
+<div i18n *ngIf="!trips || trips.length == 0">
+  Sorry, no trips found.
+</div>
+
+<table *ngIf="trips && trips.length > 0" id="tripTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th i18n scope="col">Title</th>
+      <th i18n scope="col" class="text-center">Ticker</th>
+      <th i18n scope="col" class="text-center">Start date</th>
+      <th i18n scope="col" class="text-center">End date</th>
+      <th i18n scope="col" class="text-center">Price</th>
+      <th i18n scope="col" class="text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let trip of trips">
+      <td *ngIf="!isAboutToStart(trip)" class="align-middle" scope="row">{{trip.title}}</td>
+      <td *ngIf="isAboutToStart(trip)" class="align-middle text-danger" scope="row">{{trip.title}}</td>
+
+      <td *ngIf="!isAboutToStart(trip)" class="text-center align-middle">{{trip.ticker}}</td>
+      <td *ngIf="isAboutToStart(trip)" class="text-center align-middle text-danger">{{trip.ticker}}</td>
+
+      <td *ngIf="!isAboutToStart(trip)" class="text-center align-middle">{{trip.startDate | date: 'shortDate'}}</td>
+      <td *ngIf="isAboutToStart(trip)" class="text-center align-middle text-danger">{{trip.startDate | date:
+        'shortDate'}}</td>
+
+      <td *ngIf="!isAboutToStart(trip)" class="text-center align-middle">{{trip.endDate | date: 'shortDate'}}</td>
+      <td *ngIf="isAboutToStart(trip)" class="text-center align-middle text-danger">{{trip.endDate | date: 'shortDate'}}
+      </td>
+
+      <td *ngIf="!isAboutToStart(trip)" class="text-center align-middle">{{ trip.price }}</td>
+      <td *ngIf="isAboutToStart(trip)" class="text-center align-middle text-danger">{{ trip.price }}</td>
+
+      <td class="text-center align-middle">
+        <a i18n class="btn btn-info" routerLink="/trips/{{ trip._id }}">Details</a>
+        <a i18n class="btn btn-danger ms-md-2 mt-2 mt-md-0" data-bs-toggle="modal"
+          data-bs-target="#cancelModal">Cancel</a>
+      </td>
+      <app-trip-cancel [trip]="trip"></app-trip-cancel>
+    </tr>
+  </tbody>
+</table>
+
+
+<div id="cancelAllModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h5 i18n>Are you sure you want to cancel all trips?</h5>
+        <p i18n>This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" i18n>No</button>
+        <button type="button" class="btn btn-danger" (click)="cancelAllTrips()" data-bs-dismiss="modal" i18n>Yes, cancel
+          all</button>
+      </div>
+    </div>
+  </div>
+</div>

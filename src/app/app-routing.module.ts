@@ -21,6 +21,7 @@ import { ExplorerApplicationsComponent } from './components/application/explorer
 import { ActorListComponent } from './components/actor/actor-list/actor-list.component';
 import { ActorDisplayComponent } from './components/actor/actor-display/actor-display.component';
 import { LeaveFormGuard } from './guards/leave-form.guard';
+import { TripManagerPreCancelledComponent } from './components/trip/trip-manager-pre-cancelled/trip-manager-pre-cancelled.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.ANONYMOUS] } },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.EXPLORER] } },
   { path: 'applications', component: ExplorerApplicationsComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.EXPLORER] } },
   { path: 'mytrips', component: TripManagerListComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
+  { path: 'pre-cancelled-trips', component: TripManagerPreCancelledComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.MANAGER] } },
   { path: 'sponsorships', component: SponsorshipListComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.SPONSOR] } },
   { path: 'sponsorships/:id', component: SponsorshipDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRoles: [Role.SPONSOR] } },
   { path: 'trips', children: [

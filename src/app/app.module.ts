@@ -40,6 +40,7 @@ import { PictureCreateComponent } from './components/trip/trip-display/modals/pi
 import { TripCancelComponent } from './components/trip/trip-display/modals/trip-cancel/trip-cancel.component';
 import { ApplicationDisplayComponent } from './components/application/trip-applications/modals/application-display/application-display.component';
 import { CancelApplicationComponent } from './components/application/explorer-applications/modals/cancel-application/cancel-application.component';
+import { TripManagerPreCancelledComponent } from './components/trip/trip-manager-pre-cancelled/trip-manager-pre-cancelled.component';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { CancelApplicationComponent } from './components/application/explorer-ap
     TripCancelComponent,
     ApplicationDisplayComponent,
     CancelApplicationComponent,
+    TripManagerPreCancelledComponent,
   ],
   imports: [
     BrowserModule,

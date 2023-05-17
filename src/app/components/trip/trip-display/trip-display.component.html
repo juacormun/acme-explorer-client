@@ -11,7 +11,7 @@
           <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBePublished()" i18n class="managerButton btn btn-sm btn-secondary" (click)="publishTrip()">Publish</button>
           <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeModified()" i18n class="managerButton btn btn-sm btn-primary" (click)="toggleEditInfo()">Edit</button>
           <button *ngIf="canDisplayActions() && !infoFormIsEditable && canBeModified()" i18n class="managerButton btn btn-sm btn-danger" (click)="deleteTrip()">Delete</button>
-          <button *ngIf="canBeCancelled()" i18n class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
+          <button *ngIf="canBeCancelled() && !isPreCancelled" (click)="preCancelTrip()" i18n class="btn btn-sm btn-danger">Pre-cancel</button>
           <button *ngIf="canBeApplied()" i18n id="applyButton" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#applicationModal">Apply</button>
         </div>
       </div>
@@ -19,6 +19,7 @@
     <form [formGroup]="infoForm" (ngSubmit)="onInfoFormSubmit()">
       <h5 class="text-center mb-3">
         <span *ngIf="isCancelled" i18n class="badge bg-danger" data-toggle="tooltip" data-html="true" title="{{trip.cancellationReason}}">Cancelled</span>
+        <span *ngIf="isPreCancelled" i18n class="badge bg-dark">Pre-cancelled</span>
         <span *ngIf="hasExpired" i18n class="badge bg-dark">Expired</span>
         <span *ngIf="isAboutToStart" class="badge bg-primary">
           <countdown [config]="{ stopTime: getTripStartTime(), format: 'HH:m:s - d' }"></countdown> <span i18n> days</span>
@@ -222,5 +223,3 @@
 <app-stage-create [trip]="trip"></app-stage-create>
 
 <app-picture-create [trip]="trip"></app-picture-create>
-
-<app-trip-cancel [trip]="trip"></app-trip-cancel>

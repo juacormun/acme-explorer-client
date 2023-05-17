@@ -65,6 +65,15 @@ export class TripService {
     return undefined;
   }
 
+  getPreCancelledTrips(): Trip[] | undefined {
+    const preCancelledTrips = localStorage.getItem('preCancelledTrips');
+    if (preCancelledTrips) {
+      const parsedTrips = JSON.parse(preCancelledTrips) as Trip[];
+      return parsedTrips;
+    }
+    return undefined;
+  }
+
   saveResultInCache(queryId: any, finderResult: any) {
     localStorage.setItem(queryId, JSON.stringify(finderResult));
     this.clearExpiredCache();
@@ -171,6 +180,17 @@ export class TripService {
           reject(error);
         })
     });
+  }
+
+  preCancelTrip(trip: Trip) {
+    const preCancelledTrips = localStorage.getItem('preCancelledTrips');
+    if (preCancelledTrips) {
+      const parsedTrips = JSON.parse(preCancelledTrips) as any;
+      parsedTrips.push(trip);
+      localStorage.setItem('preCancelledTrips', JSON.stringify(parsedTrips));
+    } else {
+      localStorage.setItem('preCancelledTrips', JSON.stringify([trip]));
+    }
   }
 
   cancelTrip(trip: Trip, cancellationReason: string) {
